@@ -1,0 +1,52 @@
+<article>
+  <app-search [searchColumns]="organizationSearchColumns"  (search) = "onSearch($event)"/>
+
+  @if (organizationCollection && organizationCollection.count === 0) {
+    <p class="no-organizations">No organizations found.</p>
+  } @else {
+    <table>
+      <thead>
+      <th>Short Name</th>
+      <th>Legal Name</th>
+      <th>Company Role</th>
+      <th>CounterpartyRole</th>
+      </thead>
+      <div>
+        @if (showPrev) {
+        <button type="button" id="toprev" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+        <button type="button" id="topnext" (click)="onNext()">Next</button>
+        }
+      </div>
+      <tbody >
+        @for (organization of organizationCollection!.snapshots; track organization.entityId!.id) {
+          @let entityId = organization.entityId!.id!;
+          <tr (click)="onSelected(entityId)">
+            <td><a [routerLink]="'../edit'" [queryParams]="{organizationId: entityId}" > {{ organization!.detail!.shortName }} </a> </td>
+            <td>{{ organization!.detail!.legalName }}</td>
+            @if (organization.companyRoleSnapshot) {
+                <td> <a [routerLink]="'../companyRole/' + organization.entityId?.id">Yes</a></td>
+            } @else {
+              <td> <a [routerLink]="'../companyRole/' + organization.entityId?.id">No</a> </td>
+            }
+
+            @if (organization.counterpartyRoleSnapshot) {
+              <td> <a [routerLink]="'../counterpartyRole/' + organization.entityId?.id">Yes</a></td>
+            } @else {
+              <td> <a [routerLink]="'../counterpartyRole/' + organization.entityId?.id">No</a> </td>
+            }
+          </tr>
+        }
+      </tbody>
+      <div>
+        @if (showPrev) {
+          <button type="button" id="bottomnext" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+          <button type="button" id="bottomprev" (click)="onNext()">Next</button>
+        }
+      </div>
+    </table>
+  }
+</article>

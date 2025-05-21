@@ -1,0 +1,251 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <h2>Create/Update Physical Deal</h2>
+
+  <div>
+    <fieldset>
+      <legend>Details</legend>
+
+      <div class="control-row">
+
+        <div class="control">
+          <label for="commodity">Commodity</label>
+          <select id="commodity" name="commodity" [formControl]="myForm.controls.commodity">
+            <option value="NATGAS">Natural Gas</option>
+            <option value="CRUDE">Crude</option>
+          </select>
+        </div>
+        <div class="control">
+          <label for="dealStatus">Deal Status</label>
+          <select id="dealStatus" name="dealStatus" [formControl]="myForm.controls.dealStatus">
+            <option value="Pending">Pending</option>
+            <option value="Verified">Verified</option>
+            <option value="Suspended">Suspended</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="control-row">
+        <div class="control">
+          <label for="company">Company</label>
+          <input
+            id="company"
+            name="company"
+            type="text"
+            [formControl]="myForm.controls.company"
+          />
+          <button type="button" (click)="searchForCompany()"> Search</button>
+          @if (showCompanySearch) {
+            <div>
+              <app-search-popup
+                [title] = "'Search for Company'"
+                [roleType] = "'CO'"
+                [searchField]=" (myForm.controls.company.value) ? myForm.controls.company.value : undefined"
+                (cancel)="onCancelCompanySearch()"
+                (result)="updateCompany($event)" />
+            </div>
+          }
+        </div>
+
+        <div class="control">
+          <label for="counterparty">Counterparty</label>
+          <input
+            id="counterparty"
+            name="counterparty"
+            type="text"
+            [formControl]="myForm.controls.counterparty"
+          />
+          <button type="button" (click)="searchForCounterparty()"> Search</button>
+          @if (showCounterpartySearch) {
+            <div>
+              <app-search-popup
+                [title] = "'Search for Counterparty'"
+                [roleType] = "'CP'"
+                [searchField]=" (myForm.controls.counterparty.value) ? myForm.controls.counterparty.value : undefined"
+                (cancel)="onCancelCounterpartySearch()"
+                (result)="updateCounterparty($event)" />
+            </div>
+          }
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="control-row">
+        <div class="control">
+          <label for="ticketNo">Ticket No</label>
+          <input
+            type="text"
+            id="ticketNo"
+            name="ticketNo"
+            [formControl]="myForm.controls.ticketNo"
+          />
+        </div>
+
+        <div class="control">
+          <label for="buySellCode">Buy/Sell</label>
+          <select id="buySellCode" name="buySellCode" [formControl]="myForm.controls.buySellCode">
+            <option value="BUY">Buy</option>
+            <option value="SELL">Sell</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="control-row">
+        <div class="control">
+          <label for="startDate">Start Date</label>
+          <input
+            type="date"
+            id="startDate"
+            name="startDate"
+            [formControl]="myForm.controls.startDate"
+          />
+        </div>
+
+        <div class="control">
+          <label for="endDate">End Date</label>
+          <input
+            type="date"
+            id="endDate"
+            name="endDate"
+            [formControl]="myForm.controls.endDate"
+          />
+        </div>
+      </div>
+
+      <div class="control-row">
+        <div class="control">
+          <label for="quantity">Quantity</label>
+          <input
+            type="number"
+            id="quantity"
+            name="quantity"
+            [formControl]="myForm.controls.volumeQuantity"
+          />
+        </div>
+
+        <div class="control">
+          <label for="volUoM">Volume Unit Of Measure / Frequency</label>
+          <select id="volUoM" name="volUoM" class="picker" [formControl]="myForm.controls.volumeUoM" >
+            <option value="GJ">GJ</option>
+            <option value="MWH">MWH</option>
+          </select>
+            /
+          <select id="volFrequency" name="volFrequency" class="picker" [formControl]="myForm.controls.volumeFrequency" >
+            <option value="H">Hourly</option>
+            <option value="D">Daily</option>
+            <option value="M">Monthly</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="control-row">
+        <div class="control">
+          <label for="settleCurrencyCode">Settlement Currency</label>
+          <select id="settleCurrencyCode" name="settleCurrencyCode"  [formControl]="myForm.controls.settlementCurrency" >
+            <option value="CAD">CAD</option>
+            <option value="USD">USD</option>
+          </select>
+        </div>
+
+        <div class="control">
+          <label for="reportCurrency">Reporting Currency</label>
+          <select id="reportCurrency" name="reportCurrency"  [formControl]="myForm.controls.reportingCurrency" >
+            <option value="CAD">CAD</option>
+            <option value="USD">USD</option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+
+  <hr />
+
+  <div>
+    <fieldset>
+      <legend>Pricing</legend>
+      <div class="control-row">
+        <div class="control">
+          <label for="dealPrice">Deal Price</label>
+          <input type="number" id="dealPrice" name="dealPrice" [formControl]="myForm.controls.physicalDealPricing.controls.dealPrice"/>
+        </div>
+
+        <div>
+          <label for="dealPriceCurrency">Currency / UoM</label>
+          <select id="dealPriceCurrency" name="dealPriceCurrency" class="picker" [formControl]="myForm.controls.physicalDealPricing.controls.dealPriceCurrency" >
+            <option value="CAD">CAD</option>
+            <option value="USD">USD</option>
+          </select>
+          /
+          <select id="dealPriceUoM" name="dealPriceUoM" class="picker" [formControl]="myForm.controls.physicalDealPricing.controls.dealPriceUoM" >
+            <option value="GJ">GJ</option>
+            <option value="MWH">MWH</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="control-row">
+        <div class="control">
+          <label for="dealIndex">Deal Price Index </label>
+          <input type="text" id="dealIndex" name="dealIndex" [formControl]="myForm.controls.physicalDealPricing.controls.dealIndex"/>
+          <button type="button" (click)="searchForDealIndex()"> Search</button>
+          @if (showDealIndexSearch) {
+            <div>
+              <app-price-index-search-popup
+                [title] = "'Search for Deal Index'"
+                [searchField]=" (myForm.controls.physicalDealPricing.controls.dealIndex.value) ? myForm.controls.physicalDealPricing.controls.dealIndex.value : undefined"
+                (cancel) = "onCancelDealIndexSearch()"
+                (result)="updateDealIndex($event)" />
+            </div>
+          }
+        </div>
+
+        <div class="control">
+          <label for="marketPrice">Market Index</label>
+          <input type="text" id="marketPrice" name="marketPrice" [formControl]="myForm.controls.physicalDealPricing.controls.marketIndex"/>
+          <button type="button" (click)="searchForMarketIndex()"> Search</button>
+          @if (showMarketIndexSearch) {
+            <div>
+              <app-price-index-search-popup
+                [title] = "'Search for Market Index'"
+                [searchField]=" (myForm.controls.physicalDealPricing.controls.marketIndex.value) ? myForm.controls.physicalDealPricing.controls.marketIndex.value : undefined"
+                (cancel)="onCancelMarketIndexSearch()"
+                (result)="updateMarketIndex($event)" />
+            </div>
+          }
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+  <hr />
+
+  @if (transactionResult) {
+    @if (transactionResult.errorCode === '0') {
+      Transaction Successful!
+      <p class="form-actions">
+        <button type="reset" (click) = "onReset()" class="button button-flat">Close</button>
+      </p>
+    } @else {
+      Transaction failed {{transactionResult.errorCode}} {{transactionResult.errorMessage}}
+    }
+  } @else {
+
+    <p class="form-actions">
+      <button type="reset" (click) = "onReset()" class="button button-flat">Cancel</button>
+      <button type="submit" class="button">Save</button>
+    </p>
+  }
+
+  @if (hasErrors) {
+    <h3>errors on form: </h3>
+    @for ( msg of formErrors; track msg) {
+      <p>{{msg}}</p>
+    }
+
+  }
+
+
+</form>
+

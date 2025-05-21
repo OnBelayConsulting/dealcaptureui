@@ -1,0 +1,23 @@
+<div>
+  <h3>Pricing Details</h3>
+</div>
+
+<div class = "input-group" >
+  <p>
+    <label for="dealPrice">Deal Price</label>
+    @if (physicalDeal().dealDetail!.fixedPriceValue) {
+      <input [readonly]="true" type="number" id="dealPrice" name="dealPrice" [(ngModel)]="physicalDeal()!.dealDetail!.fixedPriceValue"/>
+      <div>{{priceLabel()}}</div>
+    } @else {
+      <div> </div>
+    }
+
+  <p>
+    <label for="marketIndex"> Market Index</label>
+    @if (physicalDeal().marketPriceIndexId) {
+      <input [readonly]="true" type="text" id="marketIndex" name="marketIndex" [(ngModel)]="physicalDeal()!.marketPriceIndexId!.code"/>
+    } @else {
+     <div> </div>
+    }
+  </p>
+</div>

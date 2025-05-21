@@ -1,0 +1,56 @@
+  <article>
+  <app-search [searchColumns]="dealSearchColumns"  (search) = "onSearch($event)"/>
+
+    @if (dealSnapshotCollection && dealSnapshotCollection.count === 0) {
+      <p class="no-deals">No deals found.</p>
+    } @else {
+      <table>
+        <thead>
+          <th>Ticket No</th>
+          <th>Deal Type</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Deal Status</th>
+          <th>Commodity</th>
+          <th>Company</th>
+          <th>Counterparty</th>
+          <th>Buy/Sell</th>
+        </thead>
+        <div>
+          @if (showPrev) {
+            <button type="button" id="toprev" (click)="onPrev()">Prev</button>
+          }
+          @if (showNext) {
+            <button type="button" id="topnext" (click)="onNext()">Next</button>
+          }
+        </div>
+
+        <tbody >
+        @if (dealSnapshotCollection) {
+          @for (deal of dealSnapshotCollection.snapshots; track deal.entityId!.id) {
+            <tr (click)="onEdit(deal!.entityId!.id!, deal!.dealTypeValue!)">
+              <td> {{deal.dealDetail!.ticketNo}}</td>
+              <td>{{ deal.dealTypeValue }}</td>
+              <td>{{ deal.dealDetail!.startDate }}</td>
+              <td>{{ deal.dealDetail!.endDate }}</td>
+              <td> {{ deal.dealDetail!.dealStatusCodeValue }} </td>
+              <td> {{ deal.dealDetail!.commodityCodeValue }} </td>
+              <td>{{ deal.companyRoleId!.code }}</td>
+              <td>{{ deal.counterpartyRoleId!.code }}</td>
+              <td> {{ deal.dealDetail!.buySellCodeValue }} </td>
+            </tr>
+          }
+        }
+        </tbody>
+        <div>
+          @if (showPrev) {
+            <button type="button" id="bottomnext" (click)="onPrev()">Prev</button>
+          }
+          @if (showNext) {
+            <button type="button" id="bottomprev" (click)="onNext()">Next</button>
+          }
+        </div>
+
+      </table>
+    }
+  </article>

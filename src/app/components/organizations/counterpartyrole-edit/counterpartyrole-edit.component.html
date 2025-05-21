@@ -1,0 +1,45 @@
+<form [formGroup]="myForm" (ngSubmit)="onSave()">
+  <div>
+    @if (action() === 'new') {
+      <h2>Create Counterparty</h2>
+    } @else {
+      <h2>Modify Counterparty</h2>
+    }
+  </div>
+  <div class = "input-group" >
+    <p>
+      <label for="roleStatus">Role Status</label>
+      <select id="roleStatus" name="roleStatus"  [formControl]="myForm.controls.roleStatus">
+        <option value="P">Pending</option>
+        <option value="V">Verified</option>
+        <option value="S">Suspended</option>
+      </select>
+    </p>
+    <p>
+      <label for="settlementCurrency">Settlement Currency</label>
+      <select id="settlementCurrency" name="settlementCurrency" [formControl]="myForm.controls.settlementCurrencyCodeValue">
+        <option value="CAD">CAD</option>
+        <option value="USD">USD</option>
+      </select>
+    </p>
+  </div>
+
+
+  @if (transactionResult) {
+    @if (transactionResult.errorCode === '0') {
+      Transaction Successful!
+      <p class="form-actions">
+        <button type="reset" (click) = "onReset()" class="button button-flat">Close</button>
+      </p>
+    } @else {
+      Transaction failed {{transactionResult.errorCode}} {{transactionResult.errorMessage}}
+    }
+  } @else {
+    <p class="form-actions">
+      <button type="reset" (click) = "onReset()" class="button button-flat">Cancel</button>
+      <button type="submit" class="button">Save</button>
+    </p>
+
+  }
+
+</form>

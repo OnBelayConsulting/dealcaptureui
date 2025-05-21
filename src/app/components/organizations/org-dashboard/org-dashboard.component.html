@@ -1,0 +1,10 @@
+<nav class="menu">
+  <div>
+    <h1>Organization</h1>
+  </div>
+  <div class="actions">
+    <a routerLink="list" class="action-item" *kaHasRoles="['view-deals']">List Organizations</a>
+    <a routerLink="edit" class="action-item" *kaHasRoles="['view-deals']">New Organization</a>
+  </div>
+</nav>
+<router-outlet/>
