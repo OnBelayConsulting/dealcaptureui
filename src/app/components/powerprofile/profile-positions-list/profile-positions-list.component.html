@@ -1,0 +1,65 @@
+<article>
+  <h2>Power Profile Positions</h2>
+  <div class="actions">
+    <i class="action-item">{{powerProfilePositionSearchService.searchCriteria()}}  </i>
+    <button class="action-item" (click)="startSearch()" type="button"><u><b>Search</b></u></button>
+    <button class="action-item" (click)="onToggleShowSearch()" type="button"><u><b>{{showSearchLabel()}}</b></u></button>
+    <a routerLink="/jobs/edit"[queryParams]="{jobTypeCode: 'PwrProfilePositionGeneration'}" class="action-item" *kaHasRoles="['view-deals']">Generate Positions</a>
+    <a routerLink="/jobs/edit"[queryParams]="{jobTypeCode: 'PwrProfilePositionValuation'}" class="action-item" *kaHasRoles="['view-deals']">Value Positions</a>
+  </div>
+
+  @if (showSearchFields()) {
+    <app-profile-positions-search (close) = "onClose()"/>
+  }
+
+
+
+  @if (!PowerProfilePositionSnapshotCollection) {
+    <p class="no-snapshots">No positions found.</p>
+  } @else {
+    <table>
+      <thead>
+      <th>Position Id</th>
+      <th>Profile Name</th>
+      <th>Power Flow Code</th>
+      <th>Number of Hours</th>
+      <th>Index Type Code</th>
+      <th>Created Date/Time</th>
+      <th>Valued Date/Time</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      </thead>
+      <div>
+        @if (showPrev) {
+          <button type="button" id="toprev" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+          <button type="button" id="topnext" (click)="onNext()">Next</button>
+        }
+      </div>
+      <tbody >
+        @for (snapshot of PowerProfilePositionSnapshotCollection!.snapshots; track snapshot.entityId!.id) {
+          <tr>
+            <td>{{ snapshot!.entityId?.id }} </td>
+            <td>{{ snapshot!.powerProfileId.code}}</td>
+            <td>{{ snapshot!.detail.powerFlowCodeValue }}</td>
+            <td>{{ snapshot!.detail.numberOfHours }}</td>
+            <td>{{ snapshot!.detail.indexTypeCodeValue }}</td>
+            <td>{{ snapshot!.detail.createdDateTime }}</td>
+            <td>{{ snapshot!.detail.valuedDateTime }}</td>
+            <td>{{ snapshot!.detail.startDate }}</td>
+            <td>{{ snapshot!.detail.endDate }}</td>
+          </tr>
+        }
+      </tbody>
+      <div>
+        @if (showPrev) {
+          <button type="button" id="bottomnext" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+          <button type="button" id="bottomprev" (click)="onNext()">Next</button>
+        }
+      </div>
+    </table>
+  }
+</article>

@@ -1,0 +1,327 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <h2>Create/Update Financial Swap Deal</h2>
+  @if (dealSnapshot?.entityState !== 'NEW') {
+    <div>
+      <a routerLink="/deals/{{dealId()}}/dealCosts/list" class="action-item" *kaHasRoles="['view-deals']">Deal Costs</a>
+
+    </div>
+    <hr>
+  }
+  <div>
+    <fieldset>
+      <legend>Details</legend>
+
+      <div class="control-row">
+
+        <div class="control">
+          <label for="commodity">Commodity</label>
+          <select id="commodity" name="commodity" [formControl]="myForm.controls.commodity">
+            <option value="NATGAS">Natural Gas</option>
+            <option value="CRUDE">Crude</option>
+          </select>
+        </div>
+        <div class="control">
+          <label for="dealStatus">Deal Status</label>
+          <select id="dealStatus" name="dealStatus" [formControl]="myForm.controls.dealStatus">
+            <option value="Pending">Pending</option>
+            <option value="Verified">Verified</option>
+            <option value="Suspended">Suspended</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="control-row">
+        <div class="control">
+          <label for="company">Company</label>
+          <input
+            id="company"
+            name="company"
+            type="text"
+            [formControl]="myForm.controls.company"
+          />
+          <button type="button" (click)="searchForCompany()"> Search</button>
+          @if (showCompanySearch) {
+            <div>
+              <app-organization-quick-search
+                [title] = "'Search for Company'"
+                [roleType] = "'CO'"
+                [searchField]=" (myForm.controls.company.value) ? myForm.controls.company.value : undefined"
+                (cancel)="onCancelCompanySearch()"
+                (result)="updateCompany($event)" />
+            </div>
+          }
+        </div>
+
+        <div class="control">
+          <label for="companyTrader">Company Trader</label>
+          <input
+            id="companyTrader"
+            name="companyTrader"
+            type="text"
+            [formControl]="myForm.controls.companyTrader"
+          />
+          <button type="button" (click)="searchForCompanyTrader()"> Search</button>
+          @if (showCompanyTraderSearch) {
+            <div>
+              <app-business-contacts-quick-search
+                [contactType]="'isCompanyTrader'"
+                [title] = "'Search for Company Trader'"
+                [searchField]=" (myForm.controls.companyTrader.value) ? myForm.controls.companyTrader.value : undefined"
+                (cancel)="onCancelCompanyTraderSearch()"
+                (result)="updateCompanyTrader($event)" />
+            </div>
+          }
+        </div>
+      </div>
+
+
+      <div class="control-row">
+
+        <div class="control">
+          <label for="counterparty">Counterparty</label>
+          <input
+            id="counterparty"
+            name="counterparty"
+            type="text"
+            [formControl]="myForm.controls.counterparty"
+          />
+          <button type="button" (click)="searchForCounterparty()"> Search</button>
+          @if (showCounterpartySearch) {
+            <div>
+              <app-organization-quick-search
+                [title] = "'Search for Counterparty'"
+                [roleType] = "'CP'"
+                [searchField]=" (myForm.controls.counterparty.value) ? myForm.controls.counterparty.value : undefined"
+                (cancel)="onCancelCounterpartySearch()"
+                (result)="updateCounterparty($event)" />
+            </div>
+          }
+        </div>
+        <div class="control">
+          <label for="counterpartyTrader">Counterparty Trader</label>
+          <input
+            id="counterpartyTrader"
+            name="counterpartyTrader"
+            type="text"
+            [formControl]="myForm.controls.counterpartyTrader"
+          />
+          <button type="button" (click)="searchForCounterpartyTrader()"> Search</button>
+          @if (showCounterpartyTraderSearch) {
+            <div>
+              <app-business-contacts-quick-search
+                [contactType]="'isCounterpartyTrader'"
+                [title] = "'Search for Counterparty Trader'"
+                [searchField]=" (myForm.controls.counterpartyTrader.value) ? myForm.controls.counterpartyTrader.value : undefined"
+                (cancel)="onCancelCounterpartyTraderSearch()"
+                (result)="updateCounterpartyTrader($event)" />
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="control-row">
+        <div class="control">
+          <label for="administrator">Administrator</label>
+          <input
+            id="administrator"
+            name="administrator"
+            type="text"
+            [formControl]="myForm.controls.administrator"
+          />
+          <button type="button" (click)="searchForAdministrator()"> Search</button>
+          @if (showAdministratorSearch) {
+            <div>
+              <app-business-contacts-quick-search
+                [contactType]="'isAdministrator'"
+                [title] = "'Search for Counterparty Trader'"
+                [searchField]=" (myForm.controls.administrator.value) ? myForm.controls.administrator.value : undefined"
+                (cancel)="onCancelAdministratorSearch()"
+                (result)="updateAdministrator($event)" />
+            </div>
+          }
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="control-row">
+        <div class="control">
+          <label for="ticketNo">Ticket No</label>
+          <input
+            type="text"
+            id="ticketNo"
+            name="ticketNo"
+            [formControl]="myForm.controls.ticketNo"
+          />
+        </div>
+
+        <div class="control">
+          <label for="buySellCode">Buy/Sell</label>
+          <select id="buySellCode" name="buySellCode" [formControl]="myForm.controls.buySellCode">
+            <option value="BUY">Buy</option>
+            <option value="SELL">Sell</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="control-row">
+        <div class="control">
+          <label for="startDate">Start Date</label>
+          <input
+            type="date"
+            id="startDate"
+            name="startDate"
+            [formControl]="myForm.controls.startDate"
+          />
+        </div>
+
+        <div class="control">
+          <label for="endDate">End Date</label>
+          <input
+            type="date"
+            id="endDate"
+            name="endDate"
+            [formControl]="myForm.controls.endDate"
+          />
+        </div>
+      </div>
+
+      <div class="control-row">
+        <div class="control">
+          <label for="quantity">Quantity</label>
+          <input
+            type="number"
+            id="quantity"
+            name="quantity"
+            [formControl]="myForm.controls.volumeQuantity"
+          />
+        </div>
+
+        <div class="control">
+          <label for="volUoM">Volume Unit Of Measure / Frequency</label>
+          <select id="volUoM" name="volUoM" class="picker" [formControl]="myForm.controls.volumeUoM" >
+            <option value="GJ">GJ</option>
+            <option value="MWH">MWH</option>
+          </select>
+          /
+          <select id="volFrequency" name="volFrequency" class="picker" [formControl]="myForm.controls.volumeFrequency" >
+            <option value="H">Hourly</option>
+            <option value="D">Daily</option>
+            <option value="M">Monthly</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="control-row">
+        <div class="control">
+          <label for="settleCurrencyCode">Settlement Currency</label>
+          <select id="settleCurrencyCode" name="settleCurrencyCode"  [formControl]="myForm.controls.settlementCurrency" >
+            <option value="CAD">CAD</option>
+            <option value="USD">USD</option>
+          </select>
+        </div>
+
+        <div class="control">
+          <label for="reportCurrency">Reporting Currency</label>
+          <select id="reportCurrency" name="reportCurrency"  [formControl]="myForm.controls.reportingCurrency" >
+            <option value="CAD">CAD</option>
+            <option value="USD">USD</option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+
+  <hr />
+
+  <div>
+    <fieldset>
+      <legend>Pricing</legend>
+      <div class="control-row">
+        <div class="control">
+          <label for="dealPrice">Pays Price</label>
+          <input type="number" id="dealPrice" name="dealPrice" [formControl]="myForm.controls.financialSwapDealPricing.controls.dealPrice"/>
+        </div>
+
+        <div>
+          <label for="dealPriceCurrency">Currency / UoM</label>
+          <select id="dealPriceCurrency" name="dealPriceCurrency" class="picker" [formControl]="myForm.controls.financialSwapDealPricing.controls.dealPriceCurrency" >
+            <option value="CAD">CAD</option>
+            <option value="USD">USD</option>
+          </select>
+          /
+          <select id="dealPriceUoM" name="dealPriceUoM" class="picker" [formControl]="myForm.controls.financialSwapDealPricing.controls.dealPriceUoM" >
+            <option value="GJ">GJ</option>
+            <option value="MWH">MWH</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="control-row">
+
+        <div class="control">
+          <label for="paysIndex">Pays Index</label>
+          <input type="text" id="paysIndex" name="paysIndex" [formControl]="myForm.controls.financialSwapDealPricing.controls.paysIndex"/>
+          <button type="button" (click)="searchForPaysIndex()"> Search</button>
+          @if (showPaysIndexSearch) {
+            <div>
+              <app-price-index-quick-search
+                [title] = "'Search for Market Index'"
+                [searchField]=" (myForm.controls.financialSwapDealPricing.controls.paysIndex.value) ? myForm.controls.financialSwapDealPricing.controls.paysIndex.value : undefined"
+                (cancel)="onCancelPaysIndexSearch()"
+                (result)="updatePaysIndex($event)" />
+            </div>
+          }
+        </div>
+        <div class="control">
+          <label for="receivesIndex">Receives Index </label>
+          <input type="text" id="receivesIndex" name="receivesIndex" [formControl]="myForm.controls.financialSwapDealPricing.controls.receivesIndex"/>
+          <button type="button" (click)="searchForReceivesIndex()"> Search</button>
+          @if (showReceivesIndexSearch) {
+            <div>
+              <app-price-index-quick-search
+                [title] = "'Search for Deal Index'"
+                [searchField]=" (myForm.controls.financialSwapDealPricing.controls.receivesIndex.value) ? myForm.controls.financialSwapDealPricing.controls.receivesIndex.value : undefined"
+                (cancel) = "onCancelReceivesIndexSearch()"
+                (result)="updateReceivesIndex($event)" />
+            </div>
+          }
+        </div>
+
+      </div>
+    </fieldset>
+  </div>
+
+  <hr />
+
+  @if (transactionResult) {
+    @if (transactionResult.errorCode === '0') {
+      Transaction Successful!
+      <p class="form-actions">
+        <button type="reset" (click) = "onCancel()" class="button button-flat">Close</button>
+      </p>
+    } @else {
+      Transaction failed {{transactionResult.errorCode}} {{transactionResult.errorMessage}}
+    }
+  } @else {
+
+    <p class="form-actions">
+      <button type="reset" (click) = "onReset()" class="button button-flat">Clear</button>
+      <button type="reset" (click) = "onCancel()" class="button button-flat">Cancel</button>
+      <button type="submit" class="button">Save</button>
+    </p>
+  }
+
+  @if (hasErrors) {
+    <h3>errors on form: </h3>
+    @for ( msg of formErrors; track msg) {
+      <p>{{msg}}</p>
+    }
+
+  }
+
+
+</form>
+

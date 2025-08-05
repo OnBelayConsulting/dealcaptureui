@@ -1,0 +1,140 @@
+<form  (ngSubmit)="onSubmit()">
+  <h2>Queue Deal Job</h2>
+  @if (formTypeCode() === 'Generation') {
+  <div class="control-row">
+    <div class="control">
+      <label for="query">Query Text</label>
+      <input
+        id="query"
+        name="queryText"
+        type="text"
+        [(ngModel)]="modifiedSnapshot!.detail.queryText"
+      />
+      <button type="button" (click)="onShowSearch()"> Build Query</button>
+      @if (showSearchFields()) {
+        <app-deal-search (close) = "onClose()"/>
+      }
+    </div>
+    <div class="control">
+      <label for="createdDateTime">Created Date/Time</label>
+      <input
+        id="createdDateTime"
+        name="createdDateTime"
+        type="datetime-local"
+        [(ngModel)]="modifiedSnapshot!.detail.createdDateTime"
+      />
+    </div>
+  </div>
+  } @else {
+    <div class="control-row">
+      <div class="control">
+        <label for="query">Query Text</label>
+        <input
+          id="query"
+          name="queryText"
+          type="text"
+          [(ngModel)]="modifiedSnapshot!.detail.queryText"
+        />
+        <button type="button" (click)="onShowSearch()"> Build Query</button>
+        @if (showSearchFields()) {
+          <app-deal-search (close) = "onClose()"/>
+        }
+      </div>
+    </div>
+  <div class="control-row">
+    <div class="control">
+      <label for="createdDateTime">Created Date/Time</label>
+      <input
+        id="createdDateTime"
+        name="createdDateTime"
+        type="datetime-local"
+        [(ngModel)]="modifiedSnapshot!.detail.createdDateTime"
+      />
+    </div>
+    @if (previousCreatedDateTimes()) {
+    <div class="control">
+      <label for="prevCreatedDateTime">Previous Created Date/Time</label>
+      <select
+        id="prevCreatedDateTime"
+        name="prevCreatedDateTime"
+        [(ngModel)]="previousCreatedDateTime" >
+        @for ( createdDateTime of previousCreatedDateTimes(); track createdDateTime) {
+          <option value="{{createdDateTime}}"> {{createdDateTime}} </option>
+        }
+      </select>
+    </div>
+    }
+  </div>
+  }
+
+  <div class="control-row">
+    <div class="control">
+      <label for="fromDate">From Date</label>
+      <input
+        id="fromDate"
+        name="fromDate"
+        type="date"
+        [(ngModel)]="modifiedSnapshot!.detail.fromDate"
+      />
+    </div>
+
+    <div class="control">
+      <label for="toDate">To Date</label>
+      <input
+        id="toDate"
+        name="toDate"
+        type="date"
+        [(ngModel)]="modifiedSnapshot!.detail.toDate"
+      />
+    </div>
+  </div>
+
+
+  <div class="control-row">
+    <div class="control">
+      <label for="currency">Currency</label>
+      <select id="currency" name="currency" [(ngModel)]="modifiedSnapshot!.detail.currencyCodeValue">
+        <option value="CAD">CAD</option>
+        <option value="USD">USD</option>
+      </select>
+    </div>
+
+    @if (formTypeCode() === 'Generation') {
+      <div class="control">
+        <label for="uom">Unit of Measure</label>
+        <select id="uom" name="uom" [(ngModel)]="modifiedSnapshot!.detail.volumeUnitOfMeasure">
+          <option value="GJ">GJ</option>
+          <option value="MMBTU">MMBTU</option>
+          <option value="MWH">MWH</option>
+        </select>
+      </div>
+    }
+  </div>
+
+  @if (hasErrors) {
+    <h3>errors on form: </h3>
+    @for ( msg of formErrors; track msg) {
+      <p>{{msg}}</p>
+    }
+
+  }
+
+  @if (transactionResult) {
+    @if (transactionResult.errorCode === '0') {
+      Transaction Successful!
+      <p class="form-actions">
+        <button type="reset" (click) = "onReset()" class="button button-flat">Close</button>
+      </p>
+    } @else {
+      Transaction failed {{transactionResult.errorCode}} {{transactionResult.errorMessage}}
+    }
+  } @else {
+    <p class="form-actions">
+      <button type="reset" (click) = "onReset()" class="button button-flat">Cancel</button>
+      <button type="submit" class="button">Submit</button>
+    </p>
+
+  }
+
+</form>
+

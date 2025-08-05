@@ -1,0 +1,58 @@
+<article>
+  <h2>F/X Indices</h2>
+  <div class="actions">
+    <i class="action-item">{{fxIndexSearchService.searchCriteria()}}  </i>
+    <button class="action-item" (click)="startSearch()" type="button"><u><b>Search</b></u></button>
+    <button class="action-item" (click)="onToggleShowSearch()" type="button"><u><b>{{showSearchLabel()}}</b></u></button>
+    <a routerLink="/fxIndices/edit" class="action-item" *kaHasRoles="['view-deals']">New</a>
+  </div>
+
+  @if (showSearchFields()) {
+    <app-fx-index-search (close) = "onClose()"/>
+  }
+
+
+
+  @if (!fxIndexCollection) {
+    <p class="no-snapshots">No price indices found.</p>
+  } @else {
+    <table>
+      <thead>
+      <th>Name</th>
+      <th>Description</th>
+      <th>From Currency</th>
+      <th>To Currency</th>
+      <th>Frequency</th>
+      </thead>
+      <div>
+        @if (showPrev) {
+          <button type="button" id="toprev" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+          <button type="button" id="topnext" (click)="onNext()">Next</button>
+        }
+      </div>
+      <tbody >
+        @for (priceIndexSnapshot of fxIndexCollection!.snapshots; track priceIndexSnapshot.entityId!.id) {
+          @let entityId = priceIndexSnapshot.entityId!.id!;
+          <tr (click)="onSelected(entityId)">
+            <td><a [routerLink]="'../edit'" [queryParams]="{priceIndexId: entityId}" > {{ priceIndexSnapshot!.detail!.name }} </a> </td>
+            <td>{{ priceIndexSnapshot!.detail!.description }}</td>
+            <td>{{ priceIndexSnapshot!.detail!.fromCurrencyCodeValue }}</td>
+            <td>{{ priceIndexSnapshot!.detail!.toCurrencyCodeValue }}</td>
+            <td>{{ priceIndexSnapshot!.detail!.frequencyCodeValue }}</td>
+          </tr>
+        }
+      </tbody>
+      <div>
+        @if (showPrev) {
+          <button type="button" id="bottomnext" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+          <button type="button" id="bottomprev" (click)="onNext()">Next</button>
+        }
+      </div>
+    </table>
+  }
+</article>
+

@@ -1,0 +1,49 @@
+  <article>
+    <h2>Deals</h2>
+
+
+    <div class="actions">
+      <i class="action-item">{{dealSearchService.searchCriteria()}}  </i>
+      <button class="action-item" (click)="dealSearchService.startSearch()" type="button"><u><b>Search</b></u></button>
+      <button class="action-item" (click)="onToggleShowSearch()" type="button"><u><b>{{showSearchLabel()}}</b></u></button>
+      <button class="action-item" (click)="onFileUploadShow()" type="button"><u><b>Deal file upload</b></u></button>
+      <button class="action-item" (click)="onOverrideFileUploadShow()" type="button"><u><b>Overrides file upload</b></u></button>
+      <a routerLink="/deals/PhysicalDeal/edit" class="action-item" *kaHasRoles="['view-deals']">New Physical Deal</a>
+      <a routerLink="/deals/FinancialSwap/edit" class="action-item" *kaHasRoles="['view-deals']">New Financial Swap</a>
+      <a routerLink="/deals/VanillaOption/edit" class="action-item" *kaHasRoles="['view-deals']">New Vanilla Option</a>
+    </div>
+    @if(showFileUpload()) {
+      <app-deal-file-upload (close) = "onFileUploadClose()" />
+    }
+
+
+    @if(showOverridesFileUpload()) {
+      <app-deal-overrides-file-upload (close) = "onOverrideFileUploadClose()" />
+    }
+
+
+    @if (showSearchFields()) {
+      <app-deal-search (close) = "onClose()"/>
+    }
+    <div>
+      <button class="action-item" (click)="setToAll()" type="button"><u><b>Default View</b></u></button>
+      <button class="action-item" (click)="setToPhysicalDeals()" type="button"><u><b>Physical Deal View</b></u></button>
+      <button class="action-item" (click)="setToFinancialSwaps()" type="button"><u><b>Financial Swap View</b></u></button>
+      <button class="action-item" (click)="setToVanillaOptions()" type="button"><u><b>Vanilla Option View</b></u></button>
+    </div>
+
+    @switch (dealSearchService.searchDealTypeFilter()) {
+      @case ('default') {
+        <app-default-deals/>
+      }
+      @case ('PhysicalDeal') {
+        <app-physical-deals-list/>
+      }
+      @case ('FinancialSwap') {
+        <app-swap-deals-list/>
+      }
+      @case ('VanillaOption') {
+        <app-vanilla-option-deals-list/>
+      }
+    }
+  </article>

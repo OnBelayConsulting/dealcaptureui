@@ -2,7 +2,7 @@ export interface SearchColumnModel {
 
   label : string;
   columnName: string;
-  columnType:  "TEXT"| "DATE"| "CODE";
+  columnType:  "TEXT"| "NUMBER" | "DATE"| "CODE";
   codeEntityName?: string;
 }
 

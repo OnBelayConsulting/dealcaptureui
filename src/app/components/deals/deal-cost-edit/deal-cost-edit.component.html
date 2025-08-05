@@ -1,0 +1,68 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <h2>Create/Update Deal Cost for deal {{dealId()}}</h2>
+
+  <div class="control-row">
+    <div class="control">
+      <label for="costName">Cost Name</label>
+      <select id="costName" name="costName" [formControl]="myForm.controls.costNameCode">
+        <option value="Facility Fee">Facility Fee (per unit)</option>
+        <option value="Facility Flat Fee ">Facility Fee (flat)</option>
+        <option value="Transportation Fee">Transportation Fee (per unit)</option>
+        <option value="Trans Flat Fee ">Transportation Fee (flat)</option>
+        <option value="Brokerage Fee">Brokerage Fee (per unit)</option>
+        <option value="Brokerage Flat Fee ">Brokerage Fee (flat)</option>
+      </select>
+    </div>
+
+    <div class="control">
+      <label for="cost">Cost $</label>
+      <input
+        id="cost"
+        name="cost"
+        type="number"
+        [formControl]="myForm.controls.cost"
+      />
+    </div>
+  </div>
+
+  <div class="control-row">
+    <div class="control">
+      <label for="currency">Currency</label>
+      <select id="currency" name="currency" [formControl]="myForm.controls.currencyCode">
+        <option value="CAD">CAD</option>
+        <option value="USD">USD</option>
+      </select>
+    </div>
+
+    <div class="control">
+      <label for="uom">Unit of Measure</label>
+      <select id="uom" name="uom" [formControl]="myForm.controls.unitOfMeasureCode">
+        <option value="N/A">N/A</option>
+        <option value="GJ">GJ</option>
+        <option value="MMBTU">MMBTU</option>
+        <option value="MWH">MWH</option>
+      </select>
+    </div>
+  </div>
+
+
+  @if (transactionResult) {
+    @if (transactionResult.errorCode === '0') {
+      Transaction Successful!
+      <p class="form-actions">
+        <button type="reset" (click) = "onCancel()" class="button button-flat">Close</button>
+      </p>
+    } @else {
+      Transaction failed {{transactionResult.errorCode}} {{transactionResult.errorMessage}}
+    }
+  } @else {
+    <p class="form-actions">
+      <button type="reset" (click) = "onReset()" class="button button-flat">Reset</button>
+      <button type="reset" (click) = "onCancel()" class="button button-flat">Cancel</button>
+      <button type="submit" class="button">Save</button>
+    </p>
+
+  }
+
+</form>
+

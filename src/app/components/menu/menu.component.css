@@ -1,7 +1,7 @@
 .menu {
   display: flex;
-  justify-content: space-between;
-  background: #d5a1a1;
+  justify-content: normal;
+  background: #cedeec;
   padding: 10px;
   color: #3c3c3c;
   align-items: center;
@@ -9,7 +9,7 @@
 
 .developer-status {
   border-color: #f0ad4e;
-  border-style: dotted;
+  border-style: none;
   border-width: medium;
   width: fit-content;
   padding: 10px 20px;
@@ -22,6 +22,8 @@
 }
 
 .action-item {
+  border-style: none;
+  color: #3c3c3c;
   padding: 5px 15px;
   margin-left: 25px;
 }
@@ -32,6 +34,12 @@ a.action-item {
 }
 
 a.action-item:hover {
+  background: #bfbfbf;
+  border-radius: 5px;
+}
+
+
+button.action-item:hover {
   background: #bfbfbf;
   border-radius: 5px;
 }

@@ -1,0 +1,100 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <h2>Create/Update F/X Curve</h2>
+
+  <div class="control-row">
+    <div class="control">
+      <label for="index">Price Index</label>
+      <input
+        id="index"
+        name="index"
+        type="text"
+        [formControl]="myForm.controls.indexName"
+      />
+      <button type="button" (click)="searchForIndex()"> Search</button>
+      @if (showIndexSearch) {
+        <div>
+          <app-fx-index-quick-search
+            [title] = "'Search for Price Index'"
+            [searchField]=" (myForm.controls.indexName.value) ? myForm.controls.indexName.value : undefined"
+            (cancel)="onCancelIndexSearch()"
+            (result)="updateIndex($event)" />
+        </div>
+      }
+    </div>
+
+    <div class="control">
+      <label for="frequency">Frequency</label>
+      <select id="frequency" name="frequency" [formControl]="myForm.controls.frequency">
+        <option value="H">Hourly</option>
+        <option value="D">Daily</option>
+        <option value="M">Monthly</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="control-row">
+    <div class="control">
+      <label for="curveDate">Curve Date</label>
+      <input
+        id="curveDate"
+        name="curveDate"
+        type="date"
+        [formControl]="myForm.controls.curveDate"
+      />
+    </div>
+
+  </div>
+
+
+  <div class="control-row">
+    <div class="control">
+      <label for="observedDateTime">Observed Date/Time</label>
+      <input
+        id="observedDateTime"
+        name="observedDateTime"
+        type="datetime-local"
+        [formControl]="myForm.controls.observedDateTime"
+      />
+    </div>
+
+    <div class="control">
+      <label for="curveValue">Price $</label>
+      <input
+        id="curveValue"
+        name="curveValue"
+        type="number"
+        min="0"
+        step="0.01"
+        [formControl]="myForm.controls.curveValue"
+      />
+    </div>
+  </div>
+
+  @if (hasErrors) {
+    <h3>errors on form: </h3>
+    @for ( msg of formErrors; track msg) {
+      <p>{{msg}}</p>
+    }
+
+  }
+
+
+  @if (transactionResult) {
+    @if (transactionResult.errorCode === '0') {
+      Transaction Successful!
+      <p class="form-actions">
+        <button type="reset" (click) = "onReset()" class="button button-flat">Close</button>
+      </p>
+    } @else {
+      Transaction failed {{transactionResult.errorCode}} {{transactionResult.errorMessage}}
+    }
+  } @else {
+    <p class="form-actions">
+      <button type="reset" (click) = "onReset()" class="button button-flat">Cancel</button>
+      <button type="submit" class="button">Save</button>
+    </p>
+
+  }
+
+</form>
+

@@ -1,0 +1,67 @@
+<article>
+  <h2>Financial Swap Positions</h2>
+
+  @if (!positionSearchService.dealPositionSnapshotCollection()) {
+    <p class="no-snapshots">No positions found.</p>
+  } @else {
+    <table>
+      <thead>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Ticket No</th>
+      <th>Frequency</th>
+      <th>Created Date/Time</th>
+      <th>Valued Date/Time</th>
+      <th>Fixed price</th>
+      <th>Volume</th>
+      <th>Is Settlement</th>
+      <th>Settlement Cost</th>
+      <th>Settlement Total</th>
+      <th>Pays Index</th>
+      <th>Pays Price</th>
+      <th>Receives Index</th>
+      <th>Receives Price</th>
+      <th>Mark to Market</th>
+      </thead>
+      <div>
+        @if (positionSearchService.showPrev()) {
+          <button type="button" id="toprev" (click)="positionSearchService.prev()">Prev</button>
+        }
+        @if (positionSearchService.showNext()) {
+          <button type="button" id="topnext" (click)="positionSearchService.next()">Next</button>
+        }
+      </div>
+      <tbody >
+        @for (snapshot of swapPositions(); track snapshot.entityId!.id) {
+          <tr>
+            <td>{{ snapshot!.positionDetail.startDate | date : 'mediumDate'  }}</td>
+            <td>{{ snapshot!.positionDetail.endDate  | date : 'mediumDate'  }}</td>
+            <td>{{ snapshot!.dealId.code}}</td>
+            <td>{{ snapshot!.positionDetail.frequencyCodeValue }}</td>
+            <td>{{ snapshot!.positionDetail.createdDateTime  | date : 'medium'  }}</td>
+            <td>{{ snapshot!.positionDetail.valuedDateTime  | date : 'medium'  }}</td>
+            <td>{{ snapshot!.positionDetail.fixedPriceValue | number : '1.2-2'  }}</td>
+            <td>{{ snapshot!.positionDetail.volumeQuantityValue }}</td>
+            <td>{{ snapshot!.settlementDetail.isSettlementPosition }}</td>
+            <td>{{ snapshot!.settlementDetail.costSettlementAmount | number : '1.2-2'  }}</td>
+            <td>{{ snapshot!.settlementDetail.totalSettlementAmount | number : '1.2-2'  }}</td>
+            <td>{{ snapshot!.paysPriceIndexName }}</td>
+            <td>{{ snapshot!.priceDetail.paysPriceValue | number : '1.2-2'  }}</td>
+            <td>{{ snapshot!.receivesPriceIndexName }}</td>
+            <td>{{ snapshot!.priceDetail.receivesPriceValue | number : '1.2-2'  }}</td>
+            <td>{{ snapshot!.settlementDetail.markToMarketValuation }}</td>
+          </tr>
+        }
+      </tbody>
+      <div>
+        @if (positionSearchService.showPrev()) {
+          <button type="button" id="bottomnext" (click)="positionSearchService.prev()">Prev</button>
+        }
+        @if (positionSearchService.showNext()) {
+          <button type="button" id="bottomprev" (click)="positionSearchService.next()">Next</button>
+        }
+      </div>
+    </table>
+  }
+</article>
+

@@ -1,0 +1,112 @@
+<form  (ngSubmit)="onSubmit()">
+  <h2>Queue Mark-to-Market Jobs</h2>
+
+  <div class="control-row">
+    <div class="control">
+      <label for="ppQuery">Power Profile Query Text</label>
+      <input
+        id="ppQuery"
+        name="ppQuery"
+        type="text"
+        [(ngModel)]="modifiedSnapshot!.powerProfileQueryText"
+      />
+    </div>
+
+    <div class="control">
+      <label for="priceIdxQuery">Price Index Query Text</label>
+      <input
+        id="priceIdxQuery"
+        name="priceIdxQuery"
+        type="text"
+        [(ngModel)]="modifiedSnapshot!.priceIndexQueryText"
+      />
+    </div>
+  </div>
+
+  <div class="control-row">
+    <div class="control">
+      <label for="query">Deal Query Text</label>
+      <input
+        id="query"
+        name="queryText"
+        type="text"
+        [(ngModel)]="modifiedSnapshot!.dealQueryText"
+      />
+      <button type="button" (click)="onShowSearch()"> Build Query</button>
+      @if (showSearchFields()) {
+        <app-deal-search (close) = "onClose()"/>
+      }
+    </div>
+
+    <div class="control">
+      <label for="createdDateTime">Created Date/Time</label>
+      <input
+        id="createdDateTime"
+        name="createdDateTime"
+        type="datetime-local"
+        [(ngModel)]="modifiedSnapshot!.createdDateTime"
+      />
+    </div>
+  </div>
+
+
+  <div class="control-row">
+    <div class="control">
+      <label for="fromDate">From Date</label>
+      <input
+        id="fromDate"
+        name="fromDate"
+        type="date"
+        [(ngModel)]="modifiedSnapshot!.fromDate"
+      />
+    </div>
+
+    <div class="control">
+      <label for="toDate">To Date</label>
+      <input
+        id="toDate"
+        name="toDate"
+        type="date"
+        [(ngModel)]="modifiedSnapshot!.toDate"
+      />
+    </div>
+  </div>
+
+
+  <div class="control-row">
+    <div class="control">
+      <label for="currency">Currency</label>
+      <select id="currency" name="currency" [(ngModel)]="modifiedSnapshot!.currencyCodeValue">
+        <option value="CAD">CAD</option>
+        <option value="USD">USD</option>
+      </select>
+    </div>
+
+  </div>
+
+  @if (hasErrors) {
+    <h3>errors on form: </h3>
+    @for ( msg of formErrors; track msg) {
+      <p>{{msg}}</p>
+    }
+
+  }
+
+  @if (transactionResult) {
+    @if (transactionResult.errorCode === '0') {
+      Transaction Successful!
+      <p class="form-actions">
+        <button type="reset" (click) = "onReset()" class="button button-flat">Close</button>
+      </p>
+    } @else {
+      Transaction failed {{transactionResult.errorCode}} {{transactionResult.errorMessage}}
+    }
+  } @else {
+    <p class="form-actions">
+      <button type="reset" (click) = "onReset()" class="button button-flat">Cancel</button>
+      <button type="submit" class="button">Submit</button>
+    </p>
+
+  }
+
+</form>

@@ -1,0 +1,39 @@
+<article>
+  <div class="error">
+    <h2>{{ title() }}</h2>
+
+    <div class="container">
+      <div class="input-group">
+        <label for="searchOn">Search On </label>
+        <input  type="text" id="searchOn" name="searchOn" [(ngModel)]="searchOn"/>
+        <button type="button"  class="expressionbutton" (click)="onSearch()">Search</button>
+      </div>
+      <p></p>
+      <div class="input-group">
+        <label for="searchResult">Results</label>
+        <select  name="searchResult" id="searchResult" [(ngModel)]="searchResult">
+          @for (item of searchResults(); track item.columnName) {
+            <option value="{{item.columnName}}">{{ item.label }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <div class="confirmation-actions">
+      <p></p>
+      <button type="button"  class="button" (click)="onCancel()">Cancel</button>
+      <button type="button"  class="button" (click)="onSelect()">Select</button>
+    </div>
+  </div>
+  <div>
+    @if(searchCount()) {
+      <p class="message">{{searchCount()}} items found out of a total of {{searchTotalCount()}}</p>
+    }
+    @if (showNoItems) {
+      <p class="message">No items found in search.</p>
+
+    }
+
+  </div>
+</article>
+

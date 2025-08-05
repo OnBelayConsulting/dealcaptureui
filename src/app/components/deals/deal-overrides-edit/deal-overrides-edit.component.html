@@ -1,0 +1,59 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <h2>Create/Update Deal Overrides for month {{dealOverridesMonthSnapshot?.monthDate}}</h2>
+
+  <fieldset>
+    <table formArrayName="days">
+      <thead>
+      <th>Date</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      </thead>
+      <tbody >
+        @for (g of myForm.controls.days.controls; track $index; let idx = $index) {
+          <tr [formGroup]="g">
+            <td>
+              <input type="text" id="{{idx}}date" name="{{idx}}date" [formControl]="myForm.controls.days.at(idx).controls.overrideDay"/>
+            </td>
+            <td>
+              <input type="text" id="{{idx}}price" name="{{idx}}price" [formControl]="myForm.controls.days.at(idx).controls.price"/>
+            </td>
+            <td>
+              <input type="text" id="{{idx}}quantity" name="{{idx}}quantity" [formControl]="myForm.controls.days.at(idx).controls.quantity"/>
+            </td>
+          </tr>
+        }
+      </tbody>
+
+    </table>
+  </fieldset>
+
+  @if (hasErrors) {
+    <h3>errors on form: </h3>
+    @for ( msg of formErrors; track msg) {
+      <p>{{msg}}</p>
+    }
+
+  }
+
+
+
+  @if (transactionResult) {
+    @if (transactionResult.errorCode === '0') {
+      Transaction Successful!
+      <p class="form-actions">
+        <button type="reset" (click) = "onReset()" class="button button-flat">Close</button>
+      </p>
+    } @else {
+      Transaction failed {{transactionResult.errorCode}} {{transactionResult.errorMessage}}
+    }
+  } @else {
+    <p class="form-actions">
+      <button type="reset" (click) = "onReset()" class="button button-flat">Cancel</button>
+      <button type="submit" class="button">Save</button>
+    </p>
+
+  }
+
+</form>
+
+

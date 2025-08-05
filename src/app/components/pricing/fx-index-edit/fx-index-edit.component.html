@@ -1,0 +1,90 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <h2>Create/Update F/X Index</h2>
+
+  <div class="control-row">
+    <div class="control">
+      <label for="name">Name</label>
+      <input
+        id="name"
+        name="name"
+        type="text"
+        [formControl]="myForm.controls.name"
+      />
+    </div>
+
+    <div class="control">
+      <label for="description">Description</label>
+      <input
+        id="description"
+        name="description"
+        type="text"
+        [formControl]="myForm.controls.description"
+      />
+    </div>
+  </div>
+
+  <div class="control-row">
+    <div class="control">
+      <label for="fromCurrency">From Currency</label>
+      <select id="fromCurrency" name="fromCurrency" [formControl]="myForm.controls.fromCurrencyCodeValue">
+        <option value="CAD">CAD</option>
+        <option value="USD">USD</option>
+      </select>
+    </div>
+
+    <div class="control">
+      <label for="toCurrency">To Currency</label>
+      <select id="toCurrency" name="toCurrency" [formControl]="myForm.controls.toCurrencyCodeValue">
+        <option value="CAD">CAD</option>
+        <option value="USD">USD</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="control-row">
+    <div class="control">
+      <label for="frequency">Frequency</label>
+      <select id="frequency" name="frequency" [formControl]="myForm.controls.frequencyCodeValue">
+        <option value="H">Hourly</option>
+        <option value="D">Daily</option>
+        <option value="M">Monthly</option>
+      </select>
+    </div>
+
+    <div class="control">
+      <label for="daysExpiry">Days offset to Expiry</label>
+      <input
+        id="daysExpiry"
+        name="daysExpiry"
+        type="number"
+        [formControl]="myForm.controls.daysToExpiry"
+      />
+    </div>
+  </div>
+
+  @if (hasErrors) {
+    Errors on Form :
+    @for (error of formErrors; track error) {
+      <p>{{error}}</p>
+    }
+  }
+
+  @if (transactionResult) {
+    @if (transactionResult.errorCode === '0') {
+      Transaction Successful!
+      <p class="form-actions">
+        <button type="reset" (click) = "onReset()" class="button button-flat">Close</button>
+      </p>
+    } @else {
+      Transaction failed {{transactionResult.errorCode}} {{transactionResult.errorMessage}}
+    }
+  } @else {
+    <p class="form-actions">
+      <button type="reset" (click) = "onReset()" class="button button-flat">Cancel</button>
+      <button type="submit" class="button">Save</button>
+    </p>
+
+  }
+
+</form>
+

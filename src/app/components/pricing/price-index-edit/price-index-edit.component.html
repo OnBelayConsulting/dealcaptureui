@@ -1,0 +1,162 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <h2>Create/Update Price Index</h2>
+
+  <div class="control-row">
+    <div class="control">
+      <label for="name">Name</label>
+      <input
+        id="name"
+        name="name"
+        type="text"
+        [formControl]="myForm.controls.name"
+      />
+    </div>
+
+    <div class="control">
+      <label for="description">Description</label>
+      <input
+        id="description"
+        name="description"
+        type="text"
+        [formControl]="myForm.controls.description"
+      />
+    </div>
+  </div>
+
+  <div class="control-row">
+    <div class="control">
+      <label for="location">Location</label>
+      <input
+        id="location"
+        name="location"
+        type="text"
+        [formControl]="myForm.controls.location"
+      />
+      <button type="button" (click)="searchForLocation()"> Search</button>
+      @if (showLocationSearch) {
+        <div>
+          <app-pricing-location-quick-search
+            [title] = "'Search for Pricing Location'"
+            [searchField]=" (myForm.controls.location.value) ? myForm.controls.location.value : undefined"
+            (cancel)="onCancelLocationSearch()"
+            (result)="updateLocation($event)" />
+        </div>
+      }
+    </div>
+
+    <div class="control">
+      <label for="indexType">Index Type</label>
+      <select id="indexType" name="indexType" [formControl]="myForm.controls.indexTypeValue">
+        <option value="Hub">Hub</option>
+        <option value="Basis">Basis</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="control-row">
+    <div class="control">
+      <label for="benchmark">Benchmark Index</label>
+      <input
+        id="benchmark"
+        name="benchmark"
+        type="text"
+        [formControl]="myForm.controls.benchIndex"
+      />
+      <button type="button" (click)="searchForBenchIndex()"> Search</button>
+      @if (showBenchIndexSearch) {
+        <div>
+          <app-price-index-quick-search
+            [title] = "'Search for Benchmark'"
+            [searchField]=" (myForm.controls.benchIndex.value) ? myForm.controls.benchIndex.value : undefined"
+            (cancel)="onCancelBenchIndexSearch()"
+            (result)="updateBenchIndex($event)" />
+        </div>
+      }
+    </div>
+    <div class="control">
+      <label for="baseindex">Base (Hub) Index</label>
+      <input
+        id="baseindex"
+        name="baseindex"
+        type="text"
+        [formControl]="myForm.controls.baseIndex"
+      />
+      <button type="button" (click)="searchForBaseIndex()"> Search</button>
+      @if (showBaseIndexSearch) {
+        <div>
+          <app-price-index-quick-search
+            [title] = "'Search for Base Index'"
+            [searchField]=" (myForm.controls.baseIndex.value) ? myForm.controls.baseIndex.value : undefined"
+            (cancel)="onCancelBaseIndexSearch()"
+            (result)="updateBaseIndex($event)" />
+        </div>
+      }
+    </div>
+
+  </div>
+
+    <div class="control-row">
+    <div class="control">
+      <label for="currency">Currency</label>
+      <select id="currency" name="currency" [formControl]="myForm.controls.currencyCodeValue">
+        <option value="CAD">CAD</option>
+        <option value="USD">USD</option>
+      </select>
+    </div>
+
+    <div class="control">
+      <label for="uom">Unit of Measure</label>
+      <select id="uom" name="uom" [formControl]="myForm.controls.unitOfMeasureCodeValue">
+        <option value="GJ">GJ</option>
+        <option value="MMBTU">MMBTU</option>
+        <option value="MWH">MWH</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="control-row">
+    <div class="control">
+      <label for="frequency">Frequency</label>
+      <select id="frequency" name="frequency" [formControl]="myForm.controls.frequencyCodeValue">
+        <option value="H">Hourly</option>
+        <option value="D">Daily</option>
+        <option value="M">Monthly</option>
+      </select>
+    </div>
+
+    <div class="control">
+      <label for="benchRule">Bench Settlement Rule</label>
+      <select id="benchRule" name="benchRule" [formControl]="myForm.controls.benchmarkSettlementRuleCodeValue">
+        <option value="NEVER">Never</option>
+        <option value="NEXT_MTH">Next Mth</option>
+        <option value="NEXT_DAY">Next Day</option>
+      </select>
+    </div>
+  </div>
+
+  @if (hasErrors) {
+    Errors on Form :
+    @for (error of formErrors; track error) {
+      <p>{{error}}</p>
+    }
+  }
+
+  @if (transactionResult) {
+    @if (transactionResult.errorCode === '0') {
+      Transaction Successful!
+      <p class="form-actions">
+        <button type="reset" (click) = "onReset()" class="button button-flat">Close</button>
+      </p>
+    } @else {
+      Transaction failed {{transactionResult.errorCode}} {{transactionResult.errorMessage}}
+    }
+  } @else {
+    <p class="form-actions">
+      <button type="reset" (click) = "onReset()" class="button button-flat">Cancel</button>
+      <button type="submit" class="button">Save</button>
+    </p>
+
+  }
+
+</form>
+

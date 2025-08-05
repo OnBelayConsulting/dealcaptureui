@@ -1,0 +1,83 @@
+<article>
+  <h2>Jobs</h2>
+  <div class="actions">
+    <i class="action-item">{{dealJobSearchService.searchCriteria()}}  </i>
+    <button class="action-item" (click)="startSearch()" type="button"><u><b>Search</b></u></button>
+    <button class="action-item" (click)="onToggleShowSearch()" type="button"><u><b>{{showSearchLabel()}}</b></u></button>
+  </div>
+
+  @if (showSearchFields()) {
+    <app-deal-job-search (close) = "onClose()"/>
+  }
+  @if (showInformationDialog()) {
+    <app-info-modal title="Delete/Cancel"  [message]="'Delete or cancel was successful.'" (closeEvent)="onInfoCloseDialog()" />
+  }
+
+
+
+  @if (!dealJobSnapshotCollection) {
+    <p class="no-snapshots">No jobs found.</p>
+  } @else {
+    <table>
+      <thead>
+      <th>Job Id</th>
+      <th>Depends on job Id</th>
+      <th>Job Type</th>
+      <th>Job Status</th>
+      <th>Query Text</th>
+      <th>Created Date/Time</th>
+      <th>Valuation Date/Time</th>
+      <th>Currency</th>
+      <th>From Date</th>
+      <th>To Date</th>
+      <th>Queued Date/Time</th>
+      <th>Execution start</th>
+      <th>Execution end</th>
+      <th>Error Code</th>
+      <th>Action</th>
+      </thead>
+      <div>
+        @if (showPrev) {
+          <button type="button" id="toprev" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+          <button type="button" id="topnext" (click)="onNext()">Next</button>
+        }
+      </div>
+      <tbody >
+        @for (snapshot of dealJobSnapshotCollection!.snapshots; track snapshot.entityId!.id) {
+          <tr>
+            <td>{{snapshot.entityId?.id}} </td>
+            <td>{{snapshot.dependsOnId?.id}} </td>
+            <td>{{ snapshot!.detail.jobTypeCodeValue}}</td>
+            <td>{{ snapshot!.detail.jobStatusCodeValue}}</td>
+            <td>{{ snapshot!.detail.queryText }}</td>
+            <td>{{ snapshot!.detail.createdDateTime | date : 'medium' }}</td>
+            <td>{{ snapshot!.detail.valuationDateTime  | date : 'medium' }}</td>
+            <td>{{ snapshot!.detail.currencyCodeValue }}</td>
+            <td>{{ snapshot!.detail.fromDate | date : 'medium' }}</td>
+            <td>{{ snapshot!.detail.toDate | date : 'medium' }}</td>
+            <td>{{ snapshot!.detail.queuedDateTime  | date : 'medium' }}</td>
+            <td>{{ snapshot!.detail.executionStartDateTime  | date : 'medium' }}</td>
+            <td>{{ snapshot!.detail.executionEndDateTime  | date : 'medium'}}</td>
+            <td>{{ snapshot!.detail.errorCode }}</td>
+            @if (snapshot.detail.jobStatusCodeValue === 'Failed' || snapshot.detail.jobStatusCodeValue === 'Completed') {
+              <td> <button type="button" id="deleteB" (click)="onDelete(snapshot.entityId!.id!)">Delete</button></td>
+            } @else {
+              <td> <button type="button" id="cancelB" (click)="onCancel(snapshot.entityId!.id!)">Cancel</button></td>
+            }
+          </tr>
+        }
+      </tbody>
+      <div>
+        @if (showPrev) {
+          <button type="button" id="bottomnext" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+          <button type="button" id="bottomprev" (click)="onNext()">Next</button>
+        }
+      </div>
+    </table>
+  }
+</article>
+

@@ -1,0 +1,58 @@
+<article>
+  <h2>Power Profiles</h2>
+  <div class="actions">
+    <i class="action-item">{{powerProfileSearchService.searchCriteria()}}  </i>
+    <button class="action-item" (click)="startSearch()" type="button"><u><b>Search</b></u></button>
+    <button class="action-item" (click)="onToggleShowSearch()" type="button"><u><b>{{showSearchLabel()}}</b></u></button>
+    <a routerLink="/powerProfiles/edit" class="action-item" *kaHasRoles="['view-deals']">New</a>
+    <a routerLink="/powerProfiles/positions/list" class="action-item" *kaHasRoles="['view-deals']">Profile Positions</a>
+  </div>
+
+  @if (showSearchFields()) {
+    <app-power-profile-search (close) = "onClose()"/>
+  }
+
+
+
+  @if (!powerProfileCollection) {
+    <p class="no-snapshots">No power profiles found.</p>
+  } @else {
+    <table>
+      <thead>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Total Hours</th>
+      <th>Settled Price Index</th>
+      <th>Rest of Month Price Index</th>
+      </thead>
+      <div>
+        @if (showPrev) {
+          <button type="button" id="toprev" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+          <button type="button" id="topnext" (click)="onNext()">Next</button>
+        }
+      </div>
+      <tbody >
+        @for (snapshot of powerProfileCollection!.snapshots; track snapshot.entityId!.id) {
+          @let entityId = snapshot.entityId!.id!;
+          <tr (click)="onSelected(entityId)">
+            <td><a [routerLink]="'../edit'" [queryParams]="{powerProfileId: entityId}" > {{ snapshot!.detail!.name }} </a> </td>
+            <td>{{ snapshot!.detail!.description }}</td>
+            <td>{{ snapshot!.totalHours }}</td>
+            <td>{{ snapshot!.settledPriceIndexId?.code}}</td>
+            <td>{{ snapshot!.restOfMonthPriceIndexId?.code}}</td>
+          </tr>
+        }
+      </tbody>
+      <div>
+        @if (showPrev) {
+          <button type="button" id="bottomnext" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+          <button type="button" id="bottomprev" (click)="onNext()">Next</button>
+        }
+      </div>
+    </table>
+  }
+</article>
