@@ -1,3 +1,9 @@
+export interface EntityId {
+  id?: number | null;
+  code?: string | null;
+  description?: string | null
+}
+
 export interface ErrorHoldingSnapshot {
   errorCode?: string;
   errorMessage?:string;
@@ -12,10 +18,7 @@ export interface AbstractSnapshot extends ErrorHoldingSnapshot {
   entityState?: string;
   version?: number;
 
-  entityId?: {
-    id?: number;
-    code?: string;
-  }
+  entityId?: EntityId
 
 }
 

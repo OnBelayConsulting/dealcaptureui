@@ -1,0 +1,61 @@
+<article>
+  <h2>Price Risk Factors</h2>
+  <div class="actions">
+    <i class="action-item">{{priceRiskFactorSearchService.searchCriteria()}}  </i>
+    <button class="action-item" (click)="startSearch()" type="button"><u><b>Search</b></u></button>
+    <button class="action-item" (click)="onToggleShowSearch()" type="button"><u><b>{{showSearchLabel()}}</b></u></button>
+    <a routerLink="/jobs/edit"[queryParams]="{jobTypeCode: 'PriceRiskFactorValuation'}" class="action-item" *kaHasRoles="['view-deals']">Value Risk Factors</a>
+  </div>
+
+  @if (showSearchFields()) {
+    <app-price-riskfactor-search (close) = "onClose()"/>
+  }
+
+
+
+  @if (!priceRiskFactorSnapshotCollection) {
+    <p class="no-snapshots">No positions found.</p>
+  } @else {
+    <table>
+      <thead>
+      <th>Risk Factor Id</th>
+      <th>Price Index Name</th>
+      <th>Market Date</th>
+      <th>Hour ending</th>
+      <th>Created Date/Time</th>
+      <th>Value</th>
+      <th>Error Code</th>
+      </thead>
+      <div>
+        @if (showPrev) {
+          <button type="button" id="toprev" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+          <button type="button" id="topnext" (click)="onNext()">Next</button>
+        }
+      </div>
+      <tbody >
+        @for (snapshot of priceRiskFactorSnapshotCollection!.snapshots; track snapshot.entityId!.id) {
+          <tr>
+            <td>{{ snapshot!.entityId?.id }} </td>
+            <td>{{ snapshot!.priceIndexId.code}}</td>
+            <td>{{ snapshot!.detail.marketDate | date : 'mediumDate'  }}</td>
+            <td>{{ snapshot!.detail.hourEnding }}</td>
+            <td>{{ snapshot!.detail.createdDateTime | date : 'medium'  }}</td>
+            <td>{{ snapshot!.detail.value | number : '1.2-2' }}</td>
+            <td>{{ snapshot!.detail.errorCode }}</td>
+          </tr>
+        }
+      </tbody>
+      <div>
+        @if (showPrev) {
+          <button type="button" id="bottomnext" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+          <button type="button" id="bottomprev" (click)="onNext()">Next</button>
+        }
+      </div>
+    </table>
+  }
+</article>
+

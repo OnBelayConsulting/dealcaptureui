@@ -7,7 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {OrganizationService} from '../services/organization.service';
+import {OrganizationService} from '../../../services/organization.service';
 import {CompanyRoleSnapshot} from '../model/organization.model';
 import {TransactionResult} from '../../../models/transactionresult.model';
 import {Router} from '@angular/router';

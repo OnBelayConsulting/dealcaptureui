@@ -1,16 +1,24 @@
 import { Component,  OnInit  } from '@angular/core';
 import { ReactiveFormsModule} from "@angular/forms";
-import {SearchPopupComponent} from "../../shared/search-popup/search-popup.component";
+import {OrganizationQuickSearchComponent} from "../../organizations/organization-quick-search/organization-quick-search.component";
 import {DealEditComponent} from '../deal-edit/deal-edit.component';
 import {DealSnapshot, PhysicalDealSnapshot} from '../model/deal.model';
-import {SearchPriceIndexComponent} from '../../pricing/search-price-index/search-price-index.component';
+import {PriceIndexQuickSearchComponent} from '../../pricing/price-index-quick-search/price-index-quick-search.component';
+import {
+  BusinessContactsQuickSearchComponent
+} from '../../businesscontacts/business-contacts-quick-search/business-contacts-quick-search.component';
+import {HasRolesDirective} from 'keycloak-angular';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-physical-deal-edit',
   imports: [
     ReactiveFormsModule,
-    SearchPopupComponent,
-    SearchPriceIndexComponent
+    OrganizationQuickSearchComponent,
+    BusinessContactsQuickSearchComponent,
+    PriceIndexQuickSearchComponent,
+    HasRolesDirective,
+    RouterLink
   ],
   templateUrl: './physical-deal-edit.component.html',
   styleUrl: './physical-deal-edit.component.scss'
@@ -36,7 +44,7 @@ export class PhysicalDealEditComponent extends DealEditComponent implements OnIn
         marketValuationCodeValue: 'INDEX'
       }
     }
-    this.physicalDealSnapshot.dealTypeValue = 'PHY';
+    this.physicalDealSnapshot.dealTypeValue = 'PhysicalDeal';
 
     return this.physicalDealSnapshot;
   }
@@ -170,7 +178,5 @@ export class PhysicalDealEditComponent extends DealEditComponent implements OnIn
     this.myForm.controls.physicalDealPricing.controls.dealIndex.markAsDirty();
     this.showDealIndexSearch = false;
   }
-
-
 
 }

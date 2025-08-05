@@ -1,0 +1,22 @@
+button {
+  margin-left: 1rem;
+  font-size: 1rem;
+  border-style: none;
+  background-color: #c9d8ea;
+}
+
+button:hover {
+  background: #bfbfbf;
+  border-radius: 5px;
+}
+input {
+  display: block;
+  width: 100%;
+  max-width: 15rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #758a8a;
+  background-color: #aec9e8;
+  color: #142020;
+}

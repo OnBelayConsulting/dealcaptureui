@@ -1,0 +1,65 @@
+<article>
+  <h2>Price Curves</h2>
+  <div class="actions">
+    <i class="action-item">{{priceCurveSearchService.searchCriteria()}}  </i>
+    <button class="action-item" (click)="startSearch()" type="button"><u><b>Search</b></u></button>
+    <button class="action-item" (click)="onToggleShowSearch()" type="button"><u><b>{{showSearchLabel()}}</b></u></button>
+    <a routerLink="/priceCurves/edit" class="action-item" *kaHasRoles="['view-deals']">New</a>
+    <button class="action-item" (click)="onFileUploadShow()" type="button"><u><b>File upload</b></u></button>
+  </div>
+  @if(showFileUpload()) {
+    <app-curve-file-upload [uploadType]="'price'" (close) = "onFileUploadClose()" />
+  }
+
+  @if (showSearchFields()) {
+    <app-price-curve-search (close) = "onClose()"/>
+  }
+
+
+
+  @if (!priceCurveCollection) {
+    <p class="no-snapshots">No price curves found.</p>
+  } @else {
+    <table>
+      <thead>
+      <th>Curve Id</th>
+      <th>Index Name</th>
+      <th>Frequency</th>
+      <th>Curve Date</th>
+      <th>Hour Ending</th>
+      <th>Observed Date/Time</th>
+      <th>Price $</th>
+      </thead>
+      <div>
+        @if (showPrev) {
+          <button type="button" id="toprev" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+          <button type="button" id="topnext" (click)="onNext()">Next</button>
+        }
+      </div>
+      <tbody >
+        @for (priceCurveSnapshot of priceCurveCollection!.snapshots; track priceCurveSnapshot.entityId!.id) {
+          @let entityId = priceCurveSnapshot.entityId!.id!;
+          <tr (click)="onSelected(entityId)">
+            <td><a [routerLink]="'../edit'" [queryParams]="{priceCurveId: entityId}" > {{ priceCurveSnapshot!.entityId?.id }} </a> </td>
+            <td>{{ priceCurveSnapshot!.indexId!.code}}</td>
+            <td>{{ priceCurveSnapshot!.detail!.frequencyCodeValue }}</td>
+            <td>{{ priceCurveSnapshot!.detail!.curveDate | date : 'mediumDate' }}</td>
+            <td>{{ priceCurveSnapshot!.detail!.hourEnding }}</td>
+            <td>{{ priceCurveSnapshot!.detail!.observedDateTime | date : 'medium' }}</td>
+            <td>{{ priceCurveSnapshot!.detail?.curveValue | number : '1.2-2' }}</td>
+          </tr>
+        }
+      </tbody>
+      <div>
+        @if (showPrev) {
+          <button type="button" id="bottomnext" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+          <button type="button" id="bottomprev" (click)="onNext()">Next</button>
+        }
+      </div>
+    </table>
+  }
+</article>

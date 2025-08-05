@@ -1,6 +1,12 @@
 <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
   <h2>Create/Update Physical Deal</h2>
+  @if (dealSnapshot?.entityState !== 'NEW') {
+    <div>
+      <a routerLink="/deals/{{dealId()}}/dealCosts/list" class="action-item" *kaHasRoles="['view-deals']">Deal Costs</a>
 
+    </div>
+    <hr>
+  }
   <div>
     <fieldset>
       <legend>Details</legend>
@@ -37,7 +43,7 @@
           <button type="button" (click)="searchForCompany()"> Search</button>
           @if (showCompanySearch) {
             <div>
-              <app-search-popup
+              <app-organization-quick-search
                 [title] = "'Search for Company'"
                 [roleType] = "'CO'"
                 [searchField]=" (myForm.controls.company.value) ? myForm.controls.company.value : undefined"
@@ -46,6 +52,31 @@
             </div>
           }
         </div>
+
+        <div class="control">
+          <label for="companyTrader">Company Trader</label>
+          <input
+            id="companyTrader"
+            name="companyTrader"
+            type="text"
+            [formControl]="myForm.controls.companyTrader"
+          />
+          <button type="button" (click)="searchForCompanyTrader()"> Search</button>
+          @if (showCompanyTraderSearch) {
+            <div>
+              <app-business-contacts-quick-search
+                [contactType]="'isCompanyTrader'"
+                [title] = "'Search for Company Trader'"
+                [searchField]=" (myForm.controls.companyTrader.value) ? myForm.controls.companyTrader.value : undefined"
+                (cancel)="onCancelCompanyTraderSearch()"
+                (result)="updateCompanyTrader($event)" />
+            </div>
+          }
+        </div>
+      </div>
+
+
+      <div class="control-row">
 
         <div class="control">
           <label for="counterparty">Counterparty</label>
@@ -58,12 +89,55 @@
           <button type="button" (click)="searchForCounterparty()"> Search</button>
           @if (showCounterpartySearch) {
             <div>
-              <app-search-popup
+              <app-organization-quick-search
                 [title] = "'Search for Counterparty'"
                 [roleType] = "'CP'"
                 [searchField]=" (myForm.controls.counterparty.value) ? myForm.controls.counterparty.value : undefined"
                 (cancel)="onCancelCounterpartySearch()"
                 (result)="updateCounterparty($event)" />
+            </div>
+          }
+        </div>
+        <div class="control">
+          <label for="counterpartyTrader">Counterparty Trader</label>
+          <input
+            id="counterpartyTrader"
+            name="counterpartyTrader"
+            type="text"
+            [formControl]="myForm.controls.counterpartyTrader"
+          />
+          <button type="button" (click)="searchForCounterpartyTrader()"> Search</button>
+          @if (showCounterpartyTraderSearch) {
+            <div>
+              <app-business-contacts-quick-search
+                [contactType]="'isCounterpartyTrader'"
+                [title] = "'Search for Counterparty Trader'"
+                [searchField]=" (myForm.controls.counterpartyTrader.value) ? myForm.controls.counterpartyTrader.value : undefined"
+                (cancel)="onCancelCounterpartyTraderSearch()"
+                (result)="updateCounterpartyTrader($event)" />
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="control-row">
+        <div class="control">
+          <label for="administrator">Administrator</label>
+          <input
+            id="administrator"
+            name="administrator"
+            type="text"
+            [formControl]="myForm.controls.administrator"
+          />
+          <button type="button" (click)="searchForAdministrator()"> Search</button>
+          @if (showAdministratorSearch) {
+            <div>
+              <app-business-contacts-quick-search
+                [contactType]="'isAdministrator'"
+                [title] = "'Search for Counterparty Trader'"
+                [searchField]=" (myForm.controls.administrator.value) ? myForm.controls.administrator.value : undefined"
+                (cancel)="onCancelAdministratorSearch()"
+                (result)="updateAdministrator($event)" />
             </div>
           }
         </div>
@@ -192,7 +266,7 @@
           <button type="button" (click)="searchForDealIndex()"> Search</button>
           @if (showDealIndexSearch) {
             <div>
-              <app-price-index-search-popup
+              <app-price-index-quick-search
                 [title] = "'Search for Deal Index'"
                 [searchField]=" (myForm.controls.physicalDealPricing.controls.dealIndex.value) ? myForm.controls.physicalDealPricing.controls.dealIndex.value : undefined"
                 (cancel) = "onCancelDealIndexSearch()"
@@ -207,7 +281,7 @@
           <button type="button" (click)="searchForMarketIndex()"> Search</button>
           @if (showMarketIndexSearch) {
             <div>
-              <app-price-index-search-popup
+              <app-price-index-quick-search
                 [title] = "'Search for Market Index'"
                 [searchField]=" (myForm.controls.physicalDealPricing.controls.marketIndex.value) ? myForm.controls.physicalDealPricing.controls.marketIndex.value : undefined"
                 (cancel)="onCancelMarketIndexSearch()"
@@ -225,7 +299,7 @@
     @if (transactionResult.errorCode === '0') {
       Transaction Successful!
       <p class="form-actions">
-        <button type="reset" (click) = "onReset()" class="button button-flat">Close</button>
+        <button type="reset" (click) = "onCancel()" class="button button-flat">Close</button>
       </p>
     } @else {
       Transaction failed {{transactionResult.errorCode}} {{transactionResult.errorMessage}}
@@ -233,7 +307,8 @@
   } @else {
 
     <p class="form-actions">
-      <button type="reset" (click) = "onReset()" class="button button-flat">Cancel</button>
+      <button type="reset" (click) = "onReset()" class="button button-flat">Clear</button>
+      <button type="reset" (click) = "onCancel()" class="button button-flat">Cancel</button>
       <button type="submit" class="button">Save</button>
     </p>
   }

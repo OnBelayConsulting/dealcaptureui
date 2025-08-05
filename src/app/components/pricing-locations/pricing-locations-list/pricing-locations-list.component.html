@@ -1,0 +1,53 @@
+<article>
+  <h2>Pricing Locations</h2>
+  <div class="actions">
+    <i class="action-item">{{priceLocationSearchService.searchCriteria()}}  </i>
+    <button class="action-item" (click)="startSearch()" type="button"><u><b>Search</b></u></button>
+    <button class="action-item" (click)="onToggleShowSearch()" type="button"><u><b>{{showSearchLabel()}}</b></u></button>
+    <a routerLink="/pricingLocations/edit" class="action-item" *kaHasRoles="['view-deals']">New</a>
+  </div>
+  @if (showSearchFields()) {
+    <app-pricing-location-search (close) = "onClose()"/>
+  }
+
+  @if (!priceLocationCollection) {
+    <p class="no-snapshots">No price indices found.</p>
+  } @else {
+    <table>
+      <thead>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Country Code</th>
+      <th>State/Province Code</th>
+      </thead>
+      <div>
+        @if (showPrev) {
+          <button type="button" id="toprev" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+          <button type="button" id="topnext" (click)="onNext()">Next</button>
+        }
+      </div>
+      <tbody >
+        @for (locationSnapshot of priceLocationCollection!.snapshots; track locationSnapshot.entityId!.id) {
+          @let entityId = locationSnapshot.entityId!.id!;
+          <tr (click)="onSelected(entityId)">
+            <td><a [routerLink]="'../edit'" [queryParams]="{priceIndexId: entityId}" > {{ locationSnapshot!.detail!.name }} </a> </td>
+            <td>{{ locationSnapshot!.detail!.description }}</td>
+            <td>{{ locationSnapshot!.detail!.countryCode }}</td>
+            <td>{{ locationSnapshot!.detail!.stateProvinceCode }}</td>
+          </tr>
+        }
+      </tbody>
+      <div>
+        @if (showPrev) {
+          <button type="button" id="bottomnext" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+          <button type="button" id="bottomprev" (click)="onNext()">Next</button>
+        }
+      </div>
+    </table>
+  }
+</article>
+

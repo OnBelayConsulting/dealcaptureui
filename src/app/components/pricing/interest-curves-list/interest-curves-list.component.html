@@ -1,0 +1,65 @@
+<article>
+  <h2>Interest Rates</h2>
+  <div class="actions">
+    <i class="action-item">{{interestCurveSearchService.searchCriteria()}}  </i>
+    <button class="action-item" (click)="startSearch()" type="button"><u><b>Search</b></u></button>
+    <button class="action-item" (click)="onToggleShowSearch()" type="button"><u><b>{{showSearchLabel()}}</b></u></button>
+    <a routerLink="/interestCurves/edit" class="action-item" *kaHasRoles="['view-deals']">New</a>
+    <button class="action-item" (click)="onFileUploadShow()" type="button"><u><b>File upload</b></u></button>
+  </div>
+  @if(showFileUpload()) {
+    <app-curve-file-upload [uploadType]="'interest'"  (close) = "onFileUploadClose()" />
+  }
+
+  @if (showSearchFields()) {
+    <app-interest-curve-search (close) = "onClose()"/>
+  }
+
+
+
+  @if (!interestCurveCollection) {
+    <p class="no-snapshots">No interest rates found.</p>
+  } @else {
+    <table>
+      <thead>
+      <th>Curve Id</th>
+      <th>Index Name</th>
+      <th>Frequency</th>
+      <th>Curve Date</th>
+      <th>Hour Ending</th>
+      <th>Observed Date/Time</th>
+      <th>Rate</th>
+      </thead>
+      <div>
+        @if (showPrev) {
+          <button type="button" id="toprev" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+          <button type="button" id="topnext" (click)="onNext()">Next</button>
+        }
+      </div>
+      <tbody >
+        @for (interestCurveSnapshot of interestCurveCollection!.snapshots; track interestCurveSnapshot.entityId!.id) {
+          @let entityId = interestCurveSnapshot.entityId!.id!;
+          <tr (click)="onSelected(entityId)">
+            <td><a [routerLink]="'../edit'" [queryParams]="{interestCurveId: entityId}" > {{ interestCurveSnapshot!.entityId?.id }} </a> </td>
+            <td>{{ interestCurveSnapshot!.indexId!.code}}</td>
+            <td>{{ interestCurveSnapshot!.detail!.frequencyCodeValue }}</td>
+            <td>{{ interestCurveSnapshot!.detail!.curveDate | date : 'mediumDate' }}</td>
+            <td>{{ interestCurveSnapshot!.detail!.hourEnding }}</td>
+            <td>{{ interestCurveSnapshot!.detail!.observedDateTime | date : 'medium' }}</td>
+            <td>{{ interestCurveSnapshot!.detail?.curveValue | number : '1.2-2'  }}</td>
+          </tr>
+        }
+      </tbody>
+      <div>
+        @if (showPrev) {
+          <button type="button" id="bottomnext" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+          <button type="button" id="bottomprev" (click)="onNext()">Next</button>
+        }
+      </div>
+    </table>
+  }
+</article>

@@ -1,0 +1,15 @@
+<div>
+  <h3>Upload deals in CSV format</h3>
+  <input type="file"  (change)="onFileSelected($event)" >
+  <p>
+    @if(transactionResult) {
+      @if(transactionResult.errorCode === '0') {
+        Transaction succeeded. deal Id: {{transactionResult.ids[0]}}
+      } @else {
+        Transaction failed on error: {{transactionResult.errorCode}} {{transactionResult.errorMessage}}
+      }
+    }
+    <button (click)="onClose()">close file upload</button>
+  <p>
+
+</div>

@@ -1,0 +1,243 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <h2>Create/Update Power Profile</h2>
+
+  <div class="control-row">
+    <div class="control">
+      <label for="name">Name</label>
+      <input
+        id="name"
+        name="name"
+        type="text"
+        [formControl]="myForm.controls.name"
+      />
+    </div>
+
+    <div class="control">
+      <label for="description">Description</label>
+      <input
+        id="description"
+        name="description"
+        type="text"
+        [formControl]="myForm.controls.description"
+      />
+    </div>
+  </div>
+
+  <div class="control-row">
+    <div class="control">
+      <label for="index">Settled Price Index</label>
+      <input
+        id="index"
+        name="index"
+        type="text"
+        [formControl]="myForm.controls.settledPriceIndex"
+      />
+      <button type="button" (click)="searchForSettledPriceIndex()"> Search</button>
+      @if (showSettledPriceIndexSearch) {
+        <div>
+          <app-price-index-quick-search
+            [title] = "'Search for Price Index'"
+            [searchField]=" (myForm.controls.settledPriceIndex.value) ? myForm.controls.settledPriceIndex.value : undefined"
+            (cancel)="onCancelSettledPriceIndexSearch()"
+            (result)="updateSettledPriceIndex($event)" />
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="control-row">
+    <div class="control">
+      <label for="onPeak">On Peak Index</label>
+      <input
+        id="onPeak"
+        name="onPeak"
+        type="text"
+        [formControl]="myForm.controls.onPeakPriceIndex"
+      />
+      <button type="button" (click)="searchForOnPeakIndex()"> Search</button>
+      @if (showOnPeakPriceIndexSearch) {
+        <div>
+          <app-price-index-quick-search
+            [title] = "'Search for Price Index'"
+            [searchField]=" (myForm.controls.onPeakPriceIndex.value) ? myForm.controls.onPeakPriceIndex.value : undefined"
+            (cancel)="onCancelOnPeakIndexSearch()"
+            (result)="updateOnPeakIndex($event)" />
+        </div>
+      }
+    </div>
+    <div class="control">
+      <label for="offPeak">Off Peak Index</label>
+      <input
+        id="offPeak"
+        name="offPeak"
+        type="text"
+        [formControl]="myForm.controls.offPeakPriceIndex"
+      />
+      <button type="button" (click)="searchForOffPeakIndex()"> Search</button>
+      @if (showOffPeakSettledPriceIndexSearch) {
+        <div>
+          <app-price-index-quick-search
+            [title] = "'Search for Price Index'"
+            [searchField]=" (myForm.controls.offPeakPriceIndex.value) ? myForm.controls.offPeakPriceIndex.value : undefined"
+            (cancel)="onCancelOffPeakIndexSearch()"
+            (result)="updateOffPeakIndex($event)" />
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="control-row">
+    <div class="control">
+      <label for="superPeak">Super Peak Index</label>
+      <input
+        id="superPeak"
+        name="superPeak"
+        type="text"
+        [formControl]="myForm.controls.superPeakPriceIndex"
+      />
+      <button type="button" (click)="searchForSuperPeakIndex()"> Search</button>
+      @if (showSuperPeakSettledPriceIndexSearch) {
+        <div>
+          <app-price-index-quick-search
+            [title] = "'Search for Price Index'"
+            [searchField]=" (myForm.controls.superPeakPriceIndex.value) ? myForm.controls.superPeakPriceIndex.value : undefined"
+            (cancel)="onCancelSuperPeakIndexSearch()"
+            (result)="updateSuperPeakIndex($event)" />
+        </div>
+      }
+    </div>
+  </div>
+
+
+  <fieldset>
+  <h2>Create/Update Hours</h2>
+    <div class="control-row">
+    <div class="control">
+      <label for="code">Select Power Code</label>
+      <select id="code" name="code" [formControl]="myForm.controls.selectedCode">
+        <option value="None">None</option>
+        <option value="OnPeak">On Peak</option>
+        <option value="OffPeak">Off Peak</option>
+        <option value="SuperPeak">Super Peak</option>
+      </select>
+    </div>
+    <div class="control">
+      <label for="hourRange">Select Hour Range</label>
+      <select id="hourRange" name="hourRange" [formControl]="myForm.controls.hourRange">
+        <option value="None">None</option>
+        <option value="All">All Hours, All Days</option>
+        <option value="AllWeekDays">All hours Week Days</option>
+        <option value="AllWeekends">All hours Weekends</option>
+      </select>
+    </div>
+    </div>
+    <button type="button"  (click) = "onPreset()" >Apply Presets</button>
+    <p>
+  <table formArrayName="hourFields">
+    <thead>
+    <th>Hour</th>
+    <th>Monday</th>
+    <th>Tuesday</th>
+    <th>Wednesday</th>
+    <th>Thursday</th>
+    <th>Friday</th>
+    <th>Saturday</th>
+    <th>Sunday</th>
+    </thead>
+    <tbody >
+      @for (g of myForm.controls.hourFields.controls; track $index; let idx = $index) {
+        <tr [formGroup]="g">
+          <td> {{ $index + 1 }}
+          </td>
+          <td>
+            <select id="{{idx}}monday" name="{{idx}}monday" [formControl]="myForm.controls.hourFields.at(idx).controls.monday">
+              <option value="None">None</option>
+              <option value="OnPeak">On Peak</option>
+              <option value="OffPeak">Off Peak</option>
+              <option value="SuperPeak">Super Peak</option>
+            </select>
+          </td>
+          <td>
+            <select id="{{idx}}tuesday" name="{{idx}}tuesday" [formControl]="myForm.controls.hourFields.at(idx).controls.tuesday">
+              <option value="None">None</option>
+              <option value="OnPeak">On Peak</option>
+              <option value="OffPeak">Off Peak</option>
+              <option value="SuperPeak">Super Peak</option>
+            </select>
+          </td>
+          <td>
+            <select id="{{idx}}wednesday" name="{{idx}}wednesday" [formControl]="myForm.controls.hourFields.at(idx).controls.wednesday">
+              <option value="None">None</option>
+              <option value="OnPeak">On Peak</option>
+              <option value="OffPeak">Off Peak</option>
+              <option value="SuperPeak">Super Peak</option>
+            </select>
+          </td>
+          <td>
+            <select id="{{idx}}thursday" name="{{idx}}thursday" [formControl]="myForm.controls.hourFields.at(idx).controls.thursday">
+              <option value="None">None</option>
+              <option value="OnPeak">On Peak</option>
+              <option value="OffPeak">Off Peak</option>
+              <option value="SuperPeak">Super Peak</option>
+            </select>
+          </td>
+          <td>
+            <select id="{{idx}}friday" name="{{idx}}friday" [formControl]="myForm.controls.hourFields.at(idx).controls.friday">
+              <option value="None">None</option>
+              <option value="OnPeak">On Peak</option>
+              <option value="OffPeak">Off Peak</option>
+              <option value="SuperPeak">Super Peak</option>
+            </select>
+          </td>
+          <td>
+            <select id="{{idx}}saturday" name="{{idx}}saturday" [formControl]="myForm.controls.hourFields.at(idx).controls.saturday">
+              <option value="None">None</option>
+              <option value="OnPeak">On Peak</option>
+              <option value="OffPeak">Off Peak</option>
+              <option value="SuperPeak">Super Peak</option>
+            </select>
+          </td>
+          <td>
+            <select id="{{idx}}sunday" name="{{idx}}sunday" [formControl]="myForm.controls.hourFields.at(idx).controls.sunday">
+              <option value="None">None</option>
+              <option value="OnPeak">On Peak</option>
+              <option value="OffPeak">Off Peak</option>
+              <option value="SuperPeak">Super Peak</option>
+            </select>
+          </td>
+        </tr>
+      }
+    </tbody>
+
+  </table>
+  </fieldset>
+
+  @if (hasErrors) {
+    <h3>errors on form: </h3>
+    @for ( msg of formErrors; track msg) {
+      <p>{{msg}}</p>
+    }
+
+  }
+
+
+
+  @if (transactionResult) {
+    @if (transactionResult.errorCode === '0') {
+      Transaction Successful!
+      <p class="form-actions">
+        <button type="reset" (click) = "onReset()" class="button button-flat">Close</button>
+      </p>
+    } @else {
+      Transaction failed {{transactionResult.errorCode}} {{transactionResult.errorMessage}}
+    }
+  } @else {
+    <p class="form-actions">
+      <button type="reset" (click) = "onReset()" class="button button-flat">Cancel</button>
+      <button type="submit" class="button">Save</button>
+    </p>
+
+  }
+
+</form>
+

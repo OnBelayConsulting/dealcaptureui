@@ -1,0 +1,42 @@
+<article>
+  <h2>Deal Costs for Deal {{dealId()}}</h2>
+
+
+  <div class="actions">
+    <a routerLink="/deals/{{dealId()}}/dealCosts/edit" class="action-item" *kaHasRoles="['view-deals']">New Cost</a>
+  </div>
+
+  @if (!dealCostSnapshotCollection) {
+    <p class="no-deals">No deals found.</p>
+  } @else {
+    <table>
+      <thead>
+      <th>Cost Id</th>
+      <th>Cost Name</th>
+      <th>Currency</th>
+      <th>Unit Of Measure</th>
+      <th>Cost</th>
+      </thead>
+      <div>
+      </div>
+
+      <tbody >
+        @if (dealCostSnapshotCollection) {
+          @for (cost of dealCostSnapshotCollection.snapshots; track cost.entityId!.id) {
+            <tr>
+            <td><a [routerLink]="'../deals/' + dealId() + '/dealCosts/edit'" [queryParams]="{dealCostId: cost.entityId?.id}" > {{cost.entityId?.id}} </a> </td>
+              <td>{{ cost.detail?.costNameCodeValue }}</td>
+              <td>{{ cost.detail?.currencyCodeValue }}</td>
+              <td>{{ cost.detail?.unitOfMeasureCodeValue }}</td>
+              <td>{{ cost.detail?.costValue }}</td>
+            </tr>
+          }
+        }
+      </tbody>
+
+    </table>
+    <div class="actions">
+      <a routerLink="/deals/list" class="action-item" *kaHasRoles="['view-deals']">Close</a>
+    </div>
+  }
+</article>

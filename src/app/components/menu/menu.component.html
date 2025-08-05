@@ -1,17 +1,50 @@
 <nav class="menu">
-  <div class="developer-status"><strong>Keycloak Events:</strong> {{ keycloakStatus }}</div>
+  <div class="developer-status"><h1>Deal Capture By OnBelay</h1></div>
 
   <div class="actions">
     @if (!authenticated) {
       <a routerLink="/" class="action-item">Home</a>
     }
-    <a routerLink="/organizations" class="action-item" *kaHasRoles="['view-deals']">Organizations</a>
-    <a routerLink="/deals" class="action-item" *kaHasRoles="['view-deals']">Deals</a>
+    <button type="reset" (click) = "onUpdateDomainModel('Jobs')" class="action-item">Jobs</button>
+    <button type="reset" (click) = "onUpdateDomainModel('Organizations')" class="action-item">Organizations</button>
+    <button type="reset" (click) = "onUpdateDomainModel('Pricing')" class="action-item">Pricing</button>
+    <button type="reset" (click) = "onUpdateDomainModel('Deals')" class="action-item">Deals</button>
     <a routerLink="/profile" class="action-item" *kaHasRoles="['see-profile']">My Profile</a>
     @if (!authenticated) {
       <button class="action-item" (click)="login()">Login</button>
     } @else {
       <button class="action-item" (click)="logout()">Logout</button>
+    }
+  </div>
+</nav>
+<nav class="menu">
+  <div class="developer-status"><strong></strong> </div>
+
+  <div class="actions">
+    @switch (domainModelName())  {
+      @case('Deals') {
+        <a routerLink="/deals/list" class="action-item" *kaHasRoles="['view-deals']">Deals</a>
+        <a routerLink="/powerProfiles/list" class="action-item" *kaHasRoles="['view-deals']">Power Profiles</a>
+        <a routerLink="/positions/list" class="action-item" *kaHasRoles="['view-deals']">Positions</a>
+        <a routerLink="/deals/mtm" class="action-item" *kaHasRoles="['view-deals']">Queue Mark-to-Market</a>
+      }
+      @case ('Organizations') {
+        <a routerLink="/organizations/list" class="action-item" *kaHasRoles="['view-deals']">Organizations</a>
+      }
+      @case ('Jobs') {
+        <a routerLink="/jobs/list" class="action-item" *kaHasRoles="['view-deals']">Jobs</a>
+      }
+
+      @case ('Pricing') {
+        <a routerLink="/pricingLocations/list" class="action-item" *kaHasRoles="['view-deals']">Pricing Locations</a>
+        <a routerLink="/priceIndices/list" class="action-item" *kaHasRoles="['view-deals']">Price Indices</a>
+        <a routerLink="/priceCurves/list" class="action-item" *kaHasRoles="['view-deals']">Price Curves</a>
+        <a routerLink="/priceriskfactors/list" class="action-item" *kaHasRoles="['view-deals']">Price Risk Factors</a>
+        <a routerLink="/fxIndices/list" class="action-item" *kaHasRoles="['view-deals']">F/X Indices</a>
+        <a routerLink="/fxCurves/list" class="action-item" *kaHasRoles="['view-deals']">F/X Curves</a>
+        <a routerLink="/interestIndices/list" class="action-item" *kaHasRoles="['view-deals']">Interest Rate Indices</a>
+        <a routerLink="/interestCurves/list" class="action-item" *kaHasRoles="['view-deals']">Interest Rate Curves</a>
+      }
     }
   </div>
 </nav>

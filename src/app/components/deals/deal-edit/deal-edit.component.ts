@@ -2,8 +2,10 @@ import {Component, DestroyRef, inject, input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {DealSnapshot} from '../model/deal.model';
-import {DealService} from '../services/deal.service';
+import {DealService} from '../../../services/deal.service';
 import {TransactionResult} from '../../../models/transactionresult.model';
+import {BusinessContactSnapshot} from '../../businesscontacts/model/business-contact.model';
+import {SearchColumnModel} from '../../../models/search-column.model';
 @Component({
   selector: 'app-deal-edit',
   imports: [ReactiveFormsModule],
@@ -17,6 +19,16 @@ export class DealEditComponent implements OnInit {
 
   showCompanySearch: boolean = false;
   showCounterpartySearch: boolean = false;
+
+  companyTraderContactModel : SearchColumnModel | undefined = undefined;
+  counterpartyTraderContactModel : SearchColumnModel | undefined = undefined;
+  administratorContactModel : SearchColumnModel | undefined = undefined;
+
+  showCompanyTraderSearch: boolean = false;
+  showCounterpartyTraderSearch: boolean = false;
+
+  showAdministratorSearch: boolean = false;
+
 
   transactionResult: TransactionResult | undefined = undefined;
   hasErrors = false;
@@ -53,11 +65,26 @@ export class DealEditComponent implements OnInit {
       ],
     }),
 
+    companyTrader: new FormControl<string | undefined>(undefined,{
+        validators: [
+        Validators.required,
+      ],
+    }),
+
     counterparty: new FormControl<string | undefined>(undefined, {
       validators: [
         Validators.required,
       ],
     }),
+
+    counterpartyTrader: new FormControl<string | undefined>(undefined, {
+
+    }),
+
+    administrator: new FormControl<string | undefined>(undefined, {
+
+    }),
+
 
     buySellCode: new FormControl<string | undefined>(undefined, {
       validators: [
@@ -117,15 +144,71 @@ export class DealEditComponent implements OnInit {
       dealIndex : new FormControl<string | undefined>(undefined, {
      }),
       marketIndex : new FormControl<string | undefined>(undefined, {
-        validators: [
-          Validators.required,
-        ],
       })
+    }),
+
+   financialSwapDealPricing: new FormGroup({
+
+      dealPrice : new FormControl<number | undefined>(undefined, {
+      }),
+
+      dealPriceCurrency : new FormControl<string | undefined>(undefined, {
+      }),
+      dealPriceUoM : new FormControl<string | undefined>(undefined, {
+
+      }),
+      receivesIndex : new FormControl<string | undefined>(undefined, {
+      }),
+      paysIndex : new FormControl<string | undefined>(undefined, {
+      })
+    }),
+
+
+    vanillaOptionPricing: new FormGroup({
+
+
+      tradeTypeCode : new FormControl<string | undefined>(undefined, {
+      }),
+
+      optionTypeCode : new FormControl<string | undefined>(undefined, {
+      }),
+
+      optionStyleCode : new FormControl<string | undefined>(undefined, {
+      }),
+
+
+      optionExpiryDateRule : new FormControl<string | undefined>(undefined, {
+      }),
+
+
+      premiumPrice : new FormControl<number | undefined>(undefined, {
+      }),
+
+      premiumPriceCurrency : new FormControl<string | undefined>(undefined, {
+      }),
+      premiumPriceUoM : new FormControl<string | undefined>(undefined, {
+      }),
+
+      strikePrice : new FormControl<number | undefined>(undefined, {
+      }),
+
+      strikePriceCurrency : new FormControl<string | undefined>(undefined, {
+      }),
+      strikePriceUoM : new FormControl<string | undefined>(undefined, {
+      }),
+
+      underlyingIndex : new FormControl<string | undefined>(undefined, {
+      }),
     })
 
-});
+
+
+  });
 
   ngOnInit(): void {
+    this.myForm.controls.companyTrader.disable();
+    this.myForm.controls.counterpartyTrader.disable();
+    this.myForm.controls.administrator.disable();
     if (this.dealId()) {
       let subscription = this.dealService.findDealById(this.dealId()!).subscribe({
         next: (data) => {
@@ -138,6 +221,7 @@ export class DealEditComponent implements OnInit {
       this.destroyRef.onDestroy( () => subscription.unsubscribe());
     } else {
       this.dealSnapshot = this.createNewDealSnapshot();
+      this.populateForm();
     }
   }
 
@@ -152,7 +236,21 @@ export class DealEditComponent implements OnInit {
         id: undefined,
         code: undefined
       },
+      companyTraderId: {
+        id: undefined,
+        code: undefined,
+        description : undefined
+      },
       counterpartyRoleId: {
+        id: undefined,
+        code: undefined
+      },
+      counterpartyTraderId: {
+        id: undefined,
+        code: undefined,
+        description : undefined
+      },
+      administratorId: {
         id: undefined,
         code: undefined
       },
@@ -177,12 +275,48 @@ export class DealEditComponent implements OnInit {
   }
 
   populateForm() {
+    this.myForm.reset();
+
     if (this.dealSnapshot) {
       this.myForm.controls.ticketNo.setValue(this.dealSnapshot!.dealDetail!.ticketNo);
       this.myForm!.controls.commodity.setValue(this.dealSnapshot.dealDetail?.commodityCodeValue);
       this.myForm?.controls.dealStatus.setValue(this.dealSnapshot.dealDetail?.dealStatusCodeValue);
-      this.myForm?.controls.company.setValue(this.dealSnapshot.companyRoleId?.code);
-      this.myForm?.controls.counterparty.setValue(this.dealSnapshot.counterpartyRoleId?.code);
+
+      if (this.dealSnapshot.companyRoleId) {
+        this.myForm?.controls.company.setValue(this.dealSnapshot.companyRoleId?.code);
+      }
+
+      if (this.dealSnapshot.companyTraderId) {
+        this.myForm?.controls.companyTrader.setValue(this.dealSnapshot.companyTraderId?.description);
+        this.companyTraderContactModel = {
+          label: this.dealSnapshot.companyTraderId!.description!,
+          columnName: this.dealSnapshot.companyTraderId!.code!,
+          columnType: "TEXT"
+        };
+      } else {
+        this.companyTraderContactModel = undefined;
+      }
+
+      if (this.dealSnapshot.companyRoleId)
+        this.myForm?.controls.counterparty.setValue(this.dealSnapshot.counterpartyRoleId?.code);
+
+      if (this.dealSnapshot.counterpartyTraderId) {
+        this.myForm?.controls.counterpartyTrader.setValue(this.dealSnapshot.counterpartyTraderId?.description);
+        this.counterpartyTraderContactModel = {
+          label: this.dealSnapshot.counterpartyTraderId!.description!,
+          columnName: this.dealSnapshot.counterpartyTraderId!.code!,
+          columnType: "TEXT"
+        };
+      }
+      if (this.dealSnapshot.administratorId) {
+        this.myForm?.controls.administrator.setValue(this.dealSnapshot.administratorId?.code);
+        this.administratorContactModel = {
+          label: this.dealSnapshot.administratorId!.description!,
+          columnName: this.dealSnapshot.administratorId!.code!,
+          columnType: "TEXT"
+        };
+      }
+
       this.myForm?.controls.buySellCode.setValue(this.dealSnapshot.dealDetail?.buySellCodeValue);
       this.myForm?.controls.startDate.setValue(this.dealSnapshot.dealDetail?.startDate);
       this.myForm?.controls.endDate.setValue(this.dealSnapshot.dealDetail?.endDate);
@@ -206,6 +340,20 @@ export class DealEditComponent implements OnInit {
   }
 
 
+  searchForCompanyTrader() {
+    this.showCompanyTraderSearch = true;
+  }
+
+  searchForCounterpartyTrader() {
+    this.showCounterpartyTraderSearch = true;
+  }
+
+
+  searchForAdministrator() {
+    this.showAdministratorSearch = true;
+  }
+
+
   onCancelCompanySearch() {
     this.showCompanySearch = false;
   }
@@ -213,6 +361,20 @@ export class DealEditComponent implements OnInit {
   onCancelCounterpartySearch() {
     this.showCounterpartySearch = false;
   }
+
+
+  onCancelCompanyTraderSearch() {
+    this.showCompanyTraderSearch = false;
+  }
+
+  onCancelCounterpartyTraderSearch() {
+    this.showCounterpartyTraderSearch = false;
+  }
+
+  onCancelAdministratorSearch() {
+    this.showAdministratorSearch = false;
+  }
+
 
 
   updateCompany(name: string) {
@@ -227,16 +389,34 @@ export class DealEditComponent implements OnInit {
     this.showCounterpartySearch = false;
   }
 
-  onReset() {
-    this.myForm.reset();
-    this.router.navigate(["deals", "list"]);
+  updateCompanyTrader(model: SearchColumnModel) {
+    this.companyTraderContactModel = model;
+    this.myForm.controls.companyTrader.setValue(model.label);
+    this.myForm.controls.companyTrader.markAsDirty();
+    this.showCompanyTraderSearch = false;
+  }
 
+  updateCounterpartyTrader(model: SearchColumnModel) {
+    this.counterpartyTraderContactModel = model;
+    this.myForm.controls.counterpartyTrader.setValue(model.label);
+    this.myForm.controls.counterpartyTrader.markAsDirty();
+    this.showCounterpartyTraderSearch = false;
+  }
+
+  updateAdministrator(model: SearchColumnModel) {
+    this.administratorContactModel = model;
+    this.myForm.controls.administrator.setValue(model.label);
+    this.myForm.controls.administrator.markAsDirty();
+    this.showAdministratorSearch = false;
+  }
+
+  onReset() {
+    this.populateForm()
   }
 
 
-  onOkay() {
-    this.hasErrors = false;
-    this.formErrors = [];
+  onCancel() {
+    this.router.navigate(["deals", "list"]);
   }
 
 
@@ -255,6 +435,9 @@ export class DealEditComponent implements OnInit {
       }
       if (this.myForm.controls.company.invalid) {
         this.formErrors.push("Missing Company");
+      }
+      if (this.myForm.controls.companyTrader.invalid) {
+        this.formErrors.push("Missing Company Trader");
       }
       if (this.myForm.controls.counterparty.invalid) {
         this.formErrors.push("Missing Counterparty");
@@ -320,13 +503,51 @@ export class DealEditComponent implements OnInit {
       }
       wasModified = true;
     }
-    if (this.myForm.controls.counterparty.dirty && this.myForm.controls.counterparty.value != null) {
-      this.dealSnapshot!.counterpartyRoleId = {
+    if (this.myForm.controls.companyTrader.dirty && this.myForm.controls.companyTrader.value != null) {
+      this.dealSnapshot!.companyTraderId = {
         id: undefined,
-        code: this.myForm.controls.counterparty.value
+        code: this.companyTraderContactModel?.columnName
       }
       wasModified = true;
     }
+    if (this.myForm.controls.counterparty.dirty) {
+      if (this.myForm.controls.counterparty) {
+        this.dealSnapshot!.counterpartyRoleId = {
+          id: undefined,
+          code: this.myForm.controls.counterparty.value
+        }
+        wasModified = true;
+      }
+    }
+    if (this.myForm.controls.counterpartyTrader.dirty) {
+      if (this.myForm.controls.counterpartyTrader.value) {
+        this.dealSnapshot!.counterpartyTraderId = {
+          id: undefined,
+          code: this.myForm.controls.counterpartyTrader.value
+        }
+      } else {
+        this.dealSnapshot!.counterpartyTraderId = {
+          id: undefined,
+          code: undefined
+        }
+      }
+      wasModified = true;
+    }
+    if (this.myForm.controls.administrator.dirty)  {
+      if (this.myForm.controls.administrator.value) {
+        this.dealSnapshot!.administratorId = {
+          id: undefined,
+          code: this.myForm.controls.administrator.value
+        }
+      } else {
+        this.dealSnapshot!.administratorId = {
+          id: undefined,
+          code: undefined
+        }
+      }
+        wasModified = true;
+    }
+
     if (this.myForm.controls.startDate.dirty && this.myForm.controls.startDate.value != null) {
       this.dealSnapshot!.dealDetail!.startDate = this.myForm.controls.startDate.value;
       wasModified = true;

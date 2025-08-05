@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import {Component, effect, inject, signal} from '@angular/core';
 import { RouterModule } from '@angular/router';
 import Keycloak from 'keycloak-js';
 import {
@@ -20,6 +20,8 @@ export class MenuComponent {
   keycloakStatus: string | undefined;
   private readonly keycloak = inject(Keycloak);
   private readonly keycloakSignal = inject(KEYCLOAK_EVENT_SIGNAL);
+
+  domainModelName = signal<string>('None');
 
   constructor() {
     effect(() => {
@@ -43,5 +45,9 @@ export class MenuComponent {
 
   logout() {
     this.keycloak.logout();
+  }
+
+  onUpdateDomainModel(name: string) {
+    this.domainModelName.set(name);
   }
 }

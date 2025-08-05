@@ -1,0 +1,79 @@
+<article>
+  <h2> Financial Swap Deals</h2>
+  @if (!dealSearchService.dealSnapshotCollection()) {
+    <p class="no-deals">No deals found.</p>
+  } @else {
+    <table>
+      <thead>
+      <th>Ticket No</th>
+      <th>Deal Type</th>
+      <th>Swap Type</th>
+      <th>Buy/Sell</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Deal Status</th>
+      <th>Commodity</th>
+      <th>Company</th>
+      <th>Counterparty</th>
+      <th>Reporting Currency</th>
+      <th>Settlement Currency</th>
+      <th>Volume</th>
+      <th>Plus</th>
+      <th>Pays Index</th>
+      <th>Receives Index</th>
+      <th>Overrides</th>
+      </thead>
+      <div>
+        @if (dealSearchService.showPrev()) {
+          <button type="button" id="toprev" (click)="dealSearchService.prev()">Prev</button>
+        }
+        @if (dealSearchService.showNext()) {
+          <button type="button" id="topnext" (click)="dealSearchService.next()">Next</button>
+        }
+      </div>
+
+      <tbody >
+        @if (swapDeals()) {
+          @for (deal of swapDeals()!; track deal.entityId!.id) {
+            <tr (click)="onEdit(deal!.entityId!.id!, deal!.dealTypeValue!)">
+              <td> {{deal.dealDetail!.ticketNo}}</td>
+              <td>{{ deal.dealTypeValue }}</td>
+              <td>{{ deal.detail.paysValuationCodeValue }} for {{deal.detail.receivesValuationCodeValue}}</td>
+              <td> {{ deal.dealDetail!.buySellCodeValue }} </td>
+              <td>{{ deal.dealDetail!.startDate }}</td>
+              <td>{{ deal.dealDetail!.endDate }}</td>
+              <td> {{ deal.dealDetail!.dealStatusCodeValue }} </td>
+              <td> {{ deal.dealDetail!.commodityCodeValue }} </td>
+              <td>{{ deal.companyRoleId!.code }}</td>
+              <td>{{ deal.counterpartyRoleId!.code }}</td>
+              <td> {{ deal.dealDetail!.reportingCurrencyCodeValue }} </td>
+              <td> {{ deal.dealDetail!.settlementCurrencyCodeValue }} </td>
+              @if (deal.dealDetail?.volumeQuantity) {
+                <td> {{ deal.dealDetail!.volumeQuantity }} {{deal.dealDetail?.volumeUnitOfMeasureCodeValue}} / {{deal.dealDetail?.volumeFrequencyCodeValue}} </td>
+              } @else {
+                <td></td>
+              }
+              @if (deal.dealDetail?.fixedPriceValue) {
+                <td> {{ deal.dealDetail!.fixedPriceValue }} {{deal.dealDetail?.fixedPriceCurrencyCodeValue}} / {{deal.dealDetail?.fixedPriceUnitOfMeasureCodeValue}} </td>
+              } @else {
+                <td></td>
+              }
+              <td> {{ deal.paysPriceIndexId?.code }} </td>
+              <td> {{ deal.receivesPriceIndexId?.code }} </td>
+              <td><a routerLink="../{{deal.entityId!.id}}/overrides/list"  > Overrides </a> </td>
+            </tr>
+          }
+        }
+      </tbody>
+      <div>
+        @if (dealSearchService.showPrev()) {
+          <button type="button" id="toprev" (click)="dealSearchService.prev()">Prev</button>
+        }
+        @if (dealSearchService.showNext()) {
+          <button type="button" id="topnext" (click)="dealSearchService.next()">Next</button>
+        }
+      </div>
+
+    </table>
+  }
+</article>

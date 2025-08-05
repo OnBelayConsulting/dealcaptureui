@@ -1,15 +1,17 @@
-import {AbstractSnapshot} from '../../../models/abstract-snapshot';
+import {AbstractSnapshot, EntityId} from '../../../models/abstract-snapshot';
 
 export interface DealSnapshot extends AbstractSnapshot{
   dealTypeValue?: string;
-  companyRoleId? : {
-    id?: number;
-    code?: string;
-  }
-  counterpartyRoleId? : {
-    id?: number;
-    code?: string;
-  }
+  companyRoleId? : EntityId,
+  companyTraderId? : EntityId,
+
+  powerProfileId? : EntityId,
+
+  counterpartyRoleId? : EntityId,
+  counterpartyTraderId? : EntityId,
+
+  administratorId? : EntityId,
+
   dealDetail?: {
     commodityCodeValue?: string;
     dealStatusCodeValue?: string;
@@ -33,20 +35,59 @@ export interface DealSnapshot extends AbstractSnapshot{
 }
 
 export interface PhysicalDealSnapshot extends DealSnapshot {
-  marketPriceIndexId? : {
-    id?: number;
-    code?: string;
-  }
-  dealPriceIndexId? : {
-    id?: number;
-    code?: string;
-  }
+  marketPriceIndexId? : EntityId,
+
+  dealPriceIndexId? : EntityId,
 
   physicalDealDetail? : {
     dealPriceValuationCodeValue: string;
     marketValuationCodeValue: string;
   }
+}
+
+export interface FinancialSwapDealSnapshot extends  DealSnapshot {
+
+  paysPriceIndexId : EntityId,
+  receivesPriceIndexId : EntityId,
+
+  detail : {
+    paysValuationCodeValue : 'Fixed' | 'Index' | 'IndexPlus' | 'PowerProfile' | null | undefined;
+    receivesValuationCodeValue : 'Index'| 'PowerProfile'| null | undefined;
+  }
+
+}
+
+export interface OptionDealDetail {
+  optionExpiryDateRuleValue : 'pstart' | 'pend',
+  tradeTypeCodeValue : 'OTC' | 'Exchange',
+  optionTypeCodeValue : 'Call' | 'Put',
+  optionStyleCodeValue : 'European' | 'American',
+
+  strikePriceValue : number | null,
+  strikePriceCurrencyCodeValue : string | null,
+  strikePriceUnitOfMeasureCodeValue : string | null,
 
 
+  premiumPriceValue : number | null,
+  premiumPriceCurrencyCodeValue : string | null,
+  premiumPriceUnitOfMeasureCodeValue : string | null,
+
+
+}
+
+export interface VanillaOptionDealSnapshot extends DealSnapshot {
+  underlyingPriceIndexId : EntityId,
+  detail : OptionDealDetail
+
+}
+
+export interface MarkToMarketJobRequest {
+  dealQueryText:  string | undefined,
+  powerProfileQueryText:  string | undefined,
+  priceIndexQueryText:  string | undefined,
+  currencyCodeValue :  string | undefined,
+  createdDateTime:  string | undefined,
+  fromDate :  string | undefined,
+  toDate :  string | undefined,
 }
 

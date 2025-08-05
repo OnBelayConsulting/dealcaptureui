@@ -1,0 +1,56 @@
+<article>
+  <h2>Interest Rate Indices</h2>
+  <div class="actions">
+    <i class="action-item">{{interestIndexSearchService.searchCriteria()}}  </i>
+    <button class="action-item" (click)="startSearch()" type="button"><u><b>Search</b></u></button>
+    <button class="action-item" (click)="onToggleShowSearch()" type="button"><u><b>{{showSearchLabel()}}</b></u></button>
+    <a routerLink="/interestIndices/edit" class="action-item" *kaHasRoles="['view-deals']">New</a>
+  </div>
+
+  @if (showSearchFields()) {
+    <app-interest-index-search (close) = "onClose()"/>
+  }
+
+
+
+  @if (!interestIndexSnapshotCollection) {
+    <p class="no-snapshots">No price indices found.</p>
+  } @else {
+    <table>
+      <thead>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Frequency</th>
+      <th>Is Risk Free</th>
+      </thead>
+      <div>
+        @if (showPrev) {
+          <button type="button" id="toprev" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+          <button type="button" id="topnext" (click)="onNext()">Next</button>
+        }
+      </div>
+      <tbody >
+        @for (interestIndexSnapshot of interestIndexSnapshotCollection!.snapshots; track interestIndexSnapshot.entityId!.id) {
+          @let entityId = interestIndexSnapshot.entityId!.id!;
+          <tr (click)="onSelected(entityId)">
+            <td><a [routerLink]="'../edit'" [queryParams]="{interestIndexId: entityId}" > {{ interestIndexSnapshot!.detail!.name }} </a> </td>
+            <td>{{ interestIndexSnapshot!.detail!.description }}</td>
+            <td>{{ interestIndexSnapshot!.detail!.frequencyCodeValue }}</td>
+            <td>{{ interestIndexSnapshot!.detail!.isRiskFreeRate }}</td>
+          </tr>
+        }
+      </tbody>
+      <div>
+        @if (showPrev) {
+          <button type="button" id="bottomnext" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+          <button type="button" id="bottomprev" (click)="onNext()">Next</button>
+        }
+      </div>
+    </table>
+  }
+</article>
+

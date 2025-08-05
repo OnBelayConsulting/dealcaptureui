@@ -1,0 +1,11 @@
+<div>
+  <h3>Upload curves in CSV format: INDEX_NAME,FREQUENCY_CODE,CURVE_DATE,HOUR_ENDING,OBSERVED_DATE_TIME,CURVE_VALUE</h3>
+  <input type="file"  (change)="onFileSelected($event)" >
+  <button (click)="onClose()">close</button>
+  <p>
+  @if(transactionResult) {
+    Transaction Result: {{transactionResult.errorCode}} {{transactionResult.errorMessage}}
+  }
+  <p>
+
+</div>

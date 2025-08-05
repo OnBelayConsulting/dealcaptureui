@@ -17,7 +17,7 @@ export const provideKeycloakAngular = () =>
     config: {
       realm: 'master',
       url: 'http://localhost:8383',
-      clientId: 'angular'
+      clientId: 'dealcaptureui'
     },
     initOptions: {
       onLoad: 'check-sso',
@@ -27,7 +27,7 @@ export const provideKeycloakAngular = () =>
     features: [
       withAutoRefreshToken({
         onInactivityTimeout: 'logout',
-        sessionTimeout: 60000
+        sessionTimeout: 6000000
       })
     ],
     providers: [
