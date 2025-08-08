@@ -38,14 +38,25 @@ header h1 {
 }
 
 form {
-  width: 90%;
-  max-width: 40rem;
+  width: auto;
+  //max-width: 40rem;
   margin: 3rem auto;
   padding: 2rem;
   background: #a1bed5;
   border-radius: 8px;
   box-shadow: 0 0 16px 1px rgba(0, 0, 0, 0.5);
 }
+
+table {
+  display: table;
+  padding: 1rem;
+  table-layout: auto;
+  border-style: none;
+  background-color: #a1bed5;
+  border-spacing: 1rem;
+  text-align: right;
+}
+
 
 .control,
 fieldset {

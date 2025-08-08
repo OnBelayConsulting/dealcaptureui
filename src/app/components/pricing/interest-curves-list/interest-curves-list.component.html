@@ -26,7 +26,6 @@
       <th>Index Name</th>
       <th>Frequency</th>
       <th>Curve Date</th>
-      <th>Hour Ending</th>
       <th>Observed Date/Time</th>
       <th>Rate</th>
       </thead>
@@ -46,7 +45,6 @@
             <td>{{ interestCurveSnapshot!.indexId!.code}}</td>
             <td>{{ interestCurveSnapshot!.detail!.frequencyCodeValue }}</td>
             <td>{{ interestCurveSnapshot!.detail!.curveDate | date : 'mediumDate' }}</td>
-            <td>{{ interestCurveSnapshot!.detail!.hourEnding }}</td>
             <td>{{ interestCurveSnapshot!.detail!.observedDateTime | date : 'medium' }}</td>
             <td>{{ interestCurveSnapshot!.detail?.curveValue | number : '1.2-2'  }}</td>
           </tr>

@@ -18,6 +18,20 @@ export interface DealOverrideMonthSnapshot extends AbstractSnapshot {
   overrideDays : DealOverrideDaySnapshot[]
 }
 
+export interface DealOverrideHourSnapshot {
+  dayDate : string | null,
+  hourEnding : number | null,
+  values :overrideValue[]
+}
+
+
+export interface DealOverrideHoursForDaySnapshot extends AbstractSnapshot {
+  headings?: string[];
+  costHeadings?: string[];
+  dayDate : string,
+  overrideHours : DealOverrideHourSnapshot[]
+}
+
 
 export interface DealOverrideSnapshotCollection extends AbstractSnapshotCollection<DealOverrideDaySnapshot>{
     startDate?: string;

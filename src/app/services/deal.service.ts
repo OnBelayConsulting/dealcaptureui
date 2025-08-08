@@ -8,6 +8,7 @@ import {ErrorService} from '../components/shared/service/error.service';
 import {TransactionResult} from '../models/transactionresult.model';
 import {DealCostSnapshot, DealCostSnapshotCollection} from '../components/deals/model/deal-cost.model';
 import {
+  DealOverrideHoursForDaySnapshot,
   DealOverrideMonthSnapshot,
   DealOverrideSnapshotCollection
 } from '../components/deals/model/deal-overrides.model';
@@ -35,6 +36,18 @@ export class DealService {
 
   saveDealOverridesByMonth(dealOverride: DealOverrideMonthSnapshot): Observable<TransactionResult> {
     return this.http.post<TransactionResult>(this.apiUrl + '/' + dealOverride.entityId!.id + '/overrides' , dealOverride)
+      .pipe(
+        catchError( (error: HttpErrorResponse) => {
+          console.log(error);
+          this.errorService.showError("Saving Deal Overrides Failed on", error.error.errorCode, error.message);
+          return throwError( () => new Error("Network error occurred."))
+        })
+      );
+  }
+
+
+  saveHourlyDealOverrides(dealOverride: DealOverrideHoursForDaySnapshot): Observable<TransactionResult> {
+    return this.http.post<TransactionResult>(this.apiUrl + '/' + dealOverride.entityId!.id + '/hourlyoverrides' , dealOverride)
       .pipe(
         catchError( (error: HttpErrorResponse) => {
           console.log(error);
@@ -133,6 +146,18 @@ export class DealService {
         })
       );
   }
+
+  getHourlyDealOverrides(dealId: number, dayDate : string): Observable<DealOverrideHoursForDaySnapshot> {
+    return this.http.get<DealOverrideHoursForDaySnapshot>(this.apiUrl + '/' + dealId + '/hourlyoverrides/' + dayDate)
+      .pipe(
+        catchError( (error) => {
+          console.log(error);
+          this.errorService.showError("finding Deal overrides Failed on", error.error.errorCode, error.message);
+          return throwError( () => new Error("Network error occurred."))
+        })
+      );
+  }
+
 
 
   findDealCostById(entityId: number): Observable<DealCostSnapshot> {

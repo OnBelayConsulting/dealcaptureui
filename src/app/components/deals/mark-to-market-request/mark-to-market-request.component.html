@@ -10,6 +10,10 @@
         type="text"
         [(ngModel)]="modifiedSnapshot!.powerProfileQueryText"
       />
+      <button type="button" (click)="onShowPowerProfileSearch()"> Build Query</button>
+      @if (showPowerProfileSearchFields()) {
+        <app-power-profile-search (close) = "onClosePowerProfileSearch()"/>
+      }
     </div>
 
     <div class="control">
@@ -20,6 +24,10 @@
         type="text"
         [(ngModel)]="modifiedSnapshot!.priceIndexQueryText"
       />
+      <button type="button" (click)="onShowPriceIndexSearch()"> Build Query</button>
+      @if (showPriceIndexSearchFields()) {
+        <app-power-profile-search (close) = "onClosePriceIndexSearch()"/>
+      }
     </div>
   </div>
 
@@ -32,9 +40,9 @@
         type="text"
         [(ngModel)]="modifiedSnapshot!.dealQueryText"
       />
-      <button type="button" (click)="onShowSearch()"> Build Query</button>
-      @if (showSearchFields()) {
-        <app-deal-search (close) = "onClose()"/>
+      <button type="button" (click)="onShowDealSearch()"> Build Query</button>
+      @if (showDealSearchFields()) {
+        <app-deal-search (close) = "onCloseDealSearch()"/>
       }
     </div>
 

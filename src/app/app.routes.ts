@@ -50,6 +50,9 @@ import {InterestCurveEditComponent} from './components/pricing/interest-curve-ed
 import {DealOverridesListComponent} from './components/deals/deal-overrides-list/deal-overrides-list.component';
 import {DealOverridesEditComponent} from './components/deals/deal-overrides-edit/deal-overrides-edit.component';
 import {VanillaOptionEditComponent} from './components/deals/vanilla-option-edit/vanilla-option-edit.component';
+import {
+  DealHourlyOverridesEditComponent
+} from './components/deals/deal-hourly-overrides-edit/deal-hourly-overrides-edit.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -98,6 +101,12 @@ export const routes: Routes = [
   {
     path: 'deals/:dealId/overrides/edit',
     component: DealOverridesEditComponent,
+    canActivate: [canActivateAuthRole],
+    data: { role: 'view-deals' }
+  },
+  {
+    path: 'deals/:dealId/hourlyoverrides/edit',
+    component: DealHourlyOverridesEditComponent,
     canActivate: [canActivateAuthRole],
     data: { role: 'view-deals' }
   },

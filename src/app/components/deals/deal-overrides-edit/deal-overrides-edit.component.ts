@@ -588,7 +588,7 @@ export class DealOverridesEditComponent {
   }
 
   onCancel() {
-
+    this.onReset();
   }
 
 }

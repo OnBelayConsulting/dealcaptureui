@@ -7,14 +7,18 @@ import {DealSearchService} from '../services/deal-search.service';
 import {TransactionResult} from '../../../models/transactionresult.model';
 import {MarkToMarketJobRequest} from '../model/deal.model';
 import {DealService} from '../../../services/deal.service';
+import {PowerProfileSearchComponent} from '../../powerprofile/power-profile-search/power-profile-search.component';
+import {PowerProfileSearchService} from '../../powerprofile/service/power-profile-search.service';
+import {PriceIndexSearchService} from '../../pricing/services/price-index-search.service';
 
 @Component({
   selector: 'app-mark-to-market-request',
-    imports: [
-        DealSearchComponent,
-        FormsModule,
-        ReactiveFormsModule
-    ],
+  imports: [
+    DealSearchComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    PowerProfileSearchComponent
+  ],
   templateUrl: './mark-to-market-request.component.html',
   styleUrl: './mark-to-market-request.component.scss'
 })
@@ -23,8 +27,12 @@ export class MarkToMarketRequestComponent {
   dealService = inject(DealService);
   destroyRef = inject(DestroyRef);
   dealSearchService = inject(DealSearchService);
+  powerProfileSearchService = inject(PowerProfileSearchService);
+  priceIndexSearchService = inject(PriceIndexSearchService);
 
-  showSearchFields = signal<boolean>(false);
+  showDealSearchFields = signal<boolean>(false);
+  showPowerProfileSearchFields = signal<boolean>(false);
+  showPriceIndexSearchFields = signal<boolean>(false);
 
   hasErrors = false;
 
@@ -91,12 +99,31 @@ export class MarkToMarketRequestComponent {
     this.destroyRef.onDestroy( () => subscription.unsubscribe());
   }
 
-  onClose() {
+  onCloseDealSearch() {
     this.modifiedSnapshot!.dealQueryText = this.dealSearchService.searchCriteria();
+    this.showDealSearchFields.set(false);
   }
 
-  onShowSearch() {
-    this.showSearchFields.set(true);
+  onShowDealSearch() {
+    this.showDealSearchFields.set(true);
+  }
+
+  onClosePowerProfileSearch() {
+    this.modifiedSnapshot!.powerProfileQueryText = this.powerProfileSearchService.searchCriteria();
+    this.showPowerProfileSearchFields.set(false);
+  }
+
+  onShowPowerProfileSearch() {
+    this.showPowerProfileSearchFields.set(true);
+  }
+
+  onClosePriceIndexSearch() {
+    this.modifiedSnapshot!.priceIndexQueryText = this.priceIndexSearchService.searchCriteria();
+    this.showPriceIndexSearchFields.set(false);
+  }
+
+  onShowPriceIndexSearch() {
+    this.showPriceIndexSearchFields.set(true);
   }
 
 

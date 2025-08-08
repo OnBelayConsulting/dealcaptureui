@@ -1,10 +1,5 @@
 <article>
-  <h2>Deal Overrides for {{dealId()}}</h2>
-
-
-  <div class="actions">
-    <a routerLink="/deals/{{dealId()}}/overrides/edit" class="action-item" *kaHasRoles="['view-deals']">Edit Overrides</a>
-  </div>
+  <h2>Deal Overrides for Deal # {{dealSnapshot?.dealDetail?.ticketNo}}</h2>
 
   @if (!dealOverrideSnapshotCollection) {
     <p class="no-deals">No deal overrides found.</p>
@@ -31,9 +26,10 @@
             <tr>
               <td> {{dayOverride.overrideDate | date : 'mediumDate'}}</td>
               @for (value of dayOverride.values; track $index) {
-              <td>{{ value | number : '1.2-2' }}</td>
+                <td>{{ value | number : '1.2-2' }}</td>
               }
-              <td> <a routerLink="/deals/{{dealId()}}/overrides/edit" [queryParams]="{monthDate: dayOverride.overrideDate}" class="action-item" *kaHasRoles="['view-deals']">Edit Month</a></td>
+              <td> <a routerLink="/deals/{{dealId()}}/overrides/edit" [queryParams]="{monthDate: dayOverride.overrideDate}" class="action-item" *kaHasRoles="['view-deals']">Edit Days in Month</a></td>
+              <td> <a routerLink="/deals/{{dealId()}}/hourlyoverrides/edit" [queryParams]="{dayDate: dayOverride.overrideDate}" class="action-item" *kaHasRoles="['view-deals']">Edit Hours in Day</a></td>
             </tr>
           }
         }
@@ -46,7 +42,8 @@
           <button type="button" id="bottomprev" (click)="onNext()">Next</button>
         }
       </div>
-
     </table>
+    <button type="button" id="bottomprev" (click)="onClose()">Close</button>
+
   }
 </article>

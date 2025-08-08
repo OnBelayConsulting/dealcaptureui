@@ -18,7 +18,7 @@
 
 
   @if (!fxCurveCollection) {
-    <p class="no-snapshots">No price curves found.</p>
+    <p class="no-snapshots">No curves found.</p>
   } @else {
     <table>
       <thead>
@@ -26,7 +26,6 @@
       <th>Index Name</th>
       <th>Frequency</th>
       <th>Curve Date</th>
-      <th>Hour Ending</th>
       <th>Observed Date/Time</th>
       <th>Rate</th>
       </thead>
@@ -39,16 +38,15 @@
         }
       </div>
       <tbody >
-        @for (priceCurveSnapshot of fxCurveCollection!.snapshots; track priceCurveSnapshot.entityId!.id) {
-          @let entityId = priceCurveSnapshot.entityId!.id!;
+        @for (curveSnapshot of fxCurveCollection!.snapshots; track curveSnapshot.entityId!.id) {
+          @let entityId = curveSnapshot.entityId!.id!;
           <tr (click)="onSelected(entityId)">
-            <td><a [routerLink]="'../edit'" [queryParams]="{priceCurveId: entityId}" > {{ priceCurveSnapshot!.entityId?.id }} </a> </td>
-            <td>{{ priceCurveSnapshot!.indexId!.code}}</td>
-            <td>{{ priceCurveSnapshot!.detail!.frequencyCodeValue }}</td>
-            <td>{{ priceCurveSnapshot!.detail!.curveDate | date : 'mediumDate' }}</td>
-            <td>{{ priceCurveSnapshot!.detail!.hourEnding }}</td>
-            <td>{{ priceCurveSnapshot!.detail!.observedDateTime | date : 'medium' }}</td>
-            <td>{{ priceCurveSnapshot!.detail?.curveValue | number : '1.2-2'  }}</td>
+            <td><a [routerLink]="'../edit'" [queryParams]="{priceCurveId: entityId}" > {{ curveSnapshot!.entityId?.id }} </a> </td>
+            <td>{{ curveSnapshot!.indexId!.code}}</td>
+            <td>{{ curveSnapshot!.detail!.frequencyCodeValue }}</td>
+            <td>{{ curveSnapshot!.detail!.curveDate | date : 'mediumDate' }}</td>
+            <td>{{ curveSnapshot!.detail!.observedDateTime | date : 'medium' }}</td>
+            <td>{{ curveSnapshot!.detail?.curveValue | number : '1.2-2'  }}</td>
           </tr>
         }
       </tbody>

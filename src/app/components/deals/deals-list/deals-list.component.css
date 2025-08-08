@@ -3,6 +3,10 @@
   font-weight: bold;
 }
 
+.title {
+  font-size: 2rem;
+}
+
 .actions {
   display: flow;
   justify-content: left;

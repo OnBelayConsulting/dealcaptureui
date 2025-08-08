@@ -1,6 +1,9 @@
   <article>
-    <h2>Deals</h2>
-
+    <div>
+      <a routerLink="/deals/PhysicalDeal/edit" class="action-item" *kaHasRoles="['view-deals']">New Physical Deal</a>
+      <a routerLink="/deals/FinancialSwap/edit" class="action-item" *kaHasRoles="['view-deals']">New Financial Swap</a>
+      <a routerLink="/deals/VanillaOption/edit" class="action-item" *kaHasRoles="['view-deals']">New Vanilla Option</a>
+    </div>
 
     <div class="actions">
       <i class="action-item">{{dealSearchService.searchCriteria()}}  </i>
@@ -8,9 +11,6 @@
       <button class="action-item" (click)="onToggleShowSearch()" type="button"><u><b>{{showSearchLabel()}}</b></u></button>
       <button class="action-item" (click)="onFileUploadShow()" type="button"><u><b>Deal file upload</b></u></button>
       <button class="action-item" (click)="onOverrideFileUploadShow()" type="button"><u><b>Overrides file upload</b></u></button>
-      <a routerLink="/deals/PhysicalDeal/edit" class="action-item" *kaHasRoles="['view-deals']">New Physical Deal</a>
-      <a routerLink="/deals/FinancialSwap/edit" class="action-item" *kaHasRoles="['view-deals']">New Financial Swap</a>
-      <a routerLink="/deals/VanillaOption/edit" class="action-item" *kaHasRoles="['view-deals']">New Vanilla Option</a>
     </div>
     @if(showFileUpload()) {
       <app-deal-file-upload (close) = "onFileUploadClose()" />
@@ -31,6 +31,7 @@
       <button class="action-item" (click)="setToFinancialSwaps()" type="button"><u><b>Financial Swap View</b></u></button>
       <button class="action-item" (click)="setToVanillaOptions()" type="button"><u><b>Vanilla Option View</b></u></button>
     </div>
+    <hr>
 
     @switch (dealSearchService.searchDealTypeFilter()) {
       @case ('default') {

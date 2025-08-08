@@ -1,32 +1,35 @@
 <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-  <h2>Create/Update Deal Overrides for month {{dealOverridesMonthSnapshot?.monthDate}}</h2>
+  <h2>Create/Update Deal Overrides for day </h2>
 
+  @if (formReady()) {
   <fieldset>
-    <table formArrayName="days">
+    <table formArrayName="hours">
       <thead>
-      <th>Date</th>
-      <th>Price</th>
-      <th>Quantity</th>
+      <th>Hour Ending</th>
+      @for (heading of overrideSnapshot?.headings; track heading) {
+        <th>{{heading}}</th>
+      }
       </thead>
       <tbody >
-        @for (g of myForm.controls.days.controls; track $index; let idx = $index) {
+        @for (g of myForm.controls.hours.controls; track $index; let idx = $index) {
           <tr [formGroup]="g">
             <td>
-              <input type="text" id="{{idx}}date" name="{{idx}}date" [formControl]="myForm.controls.days.at(idx).controls.overrideDay"/>
+              <input type="text" id="{{idx}}date" name="{{idx}}date" [formControl]="myForm.controls.hours.at(idx).controls.hourEnding"/>
             </td>
+            @for (h of g.controls.overrideValues.controls; track $index; let hdx = $index) {
             <td>
-              <input type="number" id="{{idx}}price" name="{{idx}}price" [formControl]="myForm.controls.days.at(idx).controls.price"/>
+              <input type="number" id="{{idx}}-{{hdx}}cost" name="{{idx}}-{{hdx}}cost" [formControl]="myForm.controls.hours.at(idx).controls.overrideValues.at(hdx)"/>
             </td>
-            <td>
-              <input type="number" id="{{idx}}quantity" name="{{idx}}quantity" [formControl]="myForm.controls.days.at(idx).controls.quantity"/>
-            </td>
+            }
           </tr>
         }
       </tbody>
 
     </table>
   </fieldset>
-
+  } @else {
+    building form ...
+  }
   @if (hasErrors) {
     <h3>errors on form: </h3>
     @for ( msg of formErrors; track msg) {
@@ -55,5 +58,4 @@
   }
 
 </form>
-
 

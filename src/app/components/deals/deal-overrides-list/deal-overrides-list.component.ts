@@ -4,6 +4,7 @@ import {DealService} from '../../../services/deal.service';
 import {DealOverrideSnapshotCollection} from '../model/deal-overrides.model';
 import {DatePipe, DecimalPipe} from '@angular/common';
 import {HasRolesDirective} from 'keycloak-angular';
+import {DealSnapshot} from '../model/deal.model';
 
 @Component({
   selector: 'app-deal-overrides-list',
@@ -22,6 +23,7 @@ export class DealOverridesListComponent {
   dealId = input.required<number>();
 
   dealOverrideSnapshotCollection: DealOverrideSnapshotCollection | null = null;
+  dealSnapshot: DealSnapshot | null = null;
 
   showNext: boolean = false;
   showPrev: boolean = false;
@@ -29,6 +31,22 @@ export class DealOverridesListComponent {
   destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
+    this.loadDeal()
+  }
+
+  private loadDeal() {
+    let subscription = this.dealService.findDealById(this.dealId()!).subscribe({
+      next: (data) => {
+        this.dealSnapshot = data;
+        this.loadOverrides()
+      },
+      error: err => {console.error(err)}
+    });
+
+    this.destroyRef.onDestroy( () => subscription.unsubscribe());
+
+  }
+  private loadOverrides() {
     let subscription  =this.dealService.findDealOverrides(this.dealId(), 0, 31).subscribe({
       next: (data) => {
         this.dealOverrideSnapshotCollection = data;
@@ -39,7 +57,6 @@ export class DealOverridesListComponent {
     this.destroyRef.onDestroy( () => subscription.unsubscribe());
 
   }
-
 
   private setNextAndPrev() {
     if (this.dealOverrideSnapshotCollection) {
@@ -58,6 +75,9 @@ export class DealOverridesListComponent {
     }
   }
 
+  onClose() {
+    this.router.navigate(['deals', 'list']);
+  }
 
   onNext() {
     let currentPosition = this.dealOverrideSnapshotCollection!.start + this.dealOverrideSnapshotCollection!.count;
