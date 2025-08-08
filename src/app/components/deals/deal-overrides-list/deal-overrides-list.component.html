@@ -1,7 +1,7 @@
 <article>
   <h2>Deal Overrides for Deal # {{dealSnapshot?.dealDetail?.ticketNo}}</h2>
 
-  @if (!dealOverrideSnapshotCollection) {
+  @if (!formReady() || !dealOverrideSnapshotCollection) {
     <p class="no-deals">No deal overrides found.</p>
   } @else {
     <table>

@@ -30,7 +30,6 @@ export class FxCurvesListComponent {
   fxCurveCollection: FxCurveSnapshotCollection | undefined = undefined;
 
   showSearchFields = signal<boolean>(false);
-  showSearchLabel = signal("Change");
 
   showNext: boolean = false;
   showPrev: boolean = false;
@@ -121,15 +120,11 @@ export class FxCurvesListComponent {
 
   onClose() {
     this.showSearchFields.set(false);
-    this.showSearchLabel.set('Change');
+    this.startSearch();
   }
 
-  onToggleShowSearch() {
-    this.showSearchFields.update( (val) => !val);
-    if (!this.showSearchFields())
-      this.showSearchLabel.set("Change");
-    else
-      this.showSearchLabel.set("Hide");
+  onShowSearch() {
+    this.showSearchFields.set(true);
   }
 
   onFileUploadShow() {
@@ -141,5 +136,7 @@ export class FxCurvesListComponent {
   }
 
 
-
+  onSearchCancel() {
+    this.showSearchFields.set(false);
+  }
 }

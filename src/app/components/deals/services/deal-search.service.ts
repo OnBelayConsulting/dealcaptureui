@@ -33,12 +33,19 @@ export class DealSearchService extends AbstractSearchService{
     {label: 'Sell', code: 'SELL'},
   ]
 
+
+  commodityCodeItems: CodeItem[] = [
+    {label: 'NATGAS', code: 'NATGAS'},
+    {label: 'POWER', code: 'POWER'},
+    {label: 'CRUDE', code: 'CRUDE'},
+  ]
+
   constructor() {
 
   let mySearchColumns: SearchColumnModel[] = [
       { label: 'None', columnName: "none", columnType: "TEXT"},
       { label: 'Buy/Sell', columnName: "buySellCode", columnType: "CODE", codeEntityName: 'BuySellCode' },
-      { label: 'Commodity', columnName: "commodity", columnType: "TEXT" },
+      { label: 'Commodity', columnName: "commodity", columnType: "CODE", codeEntityName: 'CommodityCode' },
       { label: 'Deal Status', columnName: "dealStatus", columnType: "CODE", codeEntityName: 'DealStatusCode' },
       { label: 'Ticket No', columnName: "ticketNo", columnType: "TEXT" },
       { label: 'Start Date', columnName: "startDate", columnType: "TEXT" },
@@ -47,6 +54,7 @@ export class DealSearchService extends AbstractSearchService{
     super('ticketNo', mySearchColumns);
     this.codeManagerMap.set("DealStatusCode", this.dealStatusCodeItems);
     this.codeManagerMap.set("BuySellCode", this.buySellCodeItems);
+    this.codeManagerMap.set("CommodityCode", this.commodityCodeItems);
   }
 
 

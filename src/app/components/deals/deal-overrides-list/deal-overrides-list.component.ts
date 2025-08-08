@@ -22,6 +22,7 @@ export class DealOverridesListComponent {
   private router = inject(Router);
   dealId = input.required<number>();
 
+  formReady = signal<boolean>(false);
   dealOverrideSnapshotCollection: DealOverrideSnapshotCollection | null = null;
   dealSnapshot: DealSnapshot | null = null;
 
@@ -38,7 +39,8 @@ export class DealOverridesListComponent {
     let subscription = this.dealService.findDealById(this.dealId()!).subscribe({
       next: (data) => {
         this.dealSnapshot = data;
-        this.loadOverrides()
+        this.loadOverrides();
+        this.formReady.set(true);
       },
       error: err => {console.error(err)}
     });

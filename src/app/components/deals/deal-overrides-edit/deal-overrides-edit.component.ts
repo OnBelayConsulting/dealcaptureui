@@ -1,7 +1,7 @@
-import {Component, DestroyRef, inject, input} from '@angular/core';
+import {Component, DestroyRef, inject, input, signal} from '@angular/core';
 import {Router} from '@angular/router';
 import {DealService} from '../../../services/deal.service';
-import {DealOverrideMonthSnapshot} from '../model/deal-overrides.model';
+import {DealOverrideDaySnapshot, DealOverrideMonthSnapshot} from '../model/deal-overrides.model';
 import {TransactionResult} from '../../../models/transactionresult.model';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 
@@ -17,7 +17,7 @@ export class DealOverridesEditComponent {
   destroyRef = inject(DestroyRef);
 
   dealId = input.required<number>();
-
+  formReady = signal<boolean>(false);
   monthDate = input.required<string>();
 
   dealOverridesMonthSnapshot : DealOverrideMonthSnapshot | undefined = undefined ;
@@ -32,477 +32,26 @@ export class DealOverridesEditComponent {
     days : new FormArray([
       new FormGroup({
         overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
+        overrideValues : new FormArray([
+          new FormControl<number | null>(null),
+          new FormControl<number | null>(null),
+          new FormControl<number | null>(null),
+          new FormControl<number | null>(null),
+          new FormControl<number | null>(null),
+          new FormControl<number | null>(null),
+          new FormControl<number | null>(null),
+          new FormControl<number | null>(null)
         ])
       }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      }),
-      new FormGroup({
-        overrideDay: new FormControl<string>(''),
-        price: new FormControl<number | undefined>(undefined),
-        quantity: new FormControl<number | undefined>(undefined),
-        costOverrides : new FormArray([
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined),
-          new FormControl<number | undefined>(undefined)
-        ])
-      })
     ])
-  });
+  })
 
   ngOnInit(): void {
     let subscription  =this.dealService.getDealOverridesByMonth(this.dealId(), this.monthDate()).subscribe({
       next: (data) => {
         this.dealOverridesMonthSnapshot = data;
         this.buildForm();
+        this.formReady.set(true);
       },
       error: err => console.log(err)
     });
@@ -511,19 +60,44 @@ export class DealOverridesEditComponent {
   }
 
   private buildForm() {
-
     if (this.dealOverridesMonthSnapshot) {
-      for (let i = 0; i < this.dealOverridesMonthSnapshot.overrideDays.length; i++) {
-        let override = this.dealOverridesMonthSnapshot.overrideDays[i];
-        this.myForm.controls.days.at(i).controls.overrideDay.setValue(override.overrideDate);
-        this.myForm.controls.days.at(i).controls.price.setValue(override.values.at(0));
-        this.myForm.controls.days.at(i).controls.quantity.setValue(override.values.at(1));
-        for (let j=2; j < this.dealOverridesMonthSnapshot.headings!.length; j++) {
-          this.myForm.controls.days.at(i).controls.costOverrides.at(j).setValue(override.values.at(i));
-        }
+      let override = this.dealOverridesMonthSnapshot.overrideDays[0];
+
+      this.myForm.controls.days.at(0).controls.overrideDay.setValue(override.overrideDate);
+      for (let j=0; j < this.dealOverridesMonthSnapshot.headings!.length; j++) {
+        this.myForm.controls.days.at(0).controls.overrideValues.at(j).setValue(override.values[j]);
+      }
+      this.buildDayOverrides(this.dealOverridesMonthSnapshot.overrideDays);
+    }
+
+  }
+
+
+  private buildDayOverrides(overrides : DealOverrideDaySnapshot[]) {
+    for (let i = 1; i < overrides.length; i++) {
+      let override = overrides[i];
+      this.myForm.controls.days.push(
+        new FormGroup({
+          overrideDay: new FormControl<string | null>(override.overrideDate),
+          overrideValues: new FormArray([
+            new FormControl<number | null>(null),
+            new FormControl<number | null>(null),
+            new FormControl<number | null>(null),
+            new FormControl<number | null>(null),
+            new FormControl<number | null>(null),
+            new FormControl<number | null>(null),
+            new FormControl<number | null>(null),
+            new FormControl<number | null>(null)
+          ])
+        })
+      );
+      for ( let k = 0; k < override.values.length; k++) {
+        this.myForm.controls.days.at(i).controls.overrideValues.at(k).setValue(override.values[k]);
       }
     }
+
   }
+
 
   onReset() {
     this.router.navigate(['deals', this.dealId(),'overrides','list']);
@@ -548,24 +122,11 @@ export class DealOverridesEditComponent {
     let wasModified = false;
     for (let i=0; i < this.dealOverridesMonthSnapshot!.overrideDays.length; i++) {
       let dayOverride = this.dealOverridesMonthSnapshot?.overrideDays.at(i);
-      if (this.myForm.controls.days.at(i).controls.price.dirty) {
-        wasModified = true;
-        if (this.myForm.controls.days.at(i).controls.price)
-          dayOverride!.values[0] = this.myForm.controls.days.at(i).controls.price.value!;
-        else
-          dayOverride!.values[0] = null;
-      }
-      if (this.myForm.controls.days.at(i).controls.quantity.dirty) {
-        wasModified = true;
-        if (this.myForm.controls.days.at(i).controls.quantity)
-          dayOverride!.values[1] = this.myForm.controls.days.at(i).controls.quantity.value!;
-        else
-          dayOverride!.values[1] = null;
-      }
-      for (let j=2; j <this.dealOverridesMonthSnapshot!.headings!.length; j++) {
-        if (this.myForm.controls.days.at(i).controls.costOverrides.at(j).dirty) {
-          if (this.myForm.controls.days.at(i).controls.costOverrides.at(j).value)
-            dayOverride!.values[j] = this.myForm.controls.days.at(i).controls.costOverrides.at(j).value!;
+      for (let j=0; j <this.dealOverridesMonthSnapshot!.headings!.length; j++) {
+        if (this.myForm.controls.days.at(i).controls.overrideValues.at(j).dirty) {
+          wasModified = true;
+          if (this.myForm.controls.days.at(i).controls.overrideValues.at(j).value)
+            dayOverride!.values[j] = this.myForm.controls.days.at(i).controls.overrideValues.at(j).value!;
           else
             dayOverride!.values[j] = null;
         }

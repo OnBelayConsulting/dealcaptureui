@@ -149,6 +149,7 @@ export class JobsListComponent {
   onClose() {
     this.showSearchFields.set(false);
     this.showSearchLabel.set('Change');
+    this.startSearch();
   }
 
   onToggleShowSearch() {
@@ -161,6 +162,12 @@ export class JobsListComponent {
 
   onInfoCloseDialog() {
     this.showInformationDialog.set(false);
+
+  }
+
+  onCancelSearch() {
+    this.showSearchFields.set(false);
+    this.showSearchLabel.set('Change');
 
   }
 }

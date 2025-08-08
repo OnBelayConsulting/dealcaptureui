@@ -2,13 +2,12 @@
   <h2>Price Indices</h2>
   <div class="actions">
     <i class="action-item">{{priceIndexSearchService.searchCriteria()}}  </i>
-    <button class="action-item" (click)="startSearch()" type="button"><u><b>Search</b></u></button>
-    <button class="action-item" (click)="onToggleShowSearch()" type="button"><u><b>{{showSearchLabel()}}</b></u></button>
+    <button class="action-item" (click)="onShowSearch()" type="button"><u><b>Search</b></u></button>
     <a routerLink="/priceIndices/edit" class="action-item" *kaHasRoles="['view-deals']">New</a>
   </div>
 
   @if (showSearchFields()) {
-    <app-price-index-search (close) = "onClose()"/>
+    <app-price-index-search (search) = "onClose()" (cancel)="onCancelSearch()"/>
   }
 
 

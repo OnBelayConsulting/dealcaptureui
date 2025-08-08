@@ -63,8 +63,9 @@
       </p>
     </div>
     <p class="actions">
+      <button class="button" (click)="onCancel()" type="button">Cancel</button>
       <button class="button" (click)="onReset()" type="button">Reset</button>
-      <button class="button" (click)="onClose()" type="button">Update</button>
+      <button class="button" (click)="onClose()" type="button">Search</button>
     </p>
     <label for="searchLimit">Limit</label>
     <input  type="number" id="searchLimit" name="searchLimit" [(ngModel)]="localSearchLimit"/>

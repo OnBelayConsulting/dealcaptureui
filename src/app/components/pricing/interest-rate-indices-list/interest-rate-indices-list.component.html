@@ -2,13 +2,12 @@
   <h2>Interest Rate Indices</h2>
   <div class="actions">
     <i class="action-item">{{interestIndexSearchService.searchCriteria()}}  </i>
-    <button class="action-item" (click)="startSearch()" type="button"><u><b>Search</b></u></button>
-    <button class="action-item" (click)="onToggleShowSearch()" type="button"><u><b>{{showSearchLabel()}}</b></u></button>
+    <button class="action-item" (click)="onShowSearch()" type="button"><u><b>Search</b></u></button>
     <a routerLink="/interestIndices/edit" class="action-item" *kaHasRoles="['view-deals']">New</a>
   </div>
 
   @if (showSearchFields()) {
-    <app-interest-index-search (close) = "onClose()"/>
+    <app-interest-index-search (search) = "onClose()" (cancel)="onCancelSearch()"/>
   }
 
 

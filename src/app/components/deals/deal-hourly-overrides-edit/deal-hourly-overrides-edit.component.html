@@ -1,5 +1,5 @@
 <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-  <h2>Create/Update Deal Overrides for day </h2>
+  <h2>Create/Update Deal # {{dealId()}} Overrides for day {{dayDate()}} </h2>
 
   @if (formReady()) {
   <fieldset>

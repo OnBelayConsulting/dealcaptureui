@@ -2,14 +2,13 @@
   <h2>Power Profile Positions</h2>
   <div class="actions">
     <i class="action-item">{{powerProfilePositionSearchService.searchCriteria()}}  </i>
-    <button class="action-item" (click)="startSearch()" type="button"><u><b>Search</b></u></button>
-    <button class="action-item" (click)="onToggleShowSearch()" type="button"><u><b>{{showSearchLabel()}}</b></u></button>
+    <button class="action-item" (click)="onShowSearch()" type="button"><u><b>Search</b></u></button>
     <a routerLink="/jobs/edit"[queryParams]="{jobTypeCode: 'PwrProfilePositionGeneration'}" class="action-item" *kaHasRoles="['view-deals']">Generate Positions</a>
     <a routerLink="/jobs/edit"[queryParams]="{jobTypeCode: 'PwrProfilePositionValuation'}" class="action-item" *kaHasRoles="['view-deals']">Value Positions</a>
   </div>
 
   @if (showSearchFields()) {
-    <app-profile-positions-search (close) = "onClose()"/>
+    <app-profile-positions-search (search) = "onClose()" (cancel)="OnCancelSearch()"/>
   }
 
 

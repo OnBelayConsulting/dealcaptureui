@@ -12,7 +12,7 @@
       />
       <button type="button" (click)="onShowSearch()"> Build Query</button>
       @if (showSearchFields()) {
-        <app-deal-search (close) = "onClose()"/>
+        <app-deal-search (search) = "onClose()"/>
       }
     </div>
     <div class="control">
@@ -37,7 +37,7 @@
         />
         <button type="button" (click)="onShowSearch()"> Build Query</button>
         @if (showSearchFields()) {
-          <app-deal-search (close) = "onClose()"/>
+          <app-deal-search (search) = "onClose()"/>
         }
       </div>
     </div>

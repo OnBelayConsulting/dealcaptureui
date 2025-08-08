@@ -2,12 +2,11 @@
   <h2>Pricing Locations</h2>
   <div class="actions">
     <i class="action-item">{{priceLocationSearchService.searchCriteria()}}  </i>
-    <button class="action-item" (click)="startSearch()" type="button"><u><b>Search</b></u></button>
-    <button class="action-item" (click)="onToggleShowSearch()" type="button"><u><b>{{showSearchLabel()}}</b></u></button>
+    <button class="action-item" (click)="onShowSearch()" type="button"><u><b>Search</b></u></button>
     <a routerLink="/pricingLocations/edit" class="action-item" *kaHasRoles="['view-deals']">New</a>
   </div>
   @if (showSearchFields()) {
-    <app-pricing-location-search (close) = "onClose()"/>
+    <app-pricing-location-search (search) = "onClose()" (cancel)="onSearchCancel()"/>
   }
 
   @if (!priceLocationCollection) {

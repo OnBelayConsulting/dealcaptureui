@@ -1,4 +1,4 @@
-import {Component, effect, EventEmitter, inject, input, Output, signal} from '@angular/core';
+import {Component, effect, EventEmitter, inject, input, output, Output, signal} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PriceCurveSearchService} from '../../pricing/services/price-curve-search.service';
 import {SearchColumnModel, SearchOperator} from '../../../models/search-column.model';
@@ -31,7 +31,8 @@ export class BaseSearchComponent {
 
   public searchOperatorListItems = signal<SearchOperator[] | undefined>(undefined);
 
-  @Output() close = new EventEmitter<void>();
+  search = output<void>();
+  cancel = output<void>();
 
   constructor( public searchService : AbstractSearchService) {
 
@@ -100,7 +101,11 @@ export class BaseSearchComponent {
     this.searchService.selectionCriteria.set(this.localSelectionCriteria());
     this.searchService.orderByCriteria.set(this.localOrderByCriteria());
     this.searchService.limitSetting.set(this.localSearchLimit());
-    this.close.emit();
+    this.search.emit();
+  }
+
+  onCancel() {
+    this.cancel.emit();
   }
 
 }

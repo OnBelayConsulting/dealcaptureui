@@ -2,15 +2,14 @@
   <h2>Deal Positions</h2>
   <div class="actions">
     <i class="action-item">{{positionSearchService.searchCriteria()}}  </i>
-    <button class="action-item" (click)="positionSearchService.startSearch()" type="button"><u><b>Search</b></u></button>
-    <button class="action-item" (click)="onToggleShowSearch()" type="button"><u><b>{{showSearchLabel()}}</b></u></button>
+    <button class="action-item" (click)="onShowSearch()" type="button"><u><b>Search</b></u></button>
     <button class="action-item" (click)="onDownloadPositions()" type="button"><u><b>download positions</b></u></button>
     <a routerLink="/jobs/edit"[queryParams]="{jobTypeCode: 'DealPositionGeneration'}" class="action-item" *kaHasRoles="['view-deals']">Generate Positions</a>
     <a routerLink="/jobs/edit"[queryParams]="{jobTypeCode: 'DealPositionValuation'}" class="action-item" *kaHasRoles="['view-deals']">Value Positions</a>
   </div>
 
   @if (showSearchFields()) {
-    <app-position-search (close) = "onClose()"/>
+    <app-position-search (search) = "onClose()" (cancel)="onSearchCancel()"/>
   }
 
   <div>

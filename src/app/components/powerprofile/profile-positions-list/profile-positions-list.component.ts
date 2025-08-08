@@ -27,7 +27,6 @@ export class ProfilePositionsListComponent {
   PowerProfilePositionSnapshotCollection: PowerProfilePositionSnapshotCollection | undefined = undefined;
 
   showSearchFields = signal<boolean>(false);
-  showSearchLabel = signal("Change");
 
   showNext: boolean = false;
   showPrev: boolean = false;
@@ -112,16 +111,15 @@ export class ProfilePositionsListComponent {
 
   onClose() {
     this.showSearchFields.set(false);
-    this.showSearchLabel.set('Change');
+    this.startSearch();
   }
 
-  onToggleShowSearch() {
-    this.showSearchFields.update( (val) => !val);
-    if (!this.showSearchFields())
-      this.showSearchLabel.set("Change");
-    else
-      this.showSearchLabel.set("Hide");
+  onShowSearch() {
+    this.showSearchFields.set(true);
   }
 
 
+  OnCancelSearch() {
+    this.showSearchFields.set(false);
+  }
 }

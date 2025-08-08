@@ -8,7 +8,7 @@
   </div>
 
   @if (showSearchFields()) {
-    <app-price-riskfactor-search (close) = "onClose()"/>
+    <app-price-riskfactor-search (search) = "onClose()" (cancel)="onSearchCancel()"/>
   }
 
 

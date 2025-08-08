@@ -61,6 +61,7 @@ export class DealsListComponent {
   onClose() {
     this.showSearchFields.set(false);
     this.showSearchLabel.set('Change search');
+    this.dealSearchService.startSearch();
   }
 
   onToggleShowSearch() {
@@ -90,4 +91,8 @@ export class DealsListComponent {
   }
 
 
+  onCancelSearch() {
+    this.showSearchFields.set(false);
+    this.showSearchLabel.set('Change search');
+  }
 }

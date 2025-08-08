@@ -25,7 +25,6 @@ export class FxIndicesListComponent {
   fxIndexCollection: FxIndexSnapshotCollection | undefined = undefined;
 
   showSearchFields = signal<boolean>(false);
-  showSearchLabel = signal("Change");
 
   showNext: boolean = false;
   showPrev: boolean = false;
@@ -124,15 +123,11 @@ export class FxIndicesListComponent {
 
   onClose() {
     this.showSearchFields.set(false);
-    this.showSearchLabel.set('Change');
+    this.startSearch()
   }
 
-  onToggleShowSearch() {
-    this.showSearchFields.update( (val) => !val);
-    if (!this.showSearchFields())
-      this.showSearchLabel.set("Change");
-    else
-      this.showSearchLabel.set("Hide");
+  onShowSearch() {
+    this.showSearchFields.set(true);
   }
 
   onFileUploadShow() {
@@ -144,4 +139,7 @@ export class FxIndicesListComponent {
   }
 
 
+  onCancelSearch() {
+    this.showSearchFields.set(false);
+  }
 }

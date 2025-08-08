@@ -25,7 +25,6 @@ export class PriceIndicesListComponent implements OnInit {
   priceIndexCollection: PriceIndexSnapshotCollection | undefined = undefined;
 
   showSearchFields = signal<boolean>(false);
-  showSearchLabel = signal("Change");
 
   showNext: boolean = false;
   showPrev: boolean = false;
@@ -124,15 +123,11 @@ export class PriceIndicesListComponent implements OnInit {
 
   onClose() {
     this.showSearchFields.set(false);
-    this.showSearchLabel.set('Change');
+    this.startSearch();
   }
 
-  onToggleShowSearch() {
-    this.showSearchFields.update( (val) => !val);
-    if (!this.showSearchFields())
-      this.showSearchLabel.set("Change");
-    else
-      this.showSearchLabel.set("Hide");
+  onShowSearch() {
+    this.showSearchFields.set(true);
   }
 
   onFileUploadShow() {
@@ -143,4 +138,7 @@ export class PriceIndicesListComponent implements OnInit {
     this.showFileUpload.set(false);
   }
 
+  onCancelSearch() {
+    this.showSearchFields.set(false);
+  }
 }

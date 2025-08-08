@@ -12,7 +12,7 @@
       />
       <button type="button" (click)="onShowPowerProfileSearch()"> Build Query</button>
       @if (showPowerProfileSearchFields()) {
-        <app-power-profile-search (close) = "onClosePowerProfileSearch()"/>
+        <app-power-profile-search (search) = "onClosePowerProfileSearch()"/>
       }
     </div>
 
@@ -26,7 +26,7 @@
       />
       <button type="button" (click)="onShowPriceIndexSearch()"> Build Query</button>
       @if (showPriceIndexSearchFields()) {
-        <app-power-profile-search (close) = "onClosePriceIndexSearch()"/>
+        <app-power-profile-search (search) = "onClosePriceIndexSearch()"/>
       }
     </div>
   </div>
@@ -42,7 +42,7 @@
       />
       <button type="button" (click)="onShowDealSearch()"> Build Query</button>
       @if (showDealSearchFields()) {
-        <app-deal-search (close) = "onCloseDealSearch()"/>
+        <app-deal-search (search) = "onCloseDealSearch()"/>
       }
     </div>
 

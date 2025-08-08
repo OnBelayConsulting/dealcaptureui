@@ -2,8 +2,7 @@
   <h2>F/X Curves</h2>
   <div class="actions">
     <i class="action-item">{{fxCurveSearchService.searchCriteria()}}  </i>
-    <button class="action-item" (click)="startSearch()" type="button"><u><b>Search</b></u></button>
-    <button class="action-item" (click)="onToggleShowSearch()" type="button"><u><b>{{showSearchLabel()}}</b></u></button>
+    <button class="action-item" (click)="onShowSearch()" type="button"><u><b>Search</b></u></button>
     <a routerLink="/fxCurves/edit" class="action-item" *kaHasRoles="['view-deals']">New</a>
     <button class="action-item" (click)="onFileUploadShow()" type="button"><u><b>File upload</b></u></button>
   </div>
@@ -12,7 +11,7 @@
   }
 
   @if (showSearchFields()) {
-    <app-fx-curve-search (close) = "onClose()"/>
+    <app-fx-curve-search (search) = "onClose()" (cancel)="onSearchCancel()"/>
   }
 
 

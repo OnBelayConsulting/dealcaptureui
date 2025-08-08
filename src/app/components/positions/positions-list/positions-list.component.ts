@@ -31,21 +31,16 @@ export class PositionsListComponent {
   positionSearchService = inject(PositionSearchService);
 
   showSearchFields = signal<boolean>(false);
-  showSearchLabel = signal("Change");
 
   destroyRef = inject(DestroyRef);
 
   onClose() {
     this.showSearchFields.set(false);
-    this.showSearchLabel.set('Change');
+    this.positionSearchService.startSearch();
   }
 
-  onToggleShowSearch() {
-    this.showSearchFields.update( (val) => !val);
-    if (!this.showSearchFields())
-      this.showSearchLabel.set("Change");
-    else
-      this.showSearchLabel.set("Hide");
+  onShowSearch() {
+    this.showSearchFields.set(true);
   }
 
 
@@ -65,5 +60,9 @@ export class PositionsListComponent {
   setToFinancialSwaps() {
     this.positionSearchService.updateDealTypeFilter('FinancialSwap');
 
+  }
+
+  onSearchCancel() {
+    this.showSearchFields.set(false);
   }
 }

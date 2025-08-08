@@ -25,7 +25,6 @@ export class InterestRateIndicesListComponent {
   interestIndexSnapshotCollection: InterestIndexSnapshotCollection | undefined = undefined;
 
   showSearchFields = signal<boolean>(false);
-  showSearchLabel = signal("Change");
 
   showNext: boolean = false;
   showPrev: boolean = false;
@@ -124,15 +123,11 @@ export class InterestRateIndicesListComponent {
 
   onClose() {
     this.showSearchFields.set(false);
-    this.showSearchLabel.set('Change');
+    this.startSearch();
   }
 
-  onToggleShowSearch() {
-    this.showSearchFields.update( (val) => !val);
-    if (!this.showSearchFields())
-      this.showSearchLabel.set("Change");
-    else
-      this.showSearchLabel.set("Hide");
+  onShowSearch() {
+    this.showSearchFields.set(true);
   }
 
   onFileUploadShow() {
@@ -144,5 +139,7 @@ export class InterestRateIndicesListComponent {
   }
 
 
-
+  onCancelSearch() {
+    this.showSearchFields.set(false);
+  }
 }

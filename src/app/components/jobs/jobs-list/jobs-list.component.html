@@ -7,7 +7,7 @@
   </div>
 
   @if (showSearchFields()) {
-    <app-deal-job-search (close) = "onClose()"/>
+    <app-deal-job-search (search) = "onClose()" (cancel)="onCancelSearch()"/>
   }
   @if (showInformationDialog()) {
     <app-info-modal title="Delete/Cancel"  [message]="'Delete or cancel was successful.'" (closeEvent)="onInfoCloseDialog()" />

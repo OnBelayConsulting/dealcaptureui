@@ -1,31 +1,33 @@
 <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-  <h2>Create/Update Deal Overrides for month {{dealOverridesMonthSnapshot?.monthDate}}</h2>
+  <h2>Create/Update Deal Overrides for month {{monthDate()}}</h2>
 
-  <fieldset>
-    <table formArrayName="days">
-      <thead>
-      <th>Date</th>
-      <th>Price</th>
-      <th>Quantity</th>
-      </thead>
-      <tbody >
-        @for (g of myForm.controls.days.controls; track $index; let idx = $index) {
-          <tr [formGroup]="g">
-            <td>
-              <input type="text" id="{{idx}}date" name="{{idx}}date" [formControl]="myForm.controls.days.at(idx).controls.overrideDay"/>
-            </td>
-            <td>
-              <input type="number" id="{{idx}}price" name="{{idx}}price" [formControl]="myForm.controls.days.at(idx).controls.price"/>
-            </td>
-            <td>
-              <input type="number" id="{{idx}}quantity" name="{{idx}}quantity" [formControl]="myForm.controls.days.at(idx).controls.quantity"/>
-            </td>
-          </tr>
-        }
-      </tbody>
+  @if(formReady()) {
+    <fieldset>
+      <table formArrayName="days">
+        <thead>
+        <th>Date</th>
+          @for (heading of dealOverridesMonthSnapshot?.headings; track heading) {
+            <th>{{heading}}</th>
+          }
+        </thead>
+        <tbody >
+          @for (g of myForm.controls.days.controls; track $index; let idx = $index) {
+            <tr [formGroup]="g">
+              <td>
+                <input type="text" id="{{idx}}date" name="{{idx}}date" [formControl]="myForm.controls.days.at(idx).controls.overrideDay"/>
+              </td>
+              @for (h of g.controls.overrideValues.controls; track $index; let hdx = $index) {
+                <td>
+                  <input type="number" id="{{idx}}-{{hdx}}cost" name="{{idx}}-{{hdx}}cost" [formControl]="myForm.controls.days.at(idx).controls.overrideValues.at(hdx)"/>
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
 
-    </table>
-  </fieldset>
+      </table>
+    </fieldset>
+  }
 
   @if (hasErrors) {
     <h3>errors on form: </h3>

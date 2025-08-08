@@ -113,6 +113,7 @@ export class PriceRiskFactorListComponent {
   onClose() {
     this.showSearchFields.set(false);
     this.showSearchLabel.set('Change');
+    this.startSearch();
   }
 
   onToggleShowSearch() {
@@ -124,4 +125,9 @@ export class PriceRiskFactorListComponent {
   }
 
 
+  onSearchCancel() {
+    this.showSearchFields.set(false);
+    this.showSearchLabel.set('Change');
+
+  }
 }
