@@ -1,4 +1,4 @@
-import {Component, DestroyRef, inject, input} from '@angular/core';
+import {Component, DestroyRef, inject, input, signal} from '@angular/core';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from '@angular/router';
 import {TransactionResult} from '../../../models/transactionresult.model';
@@ -25,6 +25,7 @@ export class PowerProfileEditComponent {
   router = inject(Router);
   powerProfileService = inject(PowerProfileService);
   destroyRef = inject(DestroyRef);
+  formReady = signal<boolean>(false);
 
   powerProfileId = input<number | undefined>(undefined);
 
@@ -33,7 +34,7 @@ export class PowerProfileEditComponent {
   showOffPeakSettledPriceIndexSearch: boolean = false;
   showSuperPeakSettledPriceIndexSearch: boolean = false;
 
-  showHourFields : boolean = true;
+  showHourFields = signal<boolean>(true);
 
   transactionResult: TransactionResult | undefined = undefined;
 
@@ -79,236 +80,6 @@ export class PowerProfileEditComponent {
         sunday: new FormControl<string>('None')
 
       }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
-      new FormGroup({
-        monday: new FormControl<string>('None'),
-        tuesday: new FormControl<string>('None'),
-        wednesday: new FormControl<string>('None'),
-        thursday: new FormControl<string>('None'),
-        friday: new FormControl<string>('None'),
-        saturday: new FormControl<string>('None'),
-        sunday: new FormControl<string>('None')
-
-      }),
     ]),
 
   });
@@ -339,6 +110,7 @@ export class PowerProfileEditComponent {
 
 
   ngOnInit(): void {
+    this.buildHours();
 
     if (this.powerProfileId()) {
       let subscriber = this.powerProfileService.findPowerProfileById(this.powerProfileId()!).subscribe( {
@@ -359,7 +131,6 @@ export class PowerProfileEditComponent {
 
             if (powerProfileSnapshot.detail?.description)
               this.myForm.controls.description.setValue(powerProfileSnapshot.detail?.description!);
-
             this.populateHourFields(powerProfileSnapshot);
             this.populateIndexMappingFields(powerProfileSnapshot);
 
@@ -367,6 +138,7 @@ export class PowerProfileEditComponent {
             this.router.navigate(['powerProfiles', 'list']);
 
           }
+          this.formReady.set(true);
         },
         error: err => {
           this.router.navigate(['powerProfiles', 'list']);
@@ -375,6 +147,8 @@ export class PowerProfileEditComponent {
 
       this.destroyRef.onDestroy(subscriber.unsubscribe);
 
+    } else {
+      this.formReady.set(true);
     }
 
   }
@@ -393,6 +167,23 @@ export class PowerProfileEditComponent {
           this.myForm.controls.superPeakPriceIndex.setValue(mapping!.priceIndexId.code);
           break;
       }
+    }
+  }
+
+  private buildHours() {
+    for (let i=0 ; i < 24; i++) {
+      this.myForm.controls.hourFields.push(
+        new FormGroup({
+          monday: new FormControl<string>('None'),
+          tuesday: new FormControl<string>('None'),
+          wednesday: new FormControl<string>('None'),
+          thursday: new FormControl<string>('None'),
+          friday: new FormControl<string>('None'),
+          saturday: new FormControl<string>('None'),
+          sunday: new FormControl<string>('None')
+
+        }),
+      )
     }
   }
 
@@ -702,11 +493,11 @@ export class PowerProfileEditComponent {
   }
 
   onShowHourFields() {
-    this.showHourFields = true;
+    this.showHourFields.set(true);
   }
 
   onCloseHourFields() {
-    this.showHourFields = false;
+    this.showHourFields.set(false);
   }
 
   searchForSettledPriceIndex() {

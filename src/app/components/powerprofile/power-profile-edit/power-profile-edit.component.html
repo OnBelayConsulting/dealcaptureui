@@ -1,6 +1,7 @@
 <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
   <h2>Create/Update Power Profile</h2>
 
+  @if (formReady()) {
   <div class="control-row">
     <div class="control">
       <label for="name">Name</label>
@@ -211,7 +212,7 @@
 
   </table>
   </fieldset>
-
+  }
   @if (hasErrors) {
     <h3>errors on form: </h3>
     @for ( msg of formErrors; track msg) {
