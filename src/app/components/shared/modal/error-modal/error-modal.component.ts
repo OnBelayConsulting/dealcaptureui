@@ -1,6 +1,6 @@
-import { Component, inject, input } from '@angular/core';
-import { ModalComponent } from "../modal.component";
-import { ErrorService } from '../../service/error.service';
+import {Component, inject, input} from '@angular/core';
+import {ModalComponent} from "../modal.component";
+import {ErrorService} from '../../service/error.service';
 
 @Component({
     selector: 'app-error-modal',

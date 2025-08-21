@@ -1,10 +1,9 @@
 import {Component, DestroyRef, inject, input} from '@angular/core';
 import {Router} from '@angular/router';
-import {PriceIndexService} from '../../../services/price-index.service';
+import {PriceIndexService} from '../services/price-index.service';
 import {TransactionResult} from '../../../models/transactionresult.model';
-import {PriceIndexSnapshot} from '../model/price.model';
+import {PriceCurveSnapshot, PriceIndexSnapshot} from '../model/price.model';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {OrganizationQuickSearchComponent} from '../../organizations/organization-quick-search/organization-quick-search.component';
 import {
   PricingLocationQuickSearchComponent
 } from '../../pricing-locations/pricing-location-quick-search/pricing-location-quick-search.component';
@@ -44,7 +43,7 @@ export class PriceIndexEditComponent {
       id: undefined,
       code: undefined
     },
-    benchIndexId: {
+    benchmarkIndexId: {
       id: undefined,
       code: undefined
     },
@@ -84,7 +83,7 @@ export class PriceIndexEditComponent {
         Validators.required,
       ],
     }),
-    benchIndex: new FormControl<string | undefined>(undefined, {
+    benchmarkIndex: new FormControl<string | undefined>(undefined, {
     }),
     baseIndex: new FormControl<string | undefined>(undefined, {
     }),
@@ -133,11 +132,11 @@ export class PriceIndexEditComponent {
               this.myForm.controls.baseIndex.setValue(priceIndexSnapshot.baseIndexId.code);
             }
 
-            if (priceIndexSnapshot.benchIndexId) {
-              this.myForm.controls.benchIndex.setValue(priceIndexSnapshot.benchIndexId.code);
+            if (priceIndexSnapshot.benchmarkIndexId) {
+              this.myForm.controls.benchmarkIndex.setValue(priceIndexSnapshot.benchmarkIndexId.code);
             }
 
-            this.myForm.controls.location.setValue(priceIndexSnapshot.pricingLocationId.code);
+            this.myForm.controls.location.setValue(priceIndexSnapshot.pricingLocationId!.code);
             this.myForm.controls.currencyCodeValue.setValue(priceIndexSnapshot.detail!.currencyCodeValue);
             this.myForm.controls.unitOfMeasureCodeValue.setValue(priceIndexSnapshot.detail!.unitOfMeasureCodeValue);
             this.myForm.controls.frequencyCodeValue.setValue(priceIndexSnapshot.detail!.frequencyCodeValue);
@@ -161,7 +160,7 @@ export class PriceIndexEditComponent {
 
 
   onReset() {
-    this.router.navigate(['priceIndices', 'list']);
+    this.router.navigate(['pricing','priceIndices', 'list']);
   }
 
 
@@ -223,14 +222,14 @@ export class PriceIndexEditComponent {
         }
       }
 
-      if (this.myForm.controls.benchIndex.dirty) {
-        if (this.myForm.controls.benchIndex.value) {
-          this.modifiedSnapshot.benchIndexId = {
+      if (this.myForm.controls.benchmarkIndex.dirty) {
+        if (this.myForm.controls.benchmarkIndex.value) {
+          this.modifiedSnapshot.benchmarkIndexId = {
             id : null,
-            code : this.myForm.controls.benchIndex.value
+            code : this.myForm.controls.benchmarkIndex.value
           }
         } else {
-          this.modifiedSnapshot.benchIndexId = {
+          this.modifiedSnapshot.benchmarkIndexId = {
             id : null,
             code : null
           }
@@ -308,8 +307,8 @@ export class PriceIndexEditComponent {
 
 
   updateBenchIndex(name: string) {
-    this.myForm.controls.benchIndex.setValue(name);
-    this.myForm.controls.benchIndex.markAsDirty();
+    this.myForm.controls.benchmarkIndex.setValue(name);
+    this.myForm.controls.benchmarkIndex.markAsDirty();
     this.showBenchIndexSearch = false;
   }
 
@@ -329,6 +328,26 @@ export class PriceIndexEditComponent {
     this.myForm.controls.baseIndex.setValue(name);
     this.myForm.controls.baseIndex.markAsDirty();
     this.showBaseIndexSearch = false;
+  }
+
+
+  onDelete() {
+    if (this.modifiedSnapshot.entityId?.id) {
+      let snapshot : PriceIndexSnapshot = {
+        entityState : 'DELETE',
+        entityId : {
+          id : this.modifiedSnapshot.entityId.id
+        }
+      }
+      let subscription = this.priceIndexService.savePriceIndex(snapshot).subscribe({
+        next: (data) => {this.transactionResult = data},
+        error: (error: Error) => {console.log(error.message)}
+      });
+
+      this.destroyRef.onDestroy( () => subscription.unsubscribe());
+
+
+    }
   }
 
 }

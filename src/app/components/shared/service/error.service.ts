@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import {Injectable, signal} from '@angular/core';
 import {ServerErrorResponse} from '../model/error-response.model';
 
 @Injectable({

@@ -1,9 +1,9 @@
 import {AbstractSnapshot, AbstractSnapshotCollection, EntityId} from '../../../models/abstract-snapshot';
 
 export interface PriceIndexSnapshot extends AbstractSnapshot {
-  pricingLocationId: EntityId,
+  pricingLocationId?: EntityId | undefined,
 
-  benchIndexId?: EntityId,
+  benchmarkIndexId?: EntityId,
 
   baseIndexId?: EntityId,
 
@@ -21,7 +21,7 @@ export interface PriceIndexSnapshot extends AbstractSnapshot {
 export interface PriceIndexSnapshotCollection extends AbstractSnapshotCollection<PriceIndexSnapshot> {}
 
 export interface PriceCurveSnapshot extends AbstractSnapshot {
-  indexId: EntityId,
+  indexId?: EntityId | undefined | null,
 
   detail?: {
     curveDate?: string | undefined | null,

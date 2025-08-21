@@ -2,10 +2,11 @@ import {Component, DestroyRef, inject, input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {DealSnapshot} from '../model/deal.model';
-import {DealService} from '../../../services/deal.service';
+import {DealService} from '../services/deal.service';
 import {TransactionResult} from '../../../models/transactionresult.model';
-import {BusinessContactSnapshot} from '../../businesscontacts/model/business-contact.model';
 import {SearchColumnModel} from '../../../models/search-column.model';
+import {PriceCurveSnapshot} from '../../pricing/model/price.model';
+
 @Component({
   selector: 'app-deal-edit',
   imports: [ReactiveFormsModule],
@@ -19,6 +20,7 @@ export class DealEditComponent implements OnInit {
 
   showCompanySearch: boolean = false;
   showCounterpartySearch: boolean = false;
+  showPowerProfileSearch : boolean = false;
 
   companyTraderContactModel : SearchColumnModel | undefined = undefined;
   counterpartyTraderContactModel : SearchColumnModel | undefined = undefined;
@@ -130,6 +132,8 @@ export class DealEditComponent implements OnInit {
         Validators.required,
       ],
     }),
+    powerProfile : new FormControl<string | undefined>(undefined, {
+    }),
 
     physicalDealPricing: new FormGroup({
 
@@ -144,7 +148,7 @@ export class DealEditComponent implements OnInit {
       dealIndex : new FormControl<string | undefined>(undefined, {
      }),
       marketIndex : new FormControl<string | undefined>(undefined, {
-      })
+      }),
     }),
 
    financialSwapDealPricing: new FormGroup({
@@ -159,7 +163,7 @@ export class DealEditComponent implements OnInit {
       }),
       receivesIndex : new FormControl<string | undefined>(undefined, {
       }),
-      paysIndex : new FormControl<string | undefined>(undefined, {
+     paysIndex : new FormControl<string | undefined>(undefined, {
       })
     }),
 
@@ -232,6 +236,10 @@ export class DealEditComponent implements OnInit {
         id: undefined
       },
       dealTypeValue: 'PHY',
+      powerProfileId: {
+        id: undefined,
+        code: undefined
+      },
       companyRoleId: {
         id: undefined,
         code: undefined
@@ -281,6 +289,10 @@ export class DealEditComponent implements OnInit {
       this.myForm.controls.ticketNo.setValue(this.dealSnapshot!.dealDetail!.ticketNo);
       this.myForm!.controls.commodity.setValue(this.dealSnapshot.dealDetail?.commodityCodeValue);
       this.myForm?.controls.dealStatus.setValue(this.dealSnapshot.dealDetail?.dealStatusCodeValue);
+
+      if (this.dealSnapshot?.powerProfileId) {
+        this.myForm.controls.powerProfile.setValue(this.dealSnapshot.powerProfileId!.code)
+      }
 
       if (this.dealSnapshot.companyRoleId) {
         this.myForm?.controls.company.setValue(this.dealSnapshot.companyRoleId?.code);
@@ -547,6 +559,22 @@ export class DealEditComponent implements OnInit {
       }
         wasModified = true;
     }
+    if (this.myForm.controls.powerProfile.dirty) {
+      if (this.myForm.controls.powerProfile.value != null) {
+
+        this.dealSnapshot!.powerProfileId = {
+          id: undefined,
+          code: this.myForm.controls.powerProfile.value
+        }
+      } else {
+        this.dealSnapshot!.powerProfileId = {
+          id : undefined,
+          code : undefined
+        }
+      }
+      wasModified = true;
+    }
+
 
     if (this.myForm.controls.startDate.dirty && this.myForm.controls.startDate.value != null) {
       this.dealSnapshot!.dealDetail!.startDate = this.myForm.controls.startDate.value;
@@ -593,4 +621,40 @@ export class DealEditComponent implements OnInit {
 
 
   }
+
+  searchForPowerProfile() {
+    this.showPowerProfileSearch = true;
+  }
+
+
+  onCancelPowerProfileSearch() {
+    this.showPowerProfileSearch = false;
+  }
+
+
+  updatePowerProfile(name: string) {
+    this.myForm.controls.powerProfile.setValue(name);
+    this.myForm.controls.powerProfile.markAsDirty();
+    this.showPowerProfileSearch = false;
+  }
+
+
+  onDelete() {
+    if (this.dealSnapshot?.entityId?.id) {
+      let snapshot : DealSnapshot = this.createNewDealSnapshot();
+      snapshot.entityId = this.dealSnapshot?.entityId;
+      snapshot.entityState = 'DELETE';
+
+      let subscription = this.dealService.saveDeal(snapshot).subscribe({
+        next: (data) => {this.transactionResult = data},
+        error: (error: Error) => {console.log(error.message)}
+      });
+
+      this.destroyRef.onDestroy( () => subscription.unsubscribe());
+
+
+    }
+  }
+
+
 }

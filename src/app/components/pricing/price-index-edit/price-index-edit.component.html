@@ -60,14 +60,14 @@
         id="benchmark"
         name="benchmark"
         type="text"
-        [formControl]="myForm.controls.benchIndex"
+        [formControl]="myForm.controls.benchmarkIndex"
       />
       <button type="button" (click)="searchForBenchIndex()"> Search</button>
       @if (showBenchIndexSearch) {
         <div>
           <app-price-index-quick-search
             [title] = "'Search for Benchmark'"
-            [searchField]=" (myForm.controls.benchIndex.value) ? myForm.controls.benchIndex.value : undefined"
+            [searchField]=" (myForm.controls.benchmarkIndex.value) ? myForm.controls.benchmarkIndex.value : undefined"
             (cancel)="onCancelBenchIndexSearch()"
             (result)="updateBenchIndex($event)" />
         </div>
@@ -153,6 +153,7 @@
   } @else {
     <p class="form-actions">
       <button type="reset" (click) = "onReset()" class="button button-flat">Cancel</button>
+      <button type="reset" (click) = "onDelete()" class="button button-flat">Delete</button>
       <button type="submit" class="button">Save</button>
     </p>
 

@@ -1,0 +1,62 @@
+<article>
+  <h2>F/X Curves</h2>
+  <div class="actions">
+    <i class="action-item">{{fxCurveSearchService.searchCriteria()}}  </i>
+    <button class="action-item" (click)="onShowSearch()" type="button"><u><b>Search</b></u></button>
+    <a routerLink="../edit" class="action-item" >New</a>
+    <button class="action-item" (click)="onFileUploadShow()" type="button"><u><b>File upload</b></u></button>
+  </div>
+  @if(showFileUpload()) {
+    <app-curve-file-upload [uploadType]="'fx'"  (close) = "onFileUploadClose()" />
+  }
+
+  @if (showSearchFields()) {
+    <app-fx-curve-search (search) = "onClose()" (cancel)="onSearchCancel()"/>
+  }
+
+
+
+  @if (!fxCurveCollection) {
+    <p class="no-snapshots">No curves found.</p>
+  } @else {
+    <table>
+      <thead>
+      <th>Curve Id</th>
+      <th>Index Name</th>
+      <th>Frequency</th>
+      <th>Curve Date</th>
+      <th>Observed Date/Time</th>
+      <th>Rate</th>
+      </thead>
+      <div>
+        @if (showPrev) {
+          <button type="button" id="toprev" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+          <button type="button" id="topnext" (click)="onNext()">Next</button>
+        }
+      </div>
+      <tbody >
+        @for (curveSnapshot of fxCurveCollection!.snapshots; track curveSnapshot.entityId!.id) {
+          @let entityId = curveSnapshot.entityId!.id!;
+          <tr (click)="onSelected(entityId)">
+            <td><a [routerLink]="'../edit'" [queryParams]="{priceCurveId: entityId}" > {{ curveSnapshot!.entityId?.id }} </a> </td>
+            <td>{{ curveSnapshot!.indexId!.code}}</td>
+            <td>{{ curveSnapshot!.detail!.frequencyCodeValue }}</td>
+            <td>{{ curveSnapshot!.detail!.curveDate | date : 'mediumDate' }}</td>
+            <td>{{ curveSnapshot!.detail!.observedDateTime | date : 'medium' }}</td>
+            <td>{{ curveSnapshot!.detail?.curveValue | number : '1.2-2'  }}</td>
+          </tr>
+        }
+      </tbody>
+      <div>
+        @if (showPrev) {
+          <button type="button" id="bottomnext" (click)="onPrev()">Prev</button>
+        }
+        @if (showNext) {
+          <button type="button" id="bottomprev" (click)="onNext()">Next</button>
+        }
+      </div>
+    </table>
+  }
+</article>

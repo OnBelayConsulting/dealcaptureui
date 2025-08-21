@@ -2,9 +2,8 @@ import {DestroyRef, inject, Injectable, signal} from '@angular/core';
 import {CodeItem} from '../../../models/code.model';
 import {AbstractSearchService} from '../../shared/search-services/abstract-search.service';
 import {SearchColumnModel} from '../../../models/search-column.model';
-import {DealService} from '../../../services/deal.service';
+import {DealService} from './deal.service';
 import {DealSnapshotCollection} from '../model/dealSnapshotCollection';
-import {DealPositionSnapshotCollection} from '../../positions/model/position.model';
 
 @Injectable({
     providedIn: 'root'

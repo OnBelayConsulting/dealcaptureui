@@ -1,14 +1,21 @@
-import { Component,  OnInit  } from '@angular/core';
-import { ReactiveFormsModule} from "@angular/forms";
-import {OrganizationQuickSearchComponent} from "../../organizations/organization-quick-search/organization-quick-search.component";
+import {Component, OnInit} from '@angular/core';
+import {ReactiveFormsModule} from "@angular/forms";
+import {
+  OrganizationQuickSearchComponent
+} from "../../organizations/organization-quick-search/organization-quick-search.component";
 import {DealEditComponent} from '../deal-edit/deal-edit.component';
 import {DealSnapshot, PhysicalDealSnapshot} from '../model/deal.model';
-import {PriceIndexQuickSearchComponent} from '../../pricing/price-index-quick-search/price-index-quick-search.component';
+import {
+  PriceIndexQuickSearchComponent
+} from '../../pricing/price-index-quick-search/price-index-quick-search.component';
 import {
   BusinessContactsQuickSearchComponent
 } from '../../businesscontacts/business-contacts-quick-search/business-contacts-quick-search.component';
 import {HasRolesDirective} from 'keycloak-angular';
 import {RouterLink} from '@angular/router';
+import {
+  PowerProfileQuickSearchComponent
+} from '../../powerprofile/power-profile-quick-search/power-profile-quick-search.component';
 
 @Component({
   selector: 'app-physical-deal-edit',
@@ -17,8 +24,8 @@ import {RouterLink} from '@angular/router';
     OrganizationQuickSearchComponent,
     BusinessContactsQuickSearchComponent,
     PriceIndexQuickSearchComponent,
-    HasRolesDirective,
-    RouterLink
+    RouterLink,
+    PowerProfileQuickSearchComponent
   ],
   templateUrl: './physical-deal-edit.component.html',
   styleUrl: './physical-deal-edit.component.scss'
@@ -53,19 +60,19 @@ export class PhysicalDealEditComponent extends DealEditComponent implements OnIn
     super.populateForm();
     this.physicalDealSnapshot = this.dealSnapshot as PhysicalDealSnapshot;
     if (this.physicalDealSnapshot?.dealDetail?.fixedPriceValue) {
-      this.myForm.controls.physicalDealPricing!.controls['dealPrice']!.setValue(this.physicalDealSnapshot.dealDetail.fixedPriceValue)
+      this.myForm.controls.physicalDealPricing!.controls.dealPrice!.setValue(this.physicalDealSnapshot.dealDetail.fixedPriceValue)
     }
     if (this.physicalDealSnapshot?.dealDetail?.fixedPriceCurrencyCodeValue) {
-      this.myForm.controls.physicalDealPricing!.controls['dealPriceCurrency'].setValue(this.physicalDealSnapshot.dealDetail.fixedPriceCurrencyCodeValue)
+      this.myForm.controls.physicalDealPricing!.controls.dealPriceCurrency.setValue(this.physicalDealSnapshot.dealDetail.fixedPriceCurrencyCodeValue)
     }
     if (this.physicalDealSnapshot?.dealDetail?.fixedPriceUnitOfMeasureCodeValue) {
-      this.myForm.controls.physicalDealPricing!.controls['dealPriceUoM'].setValue(this.physicalDealSnapshot.dealDetail.fixedPriceUnitOfMeasureCodeValue)
+      this.myForm.controls.physicalDealPricing!.controls.dealPriceUoM.setValue(this.physicalDealSnapshot.dealDetail.fixedPriceUnitOfMeasureCodeValue)
     }
     if (this.physicalDealSnapshot?.dealPriceIndexId) {
-      this.myForm.controls.physicalDealPricing!.controls['dealIndex'].setValue(this.physicalDealSnapshot.dealPriceIndexId!.code)
+      this.myForm.controls.physicalDealPricing!.controls.dealIndex.setValue(this.physicalDealSnapshot.dealPriceIndexId!.code)
     }
     if (this.physicalDealSnapshot?.marketPriceIndexId) {
-      this.myForm.controls.physicalDealPricing!.controls['marketIndex'].setValue(this.physicalDealSnapshot.marketPriceIndexId!.code)
+      this.myForm.controls.physicalDealPricing!.controls.marketIndex.setValue(this.physicalDealSnapshot.marketPriceIndexId!.code)
     }
   }
 
@@ -178,5 +185,6 @@ export class PhysicalDealEditComponent extends DealEditComponent implements OnIn
     this.myForm.controls.physicalDealPricing.controls.dealIndex.markAsDirty();
     this.showDealIndexSearch = false;
   }
+
 
 }

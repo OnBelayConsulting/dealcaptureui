@@ -1,12 +1,11 @@
-import {Component, computed, DestroyRef, inject, input, signal} from '@angular/core';
+import {Component, DestroyRef, inject, signal} from '@angular/core';
 import {DealSearchComponent} from "../deal-search/deal-search.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Router} from '@angular/router';
-import {DealJobService} from '../../../services/deal-job.service';
 import {DealSearchService} from '../services/deal-search.service';
 import {TransactionResult} from '../../../models/transactionresult.model';
 import {MarkToMarketJobRequest} from '../model/deal.model';
-import {DealService} from '../../../services/deal.service';
+import {DealService} from '../services/deal.service';
 import {PowerProfileSearchComponent} from '../../powerprofile/power-profile-search/power-profile-search.component';
 import {PowerProfileSearchService} from '../../powerprofile/service/power-profile-search.service';
 import {PriceIndexSearchService} from '../../pricing/services/price-index-search.service';

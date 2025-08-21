@@ -2,12 +2,6 @@ import { AuthGuardData, createAuthGuard } from 'keycloak-angular';
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { inject } from '@angular/core';
 
-/**
- * The logic below is a simple example, please make it more robust when implementing in your application.
- *
- * Reason: isAccessGranted is not validating the resource, since it is merging all roles. Two resources might
- * have the same role name and it makes sense to validate it more granular.
- */
 const isAccessAllowed = async (
   route: ActivatedRouteSnapshot,
   __: RouterStateSnapshot,
@@ -15,15 +9,28 @@ const isAccessAllowed = async (
 ): Promise<boolean | UrlTree> => {
   const { authenticated, grantedRoles } = authData;
 
-  const requiredRole = route.data['role'];
-  if (!requiredRole) {
-    return false;
+  for (const role of grantedRoles.resourceRoles['dealcaptureui']) {
+    if (role.toUpperCase().includes('ADMIN'))
+      return true;
   }
 
-  const hasRequiredRole = (role: string): boolean =>
-    Object.values(grantedRoles.resourceRoles).some((roles) => roles.includes(role));
+     const requiredRole= route.data['role'];
 
-  if (authenticated && hasRequiredRole(requiredRole)) {
+  if (!requiredRole) {
+    return true;
+  }
+
+  let hasRole = false;
+  for (const role of grantedRoles.resourceRoles['dealcaptureui']) {
+    if (role === requiredRole) {
+      hasRole = true;
+      break;
+    }
+
+  }
+
+
+  if (authenticated && hasRole) {
     return true;
   }
 

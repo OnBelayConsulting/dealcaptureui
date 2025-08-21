@@ -1,18 +1,16 @@
 import {Component, DestroyRef, inject, signal} from '@angular/core';
 import {CurveFileUploadComponent} from "../curve-file-upload/curve-file-upload.component";
-import {HasRolesDirective} from "keycloak-angular";
 import {RouterLink} from "@angular/router";
 import {PriceCurveSnapshotCollection} from '../model/price.model';
 import {PriceCurveSearchComponent} from '../price-curve-search/price-curve-search.component';
 import {PriceCurveSearchService} from '../services/price-curve-search.service';
-import {PriceIndexService} from '../../../services/price-index.service';
+import {PriceIndexService} from '../services/price-index.service';
 import {DatePipe, DecimalPipe} from '@angular/common';
 
 @Component({
   selector: 'app-price-curves-list',
   imports: [
     CurveFileUploadComponent,
-    HasRolesDirective,
     PriceCurveSearchComponent,
     RouterLink,
     DatePipe,
@@ -133,6 +131,7 @@ export class PriceCurvesListComponent {
 
   onFileUploadClose() {
     this.showFileUpload.set(false);
+    this.startSearch();
   }
 
 

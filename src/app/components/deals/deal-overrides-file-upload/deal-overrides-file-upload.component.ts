@@ -1,5 +1,5 @@
 import {Component, DestroyRef, inject, output} from '@angular/core';
-import {DealService} from '../../../services/deal.service';
+import {DealService} from '../services/deal.service';
 import {TransactionResult} from '../../../models/transactionresult.model';
 
 @Component({

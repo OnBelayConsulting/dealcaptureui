@@ -3,8 +3,8 @@
   <div class="actions">
     <i class="action-item">{{powerProfileSearchService.searchCriteria()}}  </i>
     <button class="action-item" (click)="onShowSearch()" type="button"><u><b>Search</b></u></button>
-    <a routerLink="/powerProfiles/edit" class="action-item" *kaHasRoles="['view-deals']">New</a>
-    <a routerLink="/powerProfiles/positions/list" class="action-item" *kaHasRoles="['view-deals']">Profile Positions</a>
+    <a routerLink="../edit" class="action-item" >New</a>
+    <a routerLink="../positions/list" class="action-item" >Profile Positions</a>
   </div>
 
   @if (showSearchFields()) {

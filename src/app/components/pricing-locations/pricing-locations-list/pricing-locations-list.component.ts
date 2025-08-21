@@ -4,12 +4,11 @@ import {RouterLink} from "@angular/router";
 import {PricingLocationSearchComponent} from '../pricing-location-search/pricing-location-search.component';
 import {PricingLocationSearchService} from '../services/pricing-location-search.service';
 import {PricingLocationSnapshotCollection} from '../model/pricing-location.model';
-import {PricingLocationService} from '../../../services/pricing-location.service';
+import {PricingLocationService} from '../services/pricing-location.service';
 
 @Component({
   selector: 'app-list-pricing-locations',
     imports: [
-        HasRolesDirective,
         PricingLocationSearchComponent,
         RouterLink
     ],
@@ -31,15 +30,7 @@ export class PricingLocationsListComponent {
   destroyRef = inject(DestroyRef);
 
   ngOnInit() {
-    let subscription = this.priceLocationService.listPricingLocations().subscribe({
-      next: (data) => {
-        this.priceLocationCollection = data;
-        this.setNextAndPrev()
-      },
-      error: (error: Error) => {console.log(error.message)}
-    });
-
-    this.destroyRef.onDestroy( () => subscription.unsubscribe());
+    this.startSearch();
   }
 
   onSelected(entityId: number) {

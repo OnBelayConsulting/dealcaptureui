@@ -1,14 +1,7 @@
-import {
-  Component,
-  DestroyRef,
-  inject,
-  input, OnInit,
-  output,
-  signal,
-} from '@angular/core';
+import {Component, DestroyRef, inject, input, OnInit, output, signal,} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {SearchColumnModel} from '../../../models/search-column.model';
-import {OrganizationService} from '../../../services/organization.service';
+import {OrganizationService} from '../services/organization.service';
 import {OrganizationRoleSummary, OrganizationRoleSummaryCollection} from '../model/organization.model';
 
 @Component({

@@ -1,17 +1,15 @@
 import {Component, DestroyRef, inject, signal} from '@angular/core';
 import {HasRolesDirective} from 'keycloak-angular';
-import {PositionSearchComponent} from '../../positions/position-search/position-search.component';
 import {RouterLink} from '@angular/router';
-import {PriceRiskFactorService} from '../../../services/price-riskfactor.service';
+import {PriceRiskFactorService} from '../service/price-riskfactor.service';
 import {PriceRiskFactorSearchService} from '../service/price-riskfactor-search.service';
 import {PriceRiskFactorSnapshotCollection} from '../model/price-riskfactor.model';
 import {PriceRiskFactorSearchComponent} from '../price-riskfactor-search/price-riskfactor-search.component';
-import {CurrencyPipe, DatePipe, DecimalPipe} from '@angular/common';
+import {DatePipe, DecimalPipe} from '@angular/common';
 
 @Component({
   selector: 'app-price-riskfactor-list',
   imports: [
-    HasRolesDirective,
     RouterLink,
     PriceRiskFactorSearchComponent,
     DatePipe,

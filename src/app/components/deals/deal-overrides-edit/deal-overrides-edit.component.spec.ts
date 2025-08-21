@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DealOverridesEditComponent } from './deal-overrides-edit.component';
+import {DealOverridesEditComponent} from './deal-overrides-edit.component';
 
 describe('DealOverridesEditComponent', () => {
   let component: DealOverridesEditComponent;

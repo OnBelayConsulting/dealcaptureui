@@ -1,7 +1,7 @@
 import {Component, computed, inject} from '@angular/core';
 import {Router, RouterLink} from "@angular/router";
 import {DealSearchService} from '../services/deal-search.service';
-import {FinancialSwapDealSnapshot, PhysicalDealSnapshot} from '../model/deal.model';
+import {FinancialSwapDealSnapshot} from '../model/deal.model';
 
 @Component({
   selector: 'app-swap-deals-list',

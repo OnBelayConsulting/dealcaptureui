@@ -47,8 +47,8 @@ export interface PhysicalDealSnapshot extends DealSnapshot {
 
 export interface FinancialSwapDealSnapshot extends  DealSnapshot {
 
-  paysPriceIndexId : EntityId,
-  receivesPriceIndexId : EntityId,
+  paysPriceIndexId? : EntityId | null | undefined,
+  receivesPriceIndexId? : EntityId | null | undefined,
 
   detail : {
     paysValuationCodeValue : 'Fixed' | 'Index' | 'IndexPlus' | 'PowerProfile' | null | undefined;
@@ -68,15 +68,15 @@ export interface OptionDealDetail {
   strikePriceUnitOfMeasureCodeValue : string | null,
 
 
-  premiumPriceValue : number | null,
-  premiumPriceCurrencyCodeValue : string | null,
-  premiumPriceUnitOfMeasureCodeValue : string | null,
+  premiumPriceValue? : number | null | undefined,
+  premiumPriceCurrencyCodeValue? : string | null | undefined,
+  premiumPriceUnitOfMeasureCodeValue? : string | null | undefined,
 
 
 }
 
 export interface VanillaOptionDealSnapshot extends DealSnapshot {
-  underlyingPriceIndexId : EntityId,
+  underlyingPriceIndexId? : EntityId,
   detail : OptionDealDetail
 
 }

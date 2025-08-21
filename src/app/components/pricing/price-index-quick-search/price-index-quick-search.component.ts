@@ -1,15 +1,8 @@
-import {
-  Component,
-  DestroyRef,
-  inject,
-  input, OnInit,
-  output,
-  signal,
-} from '@angular/core';
+import {Component, DestroyRef, inject, input, OnInit, output, signal,} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {SearchColumnModel} from '../../../models/search-column.model';
-import {PriceIndexSnapshot, PriceIndexSnapshotCollection} from '../model/price.model';
-import {PriceIndexService} from '../../../services/price-index.service';
+import {PriceIndexService} from '../services/price-index.service';
+import {EntityId, EntityListItemCollection} from '../../../models/abstract-snapshot';
 
 @Component({
   selector: 'app-price-index-quick-search',
@@ -58,7 +51,7 @@ export class PriceIndexQuickSearchComponent implements OnInit {
       selectionCriteria = "WHERE name startsWith '" + this.searchOn() + "'";
     else
       selectionCriteria = "WHERE ";
-      let subscription = this.priceIndexService.findPriceIndices(selectionCriteria, 0, 100).subscribe({
+      let subscription = this.priceIndexService.findPriceIndexEntityIds(selectionCriteria, 0, 100).subscribe({
         next: (data) => {this.populateListBox(data)},
         error: (error: Error) => {console.log(error.message)}
       });
@@ -68,7 +61,7 @@ export class PriceIndexQuickSearchComponent implements OnInit {
   }
 
 
-  private populateListBox(collection : PriceIndexSnapshotCollection) {
+  private populateListBox(collection : EntityListItemCollection) {
     if (collection && collection.totalItems > 0) {
       this.searchCount.set(collection.count);
       this.searchTotalCount.set(collection.totalItems);
@@ -82,8 +75,8 @@ export class PriceIndexQuickSearchComponent implements OnInit {
     }
   }
 
-  private convertToSearchModel(snapshot: PriceIndexSnapshot) : SearchColumnModel {
-    return {label: snapshot.detail!.name!, columnName: snapshot.detail!.name!, columnType: "TEXT"};
+  private convertToSearchModel(id: EntityId) : SearchColumnModel {
+    return {label: id.code!, columnName: id.code!, columnType: "TEXT"};
   }
 
 

@@ -20,6 +20,7 @@
       <th>Deal Price</th>
       <th>Deal Price Index</th>
       <th>Market Index</th>
+      <th>Power Profile</th>
       <th>Overrides</th>
       </thead>
       <div>
@@ -58,6 +59,7 @@
               }
               <td> {{ deal.dealPriceIndexId?.code }} </td>
               <td> {{ deal.marketPriceIndexId?.code }} </td>
+              <td> {{ deal.powerProfileId?.code }} </td>
               <td><a routerLink="../{{deal.entityId!.id}}/overrides/list"  > Overrides </a> </td>
             </tr>
           }

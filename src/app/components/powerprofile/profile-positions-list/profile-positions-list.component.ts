@@ -1,11 +1,6 @@
 import {Component, DestroyRef, inject, signal} from '@angular/core';
-import {HasRolesDirective} from "keycloak-angular";
-import {PositionSearchComponent} from "../../positions/position-search/position-search.component";
 import {RouterLink} from "@angular/router";
-import {PositionService} from '../../../services/position.service';
-import {PositionSearchService} from '../../positions/service/position-search.service';
-import {DealPositionSnapshotCollection} from '../../positions/model/position.model';
-import {PowerProfilePositionService} from '../../../services/profile-position.service';
+import {PowerProfilePositionService} from '../service/profile-position.service';
 import {PowerProfilePositionSearchService} from '../service/profile-position-search.service';
 import {PowerProfilePositionSnapshotCollection} from '../model/profile-position.model';
 import {ProfilePositionsSearchComponent} from '../profile-positions-search/profile-positions-search.component';
@@ -13,7 +8,6 @@ import {ProfilePositionsSearchComponent} from '../profile-positions-search/profi
 @Component({
   selector: 'app-profile-positions-list',
   imports: [
-    HasRolesDirective,
     RouterLink,
     ProfilePositionsSearchComponent
   ],

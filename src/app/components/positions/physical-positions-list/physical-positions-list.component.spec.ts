@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PhysicalPositionsListComponent } from './physical-positions-list.component';
+import {PhysicalPositionsListComponent} from './physical-positions-list.component';
 
 describe('PhysicalPositionsListComponent', () => {
   let component: PhysicalPositionsListComponent;

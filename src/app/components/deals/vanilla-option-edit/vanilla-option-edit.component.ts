@@ -1,29 +1,32 @@
 import {Component, OnInit} from '@angular/core';
 import {
-    BusinessContactsQuickSearchComponent
+  BusinessContactsQuickSearchComponent
 } from "../../businesscontacts/business-contacts-quick-search/business-contacts-quick-search.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HasRolesDirective} from "keycloak-angular";
 import {
-    OrganizationQuickSearchComponent
+  OrganizationQuickSearchComponent
 } from "../../organizations/organization-quick-search/organization-quick-search.component";
 import {
-    PriceIndexQuickSearchComponent
+  PriceIndexQuickSearchComponent
 } from "../../pricing/price-index-quick-search/price-index-quick-search.component";
 import {RouterLink} from "@angular/router";
-import {DealSnapshot, FinancialSwapDealSnapshot, VanillaOptionDealSnapshot} from '../model/deal.model';
+import {DealSnapshot, VanillaOptionDealSnapshot} from '../model/deal.model';
 import {DealEditComponent} from '../deal-edit/deal-edit.component';
+import {
+  PowerProfileQuickSearchComponent
+} from '../../powerprofile/power-profile-quick-search/power-profile-quick-search.component';
 
 @Component({
   selector: 'app-vanilla-option-edit',
   imports: [
     BusinessContactsQuickSearchComponent,
     FormsModule,
-    HasRolesDirective,
     OrganizationQuickSearchComponent,
     PriceIndexQuickSearchComponent,
     RouterLink,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PowerProfileQuickSearchComponent
   ],
   templateUrl: './vanilla-option-edit.component.html',
   styleUrl: './vanilla-option-edit.component.scss'

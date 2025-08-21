@@ -1,5 +1,19 @@
 <div>
-  <h3>Upload curves in CSV format: INDEX_NAME,FREQUENCY_CODE,CURVE_DATE,HOUR_ENDING,OBSERVED_DATE_TIME,CURVE_VALUE</h3>
+  <h3>Upload curves in one of four CSV formats:</h3>
+    <ol>
+      <li> INDEX_NAME,FREQUENCY_CODE,CURVE_DATE,HOUR_ENDING,OBSERVED_DATE_TIME,CURVE_VALUE</li>
+      <li> INDEX_NAME,FREQUENCY_CODE,CURVE_DATE,HOUR_ENDING,CURVE_VALUE</li>
+      <li> INDEX_NAME,FREQUENCY_CODE,CURVE_DATE,OBSERVED_DATE_TIME,CURVE_VALUE</li>
+      <li> INDEX_NAME,FREQUENCY_CODE,CURVE_DATE,CURVE_VALUE</li>
+    </ol>
+  <div>
+    <ol>
+     <li>The first version is the full version. Set hourEnding to zero for frequencies D and M, Observed date/time is supplied.
+     <li>The second version sets hour ending but defaults observed date/time to now.
+     <li>the third version skips hour ending but supplies observed date/time.
+     <li>The final version is the short version - no hour ending and defaults observed date/time.
+    </ol>
+  </div>
   <input type="file"  (change)="onFileSelected($event)" >
   <button (click)="onClose()">close</button>
   <p>

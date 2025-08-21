@@ -1,8 +1,7 @@
 import {Component, DestroyRef, inject, signal} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {PositionService} from '../../../services/position.service';
+import {PositionService} from '../service/position.service';
 import {PositionSearchService} from '../service/position-search.service';
-import {HasRolesDirective} from 'keycloak-angular';
 import {RouterLink} from '@angular/router';
 import {PositionSearchComponent} from '../position-search/position-search.component';
 import {DefaultPositionsListComponent} from '../default-positions-list/default-positions-list.component';
@@ -16,7 +15,6 @@ import {
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    HasRolesDirective,
     RouterLink,
     PositionSearchComponent,
     DefaultPositionsListComponent,

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { VanillaOptionEditComponent } from './vanilla-option-edit.component';
+import {VanillaOptionEditComponent} from './vanilla-option-edit.component';
 
 describe('VanillaOptionEditComponent', () => {
   let component: VanillaOptionEditComponent;

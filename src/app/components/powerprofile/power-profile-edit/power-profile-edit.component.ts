@@ -2,7 +2,7 @@ import {Component, DestroyRef, inject, input, signal} from '@angular/core';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from '@angular/router';
 import {TransactionResult} from '../../../models/transactionresult.model';
-import {PowerProfileService} from '../../../services/power-profile.service';
+import {PowerProfileService} from '../service/power-profile.service';
 import {
   PowerProfileDaySnapshot,
   PowerProfileIndexMappingSnapshot,
@@ -122,6 +122,7 @@ export class PowerProfileEditComponent {
               id: powerProfileSnapshot.entityId!.id
             };
             if (powerProfileSnapshot.settledPriceIndexId) {
+              this.myForm.controls.settledPriceIndex.setValue(powerProfileSnapshot.settledPriceIndexId!.code);
               this.modifiedSnapshot.settledPriceIndexId = {
                 id: powerProfileSnapshot.settledPriceIndexId.id,
                 code: powerProfileSnapshot.settledPriceIndexId.code
@@ -135,13 +136,13 @@ export class PowerProfileEditComponent {
             this.populateIndexMappingFields(powerProfileSnapshot);
 
           } else {
-            this.router.navigate(['powerProfiles', 'list']);
+            this.router.navigate(['deals','powerProfiles', 'list']);
 
           }
           this.formReady.set(true);
         },
         error: err => {
-          this.router.navigate(['powerProfiles', 'list']);
+          this.router.navigate(['deals','powerProfiles', 'list']);
         }
       });
 
@@ -224,7 +225,7 @@ export class PowerProfileEditComponent {
   }
 
   onReset() {
-    this.router.navigate(['powerProfiles', 'list']);
+    this.router.navigate(['deals','powerProfiles', 'list']);
   }
 
 
@@ -589,4 +590,25 @@ export class PowerProfileEditComponent {
       }
     }
   }
+
+  onDelete() {
+    if (this.modifiedSnapshot.entityId?.id) {
+      let snapshot : PowerProfileSnapshot = {
+        entityState : 'DELETE',
+        entityId : {
+          id : this.modifiedSnapshot.entityId.id
+        }
+      }
+      let subscription = this.powerProfileService.savePowerProfile(snapshot).subscribe({
+        next: (data) => {this.transactionResult = data},
+        error: (error: Error) => {console.log(error.message)}
+      });
+
+      this.destroyRef.onDestroy( () => subscription.unsubscribe());
+
+
+    }
+  }
+
+
 }

@@ -15,7 +15,7 @@ export interface ErrorHoldingSnapshot {
 
 
 export interface AbstractSnapshot extends ErrorHoldingSnapshot {
-  entityState?: string;
+  entityState?: 'UNMODIFIED' | 'MODIFIED' | 'NEW' | 'DELETE';
   version?: number;
 
   entityId?: EntityId
@@ -29,4 +29,8 @@ export interface AbstractSnapshotCollection<T> extends ErrorHoldingSnapshot {
   totalItems: number;
   name: string;
   snapshots: [T];
+}
+
+export interface EntityListItemCollection extends AbstractSnapshotCollection<EntityId> {
+
 }

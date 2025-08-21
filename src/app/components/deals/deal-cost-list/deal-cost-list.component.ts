@@ -1,16 +1,12 @@
-import {Component, DestroyRef, inject, input, signal} from '@angular/core';
-import {DealSearchComponent} from "../deal-search/deal-search.component";
+import {Component, DestroyRef, inject, input} from '@angular/core';
 import {HasRolesDirective} from "keycloak-angular";
 import {Router, RouterLink} from "@angular/router";
-import {DealService} from '../../../services/deal.service';
-import {DealSearchService} from '../services/deal-search.service';
-import {DealSnapshotCollection} from '../model/dealSnapshotCollection';
+import {DealService} from '../services/deal.service';
 import {DealCostSnapshotCollection} from '../model/deal-cost.model';
 
 @Component({
   selector: 'app-deal-cost-list',
     imports: [
-        HasRolesDirective,
         RouterLink
     ],
   templateUrl: './deal-cost-list.component.html',

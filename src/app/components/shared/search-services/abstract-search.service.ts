@@ -1,6 +1,7 @@
 import {computed, signal} from '@angular/core';
 import {CodeItem} from '../../../models/code.model';
 import {SearchColumnModel} from '../../../models/search-column.model';
+
 export abstract class AbstractSearchService {
 
   codeManagerMap = new Map<string, CodeItem[]>();

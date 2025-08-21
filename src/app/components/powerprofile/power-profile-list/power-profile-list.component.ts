@@ -1,18 +1,16 @@
 import {Component, DestroyRef, inject, signal} from '@angular/core';
-import {HasRolesDirective} from "keycloak-angular";
 import {RouterLink} from "@angular/router";
 import {PowerProfileSearchComponent} from '../power-profile-search/power-profile-search.component';
-import {PowerProfileService} from '../../../services/power-profile.service';
+import {PowerProfileService} from '../service/power-profile.service';
 import {PowerProfileSearchService} from '../service/power-profile-search.service';
 import {PowerProfileSnapshotCollection} from '../model/power-profile.model';
 
 @Component({
   selector: 'app-power-profile-list',
-    imports: [
-        HasRolesDirective,
-        PowerProfileSearchComponent,
-        RouterLink
-    ],
+  imports: [
+    PowerProfileSearchComponent,
+    RouterLink
+  ],
   templateUrl: './power-profile-list.component.html',
   styleUrl: './power-profile-list.component.scss'
 })

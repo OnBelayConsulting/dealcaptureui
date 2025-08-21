@@ -2,8 +2,9 @@ import {Component, DestroyRef, inject, input} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {TransactionResult} from '../../../models/transactionresult.model';
-import {PricingLocationService} from '../../../services/pricing-location.service';
+import {PricingLocationService} from '../services/pricing-location.service';
 import {PricingLocationSnapshot} from '../model/pricing-location.model';
+import {PriceCurveSnapshot} from '../../pricing/model/price.model';
 
 @Component({
   selector: 'app-pricing-locations-edit',
@@ -18,7 +19,7 @@ export class PricingLocationsEditComponent {
   pricingLocationService = inject(PricingLocationService);
   destroyRef = inject(DestroyRef);
 
-  pricingLocationId = input<number>(-1);
+  pricingLocationId = input<number | undefined>(undefined);
 
   transactionResult: TransactionResult | undefined = undefined;
 
@@ -60,8 +61,8 @@ export class PricingLocationsEditComponent {
   });
 
   ngOnInit(): void {
-    if (this.pricingLocationId && this.pricingLocationId() > 0) {
-      let subscriber = this.pricingLocationService.findPricingLocationById(this.pricingLocationId()).subscribe( {
+    if (this.pricingLocationId()) {
+      let subscriber = this.pricingLocationService.findPricingLocationById(this.pricingLocationId()!).subscribe( {
         next: pricingLocationSnapshot => {
           if (pricingLocationSnapshot) {
             this.modifiedSnapshot.entityState = 'UNMODIFIED';
@@ -79,12 +80,12 @@ export class PricingLocationsEditComponent {
             this.myForm.controls.stateProvinceCode.setValue(pricingLocationSnapshot.detail!.stateProvinceCode);
 
           } else {
-            this.router.navigate(['pricingLocations', 'list']);
+            this.router.navigate(['pricing', 'pricingLocations', 'list']);
 
           }
         },
         error: err => {
-          this.router.navigate(['pricingLocations', 'list']);
+          this.router.navigate(['pricing','pricingLocations', 'list']);
         }
       });
 
@@ -96,7 +97,7 @@ export class PricingLocationsEditComponent {
 
 
   onReset() {
-    this.router.navigate(['pricingLocations', 'list']);
+    this.router.navigate(['pricing','pricingLocations', 'list']);
   }
 
 
@@ -146,5 +147,24 @@ export class PricingLocationsEditComponent {
 
   }
 
+
+  onDelete() {
+    if (this.modifiedSnapshot.entityId?.id) {
+      let snapshot : PricingLocationSnapshot = {
+        entityState : 'DELETE',
+        entityId : {
+          id : this.modifiedSnapshot.entityId.id
+        }
+      }
+      let subscription = this.pricingLocationService.savePricingLocation(snapshot).subscribe({
+        next: (data) => {this.transactionResult = data},
+        error: (error: Error) => {console.log(error.message)}
+      });
+
+      this.destroyRef.onDestroy( () => subscription.unsubscribe());
+
+
+    }
+  }
 
 }

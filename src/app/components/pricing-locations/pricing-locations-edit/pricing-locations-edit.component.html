@@ -1,5 +1,5 @@
 <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-  <h2>Create/Update Price Index</h2>
+  <h2>Create/Update Pricing Location</h2>
 
   <div class="control-row">
     <div class="control">
@@ -56,6 +56,7 @@
   } @else {
     <p class="form-actions">
       <button type="reset" (click) = "onReset()" class="button button-flat">Cancel</button>
+      <button type="reset" (click) = "onDelete()" class="button button-flat">Delete</button>
       <button type="submit" class="button">Save</button>
     </p>
 
