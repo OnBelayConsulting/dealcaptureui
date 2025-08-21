@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DealOverridesFileUploadComponent } from './deal-overrides-file-upload.component';
+import {DealOverridesFileUploadComponent} from './deal-overrides-file-upload.component';
 
 describe('DealOverridesFileUploadComponent', () => {
   let component: DealOverridesFileUploadComponent;

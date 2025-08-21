@@ -1,5 +1,4 @@
 import {AbstractSnapshot, AbstractSnapshotCollection} from '../../../models/abstract-snapshot';
-import {DealSnapshot} from './deal.model';
 
 type overrideValue = number | null;
 

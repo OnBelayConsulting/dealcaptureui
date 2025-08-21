@@ -1,0 +1,18 @@
+<nav class="menu">
+
+  <div class="actions">
+    @if (!authenticated()) {
+      <a routerLink="/" class="action-item">Home</a>
+    } @else {
+      <a routerLink="/" class="action-item">Home</a>
+      <a routerLink="list" class="action-item" >Deals</a>
+      <a routerLink="PhysicalDeal/edit" class="action-item" >New Physical Deal</a>
+      <a routerLink="FinancialSwap/edit" class="action-item" >New Financial Swap</a>
+      <a routerLink="VanillaOption/edit" class="action-item" >New Vanilla Option</a>
+      <a routerLink="powerProfiles/list" class="action-item" >Power Profiles</a>
+      <a routerLink="positions/list" class="action-item" >Positions</a>
+      <a routerLink="mtm" class="action-item" >Queue Mark-to-Market</a>
+    }
+  </div>
+</nav>
+

@@ -1,6 +1,5 @@
-import {Component, effect, EventEmitter, inject, input, output, Output, signal} from '@angular/core';
+import {Component, effect, output, signal} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {PriceCurveSearchService} from '../../pricing/services/price-curve-search.service';
 import {SearchColumnModel, SearchOperator} from '../../../models/search-column.model';
 import {CodeItem} from '../../../models/code.model';
 import {AbstractSearchService} from '../search-services/abstract-search.service';
@@ -92,7 +91,7 @@ export class BaseSearchComponent {
   }
 
   onReset() {
-    this.localSelectionCriteria.set(this.searchService.selectionCriteria());
+    this.localSelectionCriteria.set('');
     this.localOrderByCriteria.set(this.searchService.orderByCriteria());
     this.localSearchLimit.set(this.searchService.limitSetting());
   }

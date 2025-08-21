@@ -3,8 +3,8 @@
   <div class="actions">
     <i class="action-item">{{powerProfilePositionSearchService.searchCriteria()}}  </i>
     <button class="action-item" (click)="onShowSearch()" type="button"><u><b>Search</b></u></button>
-    <a routerLink="/jobs/edit"[queryParams]="{jobTypeCode: 'PwrProfilePositionGeneration'}" class="action-item" *kaHasRoles="['view-deals']">Generate Positions</a>
-    <a routerLink="/jobs/edit"[queryParams]="{jobTypeCode: 'PwrProfilePositionValuation'}" class="action-item" *kaHasRoles="['view-deals']">Value Positions</a>
+    <a routerLink="/jobs/powerProfile/create"[queryParams]="{jobTypeCode: 'PwrProfilePositionGeneration'}" class="action-item" >Generate Positions</a>
+    <a routerLink="/jobs/powerProfile/create"[queryParams]="{jobTypeCode: 'PwrProfilePositionValuation'}" class="action-item" >Value Positions</a>
   </div>
 
   @if (showSearchFields()) {

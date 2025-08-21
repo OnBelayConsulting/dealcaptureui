@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from '../../models/user.model';
+import {Component, OnInit} from '@angular/core';
+import {User} from '../../models/user.model';
 import Keycloak from 'keycloak-js';
 
 @Component({

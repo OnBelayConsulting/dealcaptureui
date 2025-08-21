@@ -2,7 +2,7 @@ import {Component, DestroyRef, inject, signal} from '@angular/core';
 import {Router} from "@angular/router";
 import {DealJobSearchComponent} from '../deal-job-search/deal-job-search.component';
 import {DealJobSearchService} from '../service/deal-job-search.service';
-import {DealJobService} from '../../../services/deal-job.service';
+import {DealJobService} from '../service/deal-job.service';
 import {DealJobSnapshotCollection} from '../model/deal-job.model';
 import {ReactiveFormsModule} from '@angular/forms';
 import {DatePipe} from '@angular/common';

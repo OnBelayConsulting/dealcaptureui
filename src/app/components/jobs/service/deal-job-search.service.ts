@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AbstractSearchService} from '../../shared/search-services/abstract-search.service';
 import {SearchColumnModel} from '../../../models/search-column.model';
 import {CodeItem} from '../../../models/code.model';
@@ -45,7 +45,7 @@ export class DealJobSearchService extends AbstractSearchService{
       { label: 'Currency', columnName: "currencyCode", columnType: "CODE", codeEntityName: 'CurrencyCode' },
     ];
 
-    super('createdDateTime', mySearchColumns);
+    super('jobId', mySearchColumns);
     this.codeManagerMap.set('JobTypeCode', this.jobTypeCodeItems);
     this.codeManagerMap.set('JobStatusCode', this.jobStatusCodeItems);
     this.codeManagerMap.set('CurrencyCode', this.currencyCodeItems);

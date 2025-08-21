@@ -23,6 +23,7 @@
       <th>Premium</th>
       <th>Strike</th>
       <th>Underlying Index</th>
+      <th>Underlying Power Profile</th>
       </thead>
       <div>
         @if (dealSearchService.showPrev()) {
@@ -56,17 +57,14 @@
               } @else {
                 <td></td>
               }
-              @if (deal.detail?.premiumPriceValue) {
-                <td> {{ deal.detail!.premiumPriceValue }} {{deal.detail?.premiumPriceCurrencyCodeValue}} / {{deal.detail?.premiumPriceUnitOfMeasureCodeValue}} </td>
+              @if (deal.detail.premiumPriceValue) {
+                <td> {{ deal.detail!.premiumPriceValue }} {{deal.detail!.premiumPriceCurrencyCodeValue}} / {{deal.detail!.premiumPriceUnitOfMeasureCodeValue}} </td>
               } @else {
                 <td></td>
               }
-              @if (deal.detail?.strikePriceValue) {
-                <td> {{ deal.detail!.strikePriceValue }} {{deal.detail?.strikePriceCurrencyCodeValue}} / {{deal.detail?.strikePriceUnitOfMeasureCodeValue}} </td>
-              } @else {
-                <td></td>
-              }
+              <td> {{ deal.detail!.strikePriceValue }} {{deal.detail!.strikePriceCurrencyCodeValue}} / {{deal.detail!.strikePriceUnitOfMeasureCodeValue}} </td>
               <td> {{ deal.underlyingPriceIndexId?.code }} </td>
+              <td> {{ deal.powerProfileId?.code }} </td>
             </tr>
           }
         }

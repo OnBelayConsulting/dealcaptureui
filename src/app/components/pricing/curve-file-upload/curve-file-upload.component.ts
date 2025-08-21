@@ -1,8 +1,8 @@
 import {Component, DestroyRef, inject, input, output} from '@angular/core';
-import {PriceIndexService} from '../../../services/price-index.service';
+import {PriceIndexService} from '../services/price-index.service';
 import {TransactionResult} from '../../../models/transactionresult.model';
-import {FxIndexService} from '../../../services/fx-index.service';
-import {InterestIndexService} from '../../../services/interest-rate-index.service';
+import {FxIndexService} from '../../fx/services/fx-index.service';
+import {InterestIndexService} from '../../interest-rates/services/interest-rate-index.service';
 
 @Component({
   selector: 'app-curve-file-upload',

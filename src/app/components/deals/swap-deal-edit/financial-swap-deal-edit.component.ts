@@ -1,29 +1,32 @@
 import {Component, OnInit} from '@angular/core';
 import {
-    BusinessContactsQuickSearchComponent
+  BusinessContactsQuickSearchComponent
 } from "../../businesscontacts/business-contacts-quick-search/business-contacts-quick-search.component";
 import {HasRolesDirective} from "keycloak-angular";
 import {
-    OrganizationQuickSearchComponent
+  OrganizationQuickSearchComponent
 } from "../../organizations/organization-quick-search/organization-quick-search.component";
 import {
-    PriceIndexQuickSearchComponent
+  PriceIndexQuickSearchComponent
 } from "../../pricing/price-index-quick-search/price-index-quick-search.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {RouterLink} from "@angular/router";
 import {DealEditComponent} from '../deal-edit/deal-edit.component';
-import {DealSnapshot, FinancialSwapDealSnapshot, PhysicalDealSnapshot} from '../model/deal.model';
+import {DealSnapshot, FinancialSwapDealSnapshot} from '../model/deal.model';
+import {
+  PowerProfileQuickSearchComponent
+} from '../../powerprofile/power-profile-quick-search/power-profile-quick-search.component';
 
 @Component({
   selector: 'app-swap-deal-edit',
-    imports: [
-        BusinessContactsQuickSearchComponent,
-        HasRolesDirective,
-        OrganizationQuickSearchComponent,
-        PriceIndexQuickSearchComponent,
-        ReactiveFormsModule,
-        RouterLink
-    ],
+  imports: [
+    BusinessContactsQuickSearchComponent,
+    OrganizationQuickSearchComponent,
+    PriceIndexQuickSearchComponent,
+    ReactiveFormsModule,
+    RouterLink,
+    PowerProfileQuickSearchComponent
+  ],
   templateUrl: './financial-swap-deal-edit.component.html',
   styleUrl: './financial-swap-deal-edit.component.scss'
 })

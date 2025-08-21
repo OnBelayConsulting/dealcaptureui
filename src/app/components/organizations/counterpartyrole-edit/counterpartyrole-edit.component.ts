@@ -1,9 +1,9 @@
 import {Component, DestroyRef, inject, input, OnInit, signal} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {OrganizationService} from '../../../services/organization.service';
+import {OrganizationService} from '../services/organization.service';
 import {Router} from '@angular/router';
 import {TransactionResult} from '../../../models/transactionresult.model';
-import {CompanyRoleSnapshot, CounterpartyRoleSnapshot} from '../model/organization.model';
+import {CounterpartyRoleSnapshot} from '../model/organization.model';
 
 @Component({
   selector: 'app-counterpartyrole-edit',

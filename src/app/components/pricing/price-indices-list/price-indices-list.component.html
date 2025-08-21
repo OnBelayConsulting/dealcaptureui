@@ -3,7 +3,7 @@
   <div class="actions">
     <i class="action-item">{{priceIndexSearchService.searchCriteria()}}  </i>
     <button class="action-item" (click)="onShowSearch()" type="button"><u><b>Search</b></u></button>
-    <a routerLink="/priceIndices/edit" class="action-item" *kaHasRoles="['view-deals']">New</a>
+    <a routerLink="../edit" class="action-item" >New</a>
   </div>
 
   @if (showSearchFields()) {
@@ -48,7 +48,7 @@
             <td>{{ priceIndexSnapshot!.detail!.unitOfMeasureCodeValue }}</td>
             <td>{{ priceIndexSnapshot!.detail!.frequencyCodeValue }}</td>
             <td>{{ priceIndexSnapshot!.detail!.benchSettlementRuleCodeValue }}</td>
-            <td>{{ priceIndexSnapshot!.benchIndexId?.code}}</td>
+            <td>{{ priceIndexSnapshot!.benchmarkIndexId?.code}}</td>
             <td>{{ priceIndexSnapshot!.baseIndexId?.code}}</td>
           </tr>
         }

@@ -4,7 +4,7 @@
     <i class="action-item">{{priceRiskFactorSearchService.searchCriteria()}}  </i>
     <button class="action-item" (click)="startSearch()" type="button"><u><b>Search</b></u></button>
     <button class="action-item" (click)="onToggleShowSearch()" type="button"><u><b>{{showSearchLabel()}}</b></u></button>
-    <a routerLink="/jobs/edit"[queryParams]="{jobTypeCode: 'PriceRiskFactorValuation'}" class="action-item" *kaHasRoles="['view-deals']">Value Risk Factors</a>
+    <a routerLink="/jobs/deal/create"[queryParams]="{jobTypeCode: 'PriceRiskFactorValuation'}" class="action-item" >Value Risk Factors</a>
   </div>
 
   @if (showSearchFields()) {

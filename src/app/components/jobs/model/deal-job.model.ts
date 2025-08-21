@@ -5,7 +5,7 @@ export interface DealJobDetail {
   jobStatusCodeValue:  string | undefined,
   queryText:  string | undefined,
   domainId?: number | undefined,
-  currencyCodeValue :  string | undefined,
+  currencyCodeValue? :  string | undefined,
   createdDateTime:  string | undefined,
   fromDate :  string | undefined,
   toDate :  string | undefined,

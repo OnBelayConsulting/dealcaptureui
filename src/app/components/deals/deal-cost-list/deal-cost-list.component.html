@@ -3,7 +3,7 @@
 
 
   <div class="actions">
-    <a routerLink="/deals/{{dealId()}}/dealCosts/edit" class="action-item" *kaHasRoles="['view-deals']">New Cost</a>
+    <a routerLink="/deals/{{dealId()}}/dealCosts/edit" class="action-item" >New Cost</a>
   </div>
 
   @if (!dealCostSnapshotCollection) {
@@ -36,7 +36,7 @@
 
     </table>
     <div class="actions">
-      <a routerLink="/deals/list" class="action-item" *kaHasRoles="['view-deals']">Close</a>
+      <a routerLink="/deals/list" class="action-item" >Close</a>
     </div>
   }
 </article>

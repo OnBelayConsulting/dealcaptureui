@@ -1,11 +1,10 @@
-
-import { PriceIndicesListComponent } from './price-indices-list.component';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {PriceIndicesListComponent} from './price-indices-list.component';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {PriceIndexSnapshotCollection} from '../model/price.model';
 import {Observable} from 'rxjs';
 import {HttpResponse, provideHttpClient} from '@angular/common/http';
-import {PriceIndexService} from '../../../services/price-index.service';
+import {PriceIndexService} from '../services/price-index.service';
 import {provideHttpClientTesting} from '@angular/common/http/testing';
 
 describe('PriceIndicesListComponent', () => {

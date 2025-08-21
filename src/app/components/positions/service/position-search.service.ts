@@ -1,8 +1,8 @@
-import {computed, DestroyRef, inject, Injectable, signal} from '@angular/core';
+import {DestroyRef, inject, Injectable, signal} from '@angular/core';
 import {AbstractSearchService} from '../../shared/search-services/abstract-search.service';
 import {SearchColumnModel} from '../../../models/search-column.model';
 import {CodeItem} from '../../../models/code.model';
-import {PositionService} from '../../../services/position.service';
+import {PositionService} from './position.service';
 import {DealPositionSnapshotCollection} from '../model/position.model';
 
 @Injectable({

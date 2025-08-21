@@ -1,6 +1,6 @@
 import {Component, DestroyRef, inject, OnInit, signal} from '@angular/core';
 import {PriceIndexSearchComponent} from '../price-index-search/price-index-search.component';
-import {PriceIndexService} from '../../../services/price-index.service';
+import {PriceIndexService} from '../services/price-index.service';
 import {PriceIndexSearchService} from '../services/price-index-search.service';
 import {PriceIndexSnapshotCollection} from '../model/price.model';
 import {RouterLink} from '@angular/router';
@@ -11,7 +11,6 @@ import {HasRolesDirective} from 'keycloak-angular';
   imports: [
     PriceIndexSearchComponent,
     RouterLink,
-    HasRolesDirective
   ],
   templateUrl: './price-indices-list.component.html',
   styleUrl: './price-indices-list.component.scss'
@@ -34,15 +33,7 @@ export class PriceIndicesListComponent implements OnInit {
   destroyRef = inject(DestroyRef);
 
   ngOnInit() {
-    let subscription = this.priceIndexService.listPriceIndices().subscribe({
-      next: (data) => {
-        this.priceIndexCollection = data;
-        this.setNextAndPrev()
-      },
-      error: (error: Error) => {console.log(error.message)}
-    });
-
-    this.destroyRef.onDestroy( () => subscription.unsubscribe());
+    this.startSearch();
   }
 
   onSelected(entityId: number) {

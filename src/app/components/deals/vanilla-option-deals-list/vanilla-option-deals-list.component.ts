@@ -1,13 +1,11 @@
 import {Component, computed, inject} from '@angular/core';
-import {Router, RouterLink} from "@angular/router";
+import {Router} from "@angular/router";
 import {DealSearchService} from '../services/deal-search.service';
-import {FinancialSwapDealSnapshot, VanillaOptionDealSnapshot} from '../model/deal.model';
+import {VanillaOptionDealSnapshot} from '../model/deal.model';
 
 @Component({
   selector: 'app-vanilla-option-deals-list',
-    imports: [
-        RouterLink
-    ],
+  imports: [],
   templateUrl: './vanilla-option-deals-list.component.html',
   styleUrl: './vanilla-option-deals-list.component.scss'
 })

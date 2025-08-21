@@ -2,7 +2,7 @@
   <h2>Create/Update Physical Deal</h2>
   @if (dealSnapshot?.entityState !== 'NEW') {
     <div>
-      <a routerLink="/deals/{{dealId()}}/dealCosts/list" class="action-item" *kaHasRoles="['view-deals']">Deal Costs</a>
+      <a routerLink="/deals/{{dealId()}}/dealCosts/list" class="action-item" >Deal Costs</a>
 
     </div>
     <hr>
@@ -16,8 +16,9 @@
         <div class="control">
           <label for="commodity">Commodity</label>
           <select id="commodity" name="commodity" [formControl]="myForm.controls.commodity">
-            <option value="NATGAS">Natural Gas</option>
             <option value="CRUDE">Crude</option>
+            <option value="NATGAS">Natural Gas</option>
+            <option value="POWER">Power</option>
           </select>
         </div>
         <div class="control">
@@ -290,6 +291,22 @@
           }
         </div>
       </div>
+      <div class="control-row">
+        <div class="control">
+          <label for="powerProfile">Power Profile </label>
+          <input type="text" id="powerProfile" name="powerProfile" [formControl]="myForm.controls.powerProfile"/>
+          <button type="button" (click)="searchForPowerProfile()"> Search</button>
+          @if (showPowerProfileSearch) {
+            <div>
+              <app-power-profile-quick-search
+                [title] = "'Search for Power Profile'"
+                [searchField]=" (myForm.controls.powerProfile.value) ? myForm.controls.powerProfile.value : undefined"
+                (cancel) = "onCancelPowerProfileSearch()"
+                (result)="updatePowerProfile($event)" />
+            </div>
+          }
+        </div>
+      </div>
     </fieldset>
   </div>
 
@@ -309,6 +326,7 @@
     <p class="form-actions">
       <button type="reset" (click) = "onReset()" class="button button-flat">Clear</button>
       <button type="reset" (click) = "onCancel()" class="button button-flat">Cancel</button>
+      <button type="reset" (click) = "onDelete()" class="button button-flat">Delete</button>
       <button type="submit" class="button">Save</button>
     </p>
   }

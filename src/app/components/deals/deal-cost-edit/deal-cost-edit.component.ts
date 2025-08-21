@@ -1,9 +1,10 @@
-import {Component, DestroyRef, inject, input, OnInit, signal} from '@angular/core';
+import {Component, DestroyRef, inject, input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {TransactionResult} from '../../../models/transactionresult.model';
-import {DealService} from '../../../services/deal.service';
+import {DealService} from '../services/deal.service';
 import {DealCostSnapshot} from '../model/deal-cost.model';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {PriceCurveSnapshot} from '../../pricing/model/price.model';
 
 @Component({
   selector: 'app-deal-cost-edit',
@@ -138,5 +139,24 @@ export class DealCostEditComponent implements OnInit {
 
   }
 
+
+  onDelete() {
+    if (this.dealCostSnapshot.entityId?.id) {
+      let snapshot : DealCostSnapshot = {
+        entityState : 'DELETE',
+        entityId : {
+          id : this.dealCostSnapshot.entityId.id
+        }
+      }
+      let subscription = this.dealService.saveDealCost(snapshot).subscribe({
+        next: (data) => {this.transactionResult = data},
+        error: (error: Error) => {console.log(error.message)}
+      });
+
+      this.destroyRef.onDestroy( () => subscription.unsubscribe());
+
+
+    }
+  }
 
 }

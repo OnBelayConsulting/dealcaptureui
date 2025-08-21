@@ -1,8 +1,8 @@
 import {Component, DestroyRef, inject, input, output, signal} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormsModule} from "@angular/forms";
 import {SearchColumnModel} from '../../../models/search-column.model';
-import {BusinessContactService} from '../../../services/business-contact.service';
-import {BusinessContactSnapshot, BusinessContactSnapshotCollection, ContactType} from '../model/business-contact.model';
+import {BusinessContactService} from '../services/business-contact.service';
+import {BusinessContactSnapshot, BusinessContactSnapshotCollection} from '../model/business-contact.model';
 
 @Component({
   selector: 'app-business-contacts-quick-search',

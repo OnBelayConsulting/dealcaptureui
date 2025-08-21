@@ -1,12 +1,12 @@
-import { Component, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { BehaviorSubject, timer } from 'rxjs';
+import {Component} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MenuComponent} from '../menu/menu.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  imports: [CommonModule]
+  imports: [CommonModule, MenuComponent]
 })
 export class HomeComponent {
 }

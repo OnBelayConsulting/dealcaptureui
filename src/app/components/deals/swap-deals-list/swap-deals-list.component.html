@@ -21,6 +21,7 @@
       <th>Plus</th>
       <th>Pays Index</th>
       <th>Receives Index</th>
+      <th>Receives Power Profile</th>
       <th>Overrides</th>
       </thead>
       <div>
@@ -60,6 +61,7 @@
               }
               <td> {{ deal.paysPriceIndexId?.code }} </td>
               <td> {{ deal.receivesPriceIndexId?.code }} </td>
+              <td> {{ deal.powerProfileId?.code }} </td>
               <td><a routerLink="../{{deal.entityId!.id}}/overrides/list"  > Overrides </a> </td>
             </tr>
           }

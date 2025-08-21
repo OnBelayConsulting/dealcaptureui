@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { FinancialSwapPositionsListComponent } from './financial-swap-positions-list.component';
+import {FinancialSwapPositionsListComponent} from './financial-swap-positions-list.component';
 
 describe('FinancialSwapPositionsListComponent', () => {
   let component: FinancialSwapPositionsListComponent;

@@ -1,12 +1,9 @@
 import {Component, DestroyRef, inject, input} from '@angular/core';
-import {
-    PricingLocationQuickSearchComponent
-} from "../../pricing-locations/pricing-location-quick-search/pricing-location-quick-search.component";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from '@angular/router';
-import {PriceIndexService} from '../../../services/price-index.service';
+import {PriceIndexService} from '../services/price-index.service';
 import {TransactionResult} from '../../../models/transactionresult.model';
-import {PriceCurveSnapshot, PriceIndexSnapshot} from '../model/price.model';
+import {PriceCurveSnapshot} from '../model/price.model';
 import {PriceIndexQuickSearchComponent} from '../price-index-quick-search/price-index-quick-search.component';
 
 @Component({
@@ -97,8 +94,11 @@ export class PriceCurveEditComponent {
             this.modifiedSnapshot.entityId = {
               id: priceCurveSnapshot.entityId!.id
             };
-
-            this.myForm.controls.indexName.setValue(priceCurveSnapshot.indexId.code);
+            this.modifiedSnapshot.indexId = {
+              id: priceCurveSnapshot.indexId?.id,
+              code : priceCurveSnapshot.indexId?.code
+            }
+            this.myForm.controls.indexName.setValue(priceCurveSnapshot.indexId!.code);
 
             this.myForm.controls.curveDate.setValue(priceCurveSnapshot.detail?.curveDate);
 
@@ -109,12 +109,12 @@ export class PriceCurveEditComponent {
             this.myForm.controls.frequency.setValue(priceCurveSnapshot.detail!.frequencyCodeValue);
 
           } else {
-            this.router.navigate(['priceCurves', 'list']);
+            this.router.navigate(['pricing','priceCurves', 'list']);
 
           }
         },
         error: err => {
-          this.router.navigate(['priceCurves', 'list']);
+          this.router.navigate(['pricing','priceCurves', 'list']);
         }
       });
 
@@ -126,7 +126,7 @@ export class PriceCurveEditComponent {
 
 
   onReset() {
-    this.router.navigate(['priceIndices', 'list']);
+    this.router.navigate(['pricing','priceCurves', 'list']);
   }
 
 
@@ -231,5 +231,25 @@ export class PriceCurveEditComponent {
   }
 
 
+  onDelete() {
+    if (this.modifiedSnapshot.entityId?.id) {
+      let snapshot : PriceCurveSnapshot = {
+        entityState : 'DELETE',
+        indexId : {
+          id : this.modifiedSnapshot.indexId?.id
+        },
+        entityId : {
+          id : this.modifiedSnapshot.entityId.id
+        }
+      }
+      let subscription = this.priceIndexService.savePriceCurve(snapshot).subscribe({
+        next: (data) => {this.transactionResult = data},
+        error: (error: Error) => {console.log(error.message)}
+      });
 
+      this.destroyRef.onDestroy( () => subscription.unsubscribe());
+
+
+    }
+  }
 }

@@ -1,6 +1,6 @@
 import {Component, DestroyRef, inject, output} from '@angular/core';
 import {TransactionResult} from '../../../models/transactionresult.model';
-import {DealService} from '../../../services/deal.service';
+import {DealService} from '../services/deal.service';
 
 @Component({
   selector: 'app-deal-file-upload',

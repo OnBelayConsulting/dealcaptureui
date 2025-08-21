@@ -1,8 +1,8 @@
 import {Component, computed, DestroyRef, inject, OnInit, signal} from '@angular/core';
-import {OrganizationService} from '../../../services/organization.service';
+import {OrganizationService} from '../services/organization.service';
 import {RouterLink} from '@angular/router';
 import {OrganizationSnapshotCollection} from '../model/organization.model';
-import {OrganizationSearchService} from '../services/list-organizations.service';
+import {OrganizationSearchService} from '../services/organizations-search.service';
 import {OrganizationSearchComponent} from '../organization-search/organization-search.component';
 
 @Component({

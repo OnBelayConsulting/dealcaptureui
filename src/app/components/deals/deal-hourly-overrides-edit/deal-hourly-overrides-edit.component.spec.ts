@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DealHourlyOverridesEditComponent } from './deal-hourly-overrides-edit.component';
+import {DealHourlyOverridesEditComponent} from './deal-hourly-overrides-edit.component';
 
 describe('DealHourlyOverridesEditComponent', () => {
   let component: DealHourlyOverridesEditComponent;

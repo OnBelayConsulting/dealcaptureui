@@ -1,4 +1,4 @@
-import {Component, inject, input, output} from '@angular/core';
+import {Component, input, output} from '@angular/core';
 import {ModalComponent} from '../modal/modal.component';
 
 @Component({

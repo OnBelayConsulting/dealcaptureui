@@ -32,7 +32,7 @@ export interface PowerProfileSnapshot extends AbstractSnapshot {
   settledPriceIndexId? : EntityId,
   restOfMonthPriceIndexId? : EntityId,
   totalHours? : number,
-  detail : PowerProfileDetail,
+  detail? : PowerProfileDetail | undefined,
   profileDays? : PowerProfileDaySnapshot[],
   changedProfileDays? : PowerProfileDaySnapshot[],
   indexMappings? : PowerProfileIndexMappingSnapshot[],

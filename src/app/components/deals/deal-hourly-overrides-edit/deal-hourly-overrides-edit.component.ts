@@ -1,7 +1,7 @@
 import {Component, DestroyRef, inject, input, signal} from '@angular/core';
 import {DealOverrideHoursForDaySnapshot, DealOverrideHourSnapshot} from '../model/deal-overrides.model';
 import {Router} from '@angular/router';
-import {DealService} from '../../../services/deal.service';
+import {DealService} from '../services/deal.service';
 import {TransactionResult} from '../../../models/transactionresult.model';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 

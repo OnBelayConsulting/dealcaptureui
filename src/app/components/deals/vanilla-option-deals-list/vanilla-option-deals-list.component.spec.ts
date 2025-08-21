@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { VanillaOptionDealsListComponent } from './vanilla-option-deals-list.component';
+import {VanillaOptionDealsListComponent} from './vanilla-option-deals-list.component';
 
 describe('VanillaOptionDealsListComponent', () => {
   let component: VanillaOptionDealsListComponent;

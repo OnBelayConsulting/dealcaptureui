@@ -1,8 +1,7 @@
 import {Component, DestroyRef, inject, signal} from '@angular/core';
-import {Router, RouterLink} from '@angular/router';
+import {Router} from '@angular/router';
 import {DealSearchComponent} from '../deal-search/deal-search.component';
 import {DealSearchService} from '../services/deal-search.service';
-import {HasRolesDirective} from 'keycloak-angular';
 import {DealFileUploadComponent} from '../deal-file-upload/deal-file-upload.component';
 import {DealOverridesFileUploadComponent} from '../deal-overrides-file-upload/deal-overrides-file-upload.component';
 import {DefaultDealsListComponent} from '../default-deals-list/default-deals-list.component';
@@ -15,8 +14,6 @@ import {VanillaOptionDealsListComponent} from '../vanilla-option-deals-list/vani
   templateUrl: './deals-list.component.html',
   imports: [
     DealSearchComponent,
-    RouterLink,
-    HasRolesDirective,
     DealFileUploadComponent,
     DealOverridesFileUploadComponent,
     DefaultDealsListComponent,

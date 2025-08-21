@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {FormsModule} from "@angular/forms";
-import {OrganizationSearchService} from '../services/list-organizations.service';
+import {OrganizationSearchService} from '../services/organizations-search.service';
 import {BaseSearchComponent} from '../../shared/base-search/base-search.component';
 
 @Component({

@@ -1,6 +1,6 @@
 import {Component, DestroyRef, inject, input, signal} from '@angular/core';
 import {Router, RouterLink} from "@angular/router";
-import {DealService} from '../../../services/deal.service';
+import {DealService} from '../services/deal.service';
 import {DealOverrideSnapshotCollection} from '../model/deal-overrides.model';
 import {DatePipe, DecimalPipe} from '@angular/common';
 import {HasRolesDirective} from 'keycloak-angular';
@@ -11,7 +11,6 @@ import {DealSnapshot} from '../model/deal.model';
   imports: [
     DatePipe,
     DecimalPipe,
-    HasRolesDirective,
     RouterLink,
   ],
   templateUrl: './deal-overrides-list.component.html',

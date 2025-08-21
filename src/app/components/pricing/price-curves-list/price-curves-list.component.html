@@ -3,7 +3,7 @@
   <div class="actions">
     <i class="action-item">{{priceCurveSearchService.searchCriteria()}}  </i>
     <button class="action-item" (click)="onShowSearch()" type="button"><u><b>Search</b></u></button>
-    <a routerLink="/priceCurves/edit" class="action-item" *kaHasRoles="['view-deals']">New</a>
+    <a routerLink="../edit" class="action-item" >New</a>
     <button class="action-item" (click)="onFileUploadShow()" type="button"><u><b>File upload</b></u></button>
   </div>
   @if(showFileUpload()) {

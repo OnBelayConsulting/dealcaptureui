@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DefaultPositionsListComponent } from './default-positions-list.component';
+import {DefaultPositionsListComponent} from './default-positions-list.component';
 
 describe('DefaultPositionsListComponent', () => {
   let component: DefaultPositionsListComponent;
